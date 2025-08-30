@@ -1,0 +1,41 @@
+<div class="flex flex-row items-center justify-center min-h-screen">
+  <div class="md:basis-2/3 flex items-center justify-center h-full">
+    <div class="w-full max-w-md bg-white p-8 rounded">
+      <h2 class="text-2xl font-bold text-center mb-6">Member Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="w-full mb-4">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" />
+          @if (loginForm.get('email')?.hasError('required')) {
+          <mat-error>Email is required</mat-error>
+          } @if (loginForm.get('email')?.hasError('email')) {
+          <mat-error> Enter a valid email </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-2">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" />
+          @if(loginForm.get('password')?.hasError('required')) {
+          <mat-error> Password is required </mat-error>
+          }
+        </mat-form-field>
+        <mat-checkbox class="mb-6">
+          <span>Remember me</span>
+        </mat-checkbox>
+        <button matButton="filled" class="w-full">Login</button>
+      </form>
+
+      <button class="mdc-notched-outline__notch"></button>
+
+      <p class="text-center mt-4">
+        Don't have an account?
+        <a
+          routerLink="/registration"
+          class="text-blue-500 hover:underline cursor-pointer"
+          >Sign up</a
+        >
+      </p>
+    </div>
+  </div>
+</div>

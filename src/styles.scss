@@ -11,7 +11,7 @@ html {
   @include mat.theme(
     (
       color: (
-        primary: mat.$rose-palette,
+        primary: mat.$azure-palette,
         tertiary: mat.$red-palette,
       ),
       typography: Roboto,
@@ -45,4 +45,8 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mdc-notched-outline__notch {
+  border-right: none;
 }

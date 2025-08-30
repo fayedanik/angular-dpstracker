@@ -1,0 +1,79 @@
+<div class="flex flex-row items-center justify-center min-h-screen">
+  <div class="md:basis-2/3 flex items-center justify-center h-full">
+    <div class="w-full max-w-md bg-white p-8 rounded">
+      <h2 class="text-2xl font-bold text-center mb-6">Member Registration</h2>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="w-full mb-4">
+          <mat-label>First Name</mat-label>
+          <input type="text" matInput formControlName="firstName" />
+          @if(signupForm.get('firstName')?.hasError('required')) {
+          <mat-error>First Name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-4">
+          <mat-label>Last Name</mat-label>
+          <input type="text" matInput formControlName="lastName" />
+          @if(signupForm.get('lastName')?.hasError('required')) {
+          <mat-error>Last Name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-4">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" />
+          @if (signupForm.get('email')?.hasError('required')) {
+          <mat-error>Email is required</mat-error>
+          } @if (signupForm.get('email')?.hasError('email')) {
+          <mat-error> Enter a valid email </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-4">
+          <mat-label>Phone</mat-label>
+          <span matPrefix class="ml-4">+880&nbsp;</span>
+          <input
+            matInput
+            formControlName="phoneNumber"
+            type="tel"
+            inputmode="numeric"
+            placeholder="1XXXXXXXXXX"
+            (keypress)="allowOnlyDigit($event)"
+          />
+          @if (signupForm.get('phoneNumber')?.hasError('required')) {
+          <mat-error>Phone Number is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-2">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" />
+          @if(signupForm.get('password')?.hasError('required')) {
+          <mat-error> Password is required </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full mb-2">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" />
+          @if(signupForm.get('confirmPassword')?.hasError('required')) {
+          <mat-error> Confirm Password is required </mat-error>
+          }
+        </mat-form-field>
+
+        <button matButton="filled" class="w-full">Register</button>
+      </form>
+
+      <button class="mdc-notched-outline__notch"></button>
+
+      <p class="text-center mt-4">
+        Already have an account?
+        <a
+          routerLink="/login"
+          class="text-blue-500 hover:underline cursor-pointer"
+          >Login</a
+        >
+      </p>
+    </div>
+  </div>
+</div>
