@@ -1,0 +1,40 @@
+<div class="dialog-title gap-4" mat-dialog-title>
+  <mat-icon>add_circle</mat-icon>
+  <span>Add Transaction</span>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <form [formGroup]="addTransactionForm" (ngSubmit)="addTransaction()">
+    <mat-form-field class="w-full mb-4">
+      <mat-label>A/C No.</mat-label>
+      <input type="text" matInput formControlName="accountNumber" />
+      @if(addTransactionForm.get('accountNumber')?.hasError('required')) {
+      <mat-error>A/C No. is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Bank Name</mat-label>
+      <input type="text" matInput formControlName="bank" />
+      @if(addTransactionForm.get('bank')?.hasError('required')) {
+      <mat-error>Bank Name is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Transaction Number</mat-label>
+      <input type="text" matInput formControlName="transactionNumber" />
+      @if(addTransactionForm.get('transactionNumber')?.hasError('required')) {
+      <mat-error>Transaction Number is required</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancel</button>
+  <button
+    matButton="filled"
+    [mat-dialog-close]="addTransaction()"
+    cdkFocusInitial
+  >
+    Add
+  </button>
+</mat-dialog-actions>

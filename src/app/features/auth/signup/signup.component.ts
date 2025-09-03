@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../shared/material.module';
 
 @Component({
@@ -12,6 +12,7 @@ import { MaterialModule } from '../../../shared/material.module';
 })
 export class SignupComponent {
   private readonly _fb = inject(FormBuilder);
+  private readonly _router = inject(Router);
 
   signupForm = this._fb.nonNullable.group({
     firstName: ['', [Validators.required]],
@@ -22,7 +23,9 @@ export class SignupComponent {
     confirmPassword: ['', Validators.required],
   });
 
-  onSubmit() {}
+  onSubmit() {
+    this._router.navigate(['login']);
+  }
 
   allowOnlyDigit(event: KeyboardEvent) {
     if (!/[0-9]/.test(event.key)) {

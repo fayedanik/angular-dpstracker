@@ -6,25 +6,27 @@
 
 @use "@angular/material" as mat;
 @use "tailwindcss";
+@use "./app/styles/typography.scss";
+@use "./app/styles/colors.scss";
+@import "./app/themes/violetthemetheme.css";
 
 html {
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$red-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
+  // @include mat.theme(
+  //   (
+  //     color: (
+  //       primary: mat.$rose-palette,
+  //       tertiary: mat.$red-palette,
+  //     ),
+  //     typography: Roboto,
+  //     density: 0,
+  //   )
+  // );
 }
 
 body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
   // user's system settings.
-  color-scheme: light;
 
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
@@ -49,4 +51,81 @@ body {
 
 .mdc-notched-outline__notch {
   border-right: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@include mat.sidenav-overrides(
+  (
+    container-background-color: var(--mat-sys-surface-variant),
+    container-text-color: var(--mat-sys-surface-on-variant),
+    container-shape: none,
+  )
+);
+
+@include mat.toolbar-overrides(
+  (
+    standard-height: "96px",
+    mobile-height: "96px",
+  )
+);
+
+@include mat.dialog-overrides(
+  (
+    container-shape: var(--mat-sys-corner-large),
+    headline-padding: 8px,
+    actions-alignment: "space-between",
+    container-max-width: 600px,
+    container-min-width: 350px,
+    subhead-color: #666,
+    subhead-size: var(--mat-sys-headline-small-size),
+    container-color: var(--mat-sys-surface),
+  )
+);
+
+@include mat.form-field-overrides(
+  (
+    outlined-outline-color: #b4b4b4,
+  )
+);
+.table-wrapper {
+  border: 2px solid var(--mat-sys-surface-variant);
+  border-radius: 12px;
+  overflow: hidden;
+  .ngx-datatable.material {
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+  }
+  .ngx-datatable.material
+    .datatable-body
+    .datatable-body-row
+    .datatable-body-cell {
+    color: var(--mat-sys-on-surface);
+  }
+
+  .ngx-datatable.material .datatable-body .datatable-body-row {
+    border-bottom: 1px solid var(--mat-sys-surface-variant);
+    background: var(--mat-sys-surface-bright);
+  }
+
+  .ngx-datatable.material .datatable-body .datatable-body-row:hover {
+    background: var(--mat-sys-surface-dim);
+  }
+  .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover,
+  .ngx-datatable.material:not(.cell-selection)
+    .datatable-body-row:hover
+    .datatable-row-group {
+    background: var(--mat-sys-surface-dim);
+    cursor: pointer;
+  }
+
+  .ngx-datatable.material .datatable-footer {
+    border-top: none;
+    font-weight: 600;
+    color: var(--mat-sys-on-surface);
+    background: var(--mat-sys-surface-bright);
+  }
 }

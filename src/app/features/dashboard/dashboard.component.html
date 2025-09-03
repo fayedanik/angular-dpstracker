@@ -1,1 +1,153 @@
-<p>dashboard works!</p>
+<div class="w-full p-4 flex flex-col gap-4">
+  <div class="flex flex-col gap-1">
+    <span class="title-large">Dashboard</span>
+    <span class="label-small text-gray-400"
+      >Monitor your financial activity</span
+    >
+  </div>
+
+  <div
+    class="flex flex-col flex-grow md:flex-row gap-4 space-between items-start"
+  >
+    <div class="flex flex-col w-full md:w-1/4 gap-4">
+      <div
+        class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
+      >
+        <span class="flex gap-3 justify-start items-center">
+          <mat-icon class="text-primary">account_balance</mat-icon>
+          <span class="text-gray-800 body-large">Team Balance</span>
+        </span>
+        <span class="flex gap-3 justify-between items-center">
+          <span class="title-medium">BDT 15300.00</span>
+          <mat-icon class="!text-gray-400" svgIcon="eye"></mat-icon>
+        </span>
+
+        <span class="text-gray-500">Combined balance till now</span>
+      </div>
+      <div
+        class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
+      >
+        <span class="flex gap-3 justify-start items-center">
+          <mat-icon class="text-primary" svgIcon="building_office"
+            >crown</mat-icon
+          >
+          <span class="text-gray-800 body-large">DPS Status</span>
+        </span>
+        <span class="flex gap-3 justify-between items-center">
+          <span class="title-medium">Current Amount 2000.00</span>
+        </span>
+
+        <span class="text-gray-500">Combined balance till now</span>
+      </div>
+    </div>
+    <div
+      class="w-full md:w-1/4 dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
+    >
+      <span class="flex gap-3 justify-start items-center">
+        <mat-icon svgIcon="arrow_trending_up" class="text-primary"></mat-icon>
+        <span class="text-gray-800 body-large">Your contribution</span>
+      </span>
+      <span class="flex gap-3 justify-between items-center">
+        <span class="title-medium">BDT 15300.00</span>
+        <mat-icon class="!text-gray-400" svgIcon="eye"></mat-icon>
+      </span>
+
+      <span class="text-gray-500">Since last month</span>
+    </div>
+    <div
+      class="w-full md:w-1/4 dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
+    >
+      <span class="flex gap-3 justify-start items-center">
+        <mat-icon svgIcon="arrow_trending_down" class="text-primary"></mat-icon>
+        <span class="text-gray-800 body-large">Total Expense</span>
+      </span>
+      <span class="flex gap-3 justify-between items-center">
+        <span class="title-medium">BDT 15300.00</span>
+        <mat-icon class="!text-gray-400" svgIcon="eye"></mat-icon>
+      </span>
+
+      <span class="text-gray-500">Since last month</span>
+    </div>
+    <div class="w-full md:w-1/4 flex flex-col gap-4">
+      <div
+        class="w-full dashboard-chip rounded-xl p-4 flex flex-col justify-start content-center"
+      >
+        <canvas
+          appLottie="/assets/animations/credit-card.lottie"
+          class="-mt-4"
+        ></canvas>
+        <div class="flex flex-col gap-4 content-center">
+          <div class="flex flex-row justify-center gap-4">
+            <span class="text-gray-500">A/C No:</span>
+            <span class="text-pink-600">9536183193</span>
+          </div>
+          <div class="flex flex-row justify-center gap-4">
+            <span class="text-gray-500">Bank:</span>
+            <span class="text-yellow-500">Islami Bank</span>
+          </div>
+          <div class="flex flex-row justify-center gap-4">
+            <span class="text-gray-500">Branch:</span>
+            <span class="text-gray-400">Chakaria</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
+      >
+        <span class="flex gap-3 justify-between items-center">
+          <span class="text-gray-800 body-large">Recent Transactions</span>
+          <span>View all</span>
+        </span>
+        <div class="flex flex-col gap-4 w-full">
+          <div class="flex flex-row justify-between items-center w-full">
+            <div class="flex flex-row gap-2 items-start">
+              <span
+                class="label-medium w-7 h-7 p-1 object-cover rounded-full bg-primary text-white center"
+                >FA</span
+              >
+              <span class="flex flex-col">
+                <span class="title-medium -mt-1">Fayed Anik</span>
+                <span class="label-medium text-gray-400"
+                  >03 Jun 2025, 05:15PM</span
+                >
+              </span>
+            </div>
+            <span>+$120</span>
+          </div>
+
+          <div class="flex flex-row justify-between items-center w-full">
+            <div class="flex flex-row gap-2 items-start">
+              <span
+                class="label-medium w-7 h-7 p-1 object-cover rounded-full bg-primary text-white center"
+                >ST</span
+              >
+              <span class="flex flex-col">
+                <span class="title-medium -mt-1">Sharaban Tahura</span>
+                <span class="label-medium text-gray-400"
+                  >03 Jun 2025, 05:15PM</span
+                >
+              </span>
+            </div>
+            <span>+$120</span>
+          </div>
+
+          <div class="flex flex-row justify-between items-center w-full">
+            <div class="flex flex-row gap-2 items-start">
+              <span
+                class="label-medium w-7 h-7 p-1 object-cover rounded-full bg-primary text-white center"
+                >FS</span
+              >
+              <span class="flex flex-col">
+                <span class="title-medium -mt-1">Fayed Sharaban</span>
+                <span class="label-medium text-gray-400"
+                  >03 Jun 2025, 05:15PM</span
+                >
+              </span>
+            </div>
+            <span>+$120</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

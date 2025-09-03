@@ -1,0 +1,26 @@
+@use "@angular/material" as mat;
+
+$typography-levels: (
+  display-large,
+  display-medium,
+  display-small,
+  headline-large,
+  headline-medium,
+  headline-small,
+  title-large,
+  title-medium,
+  title-small,
+  body-large,
+  body-medium,
+  body-small,
+  label-large,
+  label-medium,
+  label-small
+);
+
+@each $level in $typography-levels {
+  .#{$level} {
+    font: var(--mat-sys-#{$level});
+    letter-spacing: var(--mat-sys-#{$level}-tracking);
+  }
+}

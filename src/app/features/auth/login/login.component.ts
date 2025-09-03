@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../shared/material.module';
 
 @Component({
@@ -12,6 +12,7 @@ import { MaterialModule } from '../../../shared/material.module';
 })
 export class LoginComponent {
   private readonly _fb = inject(FormBuilder);
+  private readonly _router = inject(Router);
 
   loginForm = this._fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -23,6 +24,6 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log(this.loginForm.controls.email.value);
+    this._router.navigate(['dashboard']);
   }
 }
