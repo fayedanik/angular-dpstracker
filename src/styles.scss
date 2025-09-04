@@ -71,6 +71,7 @@ body {
     container-background-color: var(--mat-sys-surface-variant),
     container-text-color: var(--mat-sys-surface-on-variant),
     container-shape: none,
+    //container-width: 200px,
   )
 );
 
@@ -99,6 +100,9 @@ body {
     outlined-outline-color: #b4b4b4,
   )
 );
+
+@include mat.list-overrides(());
+
 .table-wrapper {
   border: 2px solid var(--mat-sys-surface-variant);
   border-radius: 12px;

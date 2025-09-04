@@ -1,5 +1,16 @@
 /* styles.css */
 .active-link {
-  font-weight: bold;
-  //color: #1976d2; /* Material primary blue */
+  background-color: var(--mat-sys-inverse-primary);
+  color: var(--mat-sys-on-primary-container);
+  font-weight: 600;
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item:hover {
+  margin-left: 10px;
+  transition: margin-left 2s;
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item.active-link:hover {
+  margin-left: 0;
+  transition: none;
 }
