@@ -1,13 +1,17 @@
 <mat-toolbar class="flex flex-row justify-between gap-4 w-full">
   <button matIconButton (click)="toggleSideNav.emit()">
+    @if(isOpendedSideNav()) {
     <mat-icon svgIcon="left_panel_close"></mat-icon>
+    } @else {
+    <mat-icon svgIcon="right_panel_close"></mat-icon>
+    }
   </button>
   <span class="title-small text-gray-500 hidden md:block">{{
     dateNow() | date : "MMMM d, y, h:mm a"
   }}</span>
   <div class="flex flex-row gap-4 items-center">
-    <button matIconButton>
-      <mat-icon>dark_mode</mat-icon>
+    <button matIconButton (click)="toggleLightDarkMode()">
+      <mat-icon> @if(!isDark()) { dark_mode } @else { light_mode } </mat-icon>
     </button>
     <div
       class="flex gap-2 items-center border-1 border-gray-300 px-2 py-3 rounded-xl cursor-pointer"

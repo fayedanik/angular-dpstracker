@@ -1,4 +1,4 @@
-<div class="w-full p-4 flex flex-col gap-4">
+<div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
   <div class="flex flex-col gap-1">
     <span class="title-large">Dashboard</span>
     <span class="label-small text-gray-400"
@@ -15,7 +15,7 @@
       >
         <span class="flex gap-3 justify-start items-center">
           <mat-icon class="text-primary">account_balance</mat-icon>
-          <span class="text-gray-800 body-large">Team Balance</span>
+          <span class="body-large">Team Balance</span>
         </span>
         <span class="flex gap-3 justify-between items-center">
           <span class="title-medium">BDT 15300.00</span>
@@ -31,7 +31,7 @@
           <mat-icon class="text-primary" svgIcon="building_office"
             >crown</mat-icon
           >
-          <span class="text-gray-800 body-large">DPS Status</span>
+          <span class="body-large">DPS Status</span>
         </span>
         <span class="flex gap-3 justify-between items-center">
           <span class="title-medium">Current Amount 2000.00</span>
@@ -45,7 +45,7 @@
     >
       <span class="flex gap-3 justify-start items-center">
         <mat-icon svgIcon="arrow_trending_up" class="text-primary"></mat-icon>
-        <span class="text-gray-800 body-large">Your contribution</span>
+        <span class="body-large">Your contribution</span>
       </span>
       <span class="flex gap-3 justify-between items-center">
         <span class="title-medium">BDT 15300.00</span>
@@ -59,7 +59,7 @@
     >
       <span class="flex gap-3 justify-start items-center">
         <mat-icon svgIcon="arrow_trending_down" class="text-primary"></mat-icon>
-        <span class="text-gray-800 body-large">Total Expense</span>
+        <span class="body-large">Total Expense</span>
       </span>
       <span class="flex gap-3 justify-between items-center">
         <span class="title-medium">BDT 15300.00</span>
@@ -95,7 +95,7 @@
         class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
       >
         <span class="flex gap-3 justify-between items-center">
-          <span class="text-gray-800 body-large">Recent Transactions</span>
+          <span class="body-large">Recent Transactions</span>
           <span>View all</span>
         </span>
         <div class="flex flex-col gap-4 w-full">

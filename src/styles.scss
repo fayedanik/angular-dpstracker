@@ -40,6 +40,14 @@ body {
 }
 /* You can add global styles to this file, and also import other style files */
 
+body.dark {
+  color-scheme: dark;
+}
+
+body.light {
+  color-scheme: light;
+}
+
 html,
 body {
   height: 100%;
@@ -82,7 +90,7 @@ body {
     container-min-width: 350px,
     subhead-color: #666,
     subhead-size: var(--mat-sys-headline-small-size),
-    container-color: var(--mat-sys-surface),
+    container-color: var(--mat-sys-surface-bright),
   )
 );
 
@@ -127,5 +135,21 @@ body {
     font-weight: 600;
     color: var(--mat-sys-on-surface);
     background: var(--mat-sys-surface-bright);
+  }
+}
+
+.enter-animation {
+  animation: slide-fade 2s;
+}
+
+@keyframes slide-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
