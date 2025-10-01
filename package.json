@@ -32,6 +32,8 @@
     "@angular/router": "^20.1.0",
     "@angular/ssr": "^20.1.1",
     "@lottiefiles/dotlottie-web": "^0.50.2",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "@swimlane/ngx-datatable": "^22.0.0",
     "@tailwindcss/postcss": "^4.1.12",
     "express": "^5.1.0",

@@ -1,0 +1,7 @@
+{
+  "APP": {
+    "LOGIN": "Login"
+  },
+  "INVALID_CREDENTIALS": "Wrong email or password",
+  "LOGIN_SUCCESSFUL": "Login successful"
+}

@@ -23,7 +23,13 @@
         <mat-checkbox class="mb-6">
           <span>Remember me</span>
         </mat-checkbox>
-        <button matButton="filled" class="w-full">Login</button>
+        <button
+          matButton="filled"
+          class="w-full"
+          [disabled]="loginForm.invalid"
+        >
+          {{ "APP.LOGIN" | translate }}
+        </button>
       </form>
 
       <button class="mdc-notched-outline__notch"></button>

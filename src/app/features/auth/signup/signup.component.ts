@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MaterialModule } from '../../../shared/material.module';
+import { MaterialModule } from '../../../shared/modules/material.module';
 
 @Component({
   selector: 'app-signup',
