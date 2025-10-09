@@ -21,6 +21,7 @@ export class SvgIconRegistryService {
       'arrow_trending_down',
       'building_office',
       'right_panel_close',
+      'arrow_up_square',
     ];
 
     icons.forEach((icon) => {

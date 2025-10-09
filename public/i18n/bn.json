@@ -1,7 +1,13 @@
 {
   "APP": {
-    "LOGIN": "লগইন"
+    "LOGIN": "লগইন",
+    "BANK_ACCOUNTS": "ব্যাংক একাউন্টস",
+    "FIND_BANK_ACCOUNTS_HERE": "আপনার সকল ব্যাংক অ্যাকাউন্ট এখানে খুঁজুন",
+    "ADD_ACCOUNT": "অ্যাকাউন্ট যোগ করুন"
   },
+  "ADD": "যোগ করুন",
+  "CANCEL": "বাতিল করুন",
   "INVALID_CREDENTIALS": "ভুল ইমেইল অথবা পাসওয়ার্ড",
-  "LOGIN_SUCCESSFUL": "লগইন সফল"
+  "LOGIN_SUCCESSFUL": "লগইন সফল",
+  "LOG_OUT": "লগ আউট"
 }

@@ -14,6 +14,10 @@ export const routes: Routes = [
           import('./features/auth/login/login.component').then(
             (m) => m.LoginComponent
           ),
+        canActivate: [authGuard],
+        data: {
+          isPublic: true,
+        },
       },
       {
         path: 'registration',
@@ -21,6 +25,10 @@ export const routes: Routes = [
           import('./features/auth/signup/signup.component').then(
             (m) => m.SignupComponent
           ),
+        canActivate: [authGuard],
+        data: {
+          isPublic: true,
+        },
       },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
@@ -43,6 +51,22 @@ export const routes: Routes = [
           import('./features/transactions/transactions.component').then(
             (m) => m.TransactionsComponent
           ),
+      },
+      {
+        path: 'members',
+        loadComponent: () =>
+          import('./features/user-list/user-list.component').then(
+            (m) => m.UserListComponent
+          ),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'accounts',
+        loadComponent: () =>
+          import(
+            './features/bank-accounts/components/bank-account-list/bank-account-list.component'
+          ).then((m) => m.BankAccountListComponent),
+        canActivate: [authGuard],
       },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],

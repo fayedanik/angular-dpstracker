@@ -1,7 +1,13 @@
 {
   "APP": {
-    "LOGIN": "Login"
+    "LOGIN": "Login",
+    "BANK_ACCOUNTS": "Bank Accounts",
+    "FIND_BANK_ACCOUNTS_HERE": "Find all of your bank accounts here",
+    "ADD_ACCOUNT": "Add Account"
   },
+  "ADD": "Add",
+  "CANCEL": "Cancel",
   "INVALID_CREDENTIALS": "Wrong email or password",
-  "LOGIN_SUCCESSFUL": "Login successful"
+  "LOGIN_SUCCESSFUL": "Login successful",
+  "LOG_OUT": "Log out"
 }

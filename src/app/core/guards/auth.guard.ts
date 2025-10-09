@@ -5,7 +5,12 @@ import { AuthService } from '../services/auth.service';
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  if (!authService.isLoggedIn()) {
+  const isUserLoggedIn = authService.isLoggedIn();
+  console.log(isUserLoggedIn);
+  if (isUserLoggedIn && route.data['isPublic']) {
+    return router.createUrlTree(['/dashboard'], {});
+  }
+  if (!isUserLoggedIn && state.url !== '/login' && !route.data['isPublic']) {
     return router.createUrlTree(['/login'], {
       queryParams: {
         returnUrl: state.url,

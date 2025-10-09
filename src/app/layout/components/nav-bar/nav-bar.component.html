@@ -14,13 +14,33 @@
       <mat-icon> @if(!isDark()) { dark_mode } @else { light_mode } </mat-icon>
     </button>
     <div
-      class="flex gap-2 items-center border-1 border-gray-300 px-2 py-3 rounded-xl cursor-pointer"
+      class="flex gap-2 items-center border-1 border-gray-300 px-2 py-3 rounded-xl select-none cursor-pointer"
+      matRipple
+      [matMenuTriggerFor]="menu"
     >
-      <span class="label-medium border-2 p-2 rounded-full bg-primary text-white"
-        >FA</span
-      >
-      <p class="label-medium text-gray-400 hidden md:block">Fayed Anik</p>
+      @if (user(); as user) {
+      <app-avatar [displayName]="user.displayName" class="-mt-1" />
+      <p class="label-medium text-gray-400 hidden md:block">
+        {{ user.displayName }}
+      </p>
+      }
       <mat-icon>arrow_drop_down</mat-icon>
+      <mat-menu #menu="matMenu">
+        <div class="flex flex-row gap-1 justify-start items-center p-4">
+          <span>EN</span>
+          <mat-slide-toggle
+            [checked]="false"
+            (change)="changeLang($event)"
+            color="tertiary"
+          >
+          </mat-slide-toggle>
+          <span>বাং</span>
+        </div>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>{{ "LOG_OUT" | translate }}</span>
+        </button>
+      </mat-menu>
     </div>
   </div>
 </mat-toolbar>

@@ -24,7 +24,8 @@ export class SidePanelComponent {
   menuItems = [
     { icon: 'dashboard', label: 'Dashboard', path: '/dashboard' },
     { icon: 'currency_exchange', label: 'Transactions', path: '/transactions' },
-    { icon: 'group', label: 'Members', path: '' },
+    { icon: 'manage_accounts', label: 'Accounts', path: '/accounts' },
+    { icon: 'group', label: 'Members', path: '/members' },
     { icon: 'settings', label: 'Settings', path: '' },
   ];
 }

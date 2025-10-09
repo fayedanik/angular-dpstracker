@@ -15,25 +15,25 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { firstValueFrom } from 'rxjs';
 import { routes } from './app.routes';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
+import { UserService } from './core/services/user.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withFetch(), withInterceptors([AuthInterceptor])),
-    provideAppInitializer(() => {
+    provideAppInitializer(async () => {
       const authService = inject(AuthService);
-      const router = inject(Router);
-      return firstValueFrom(authService.refresh()).then((res) => {
-        if (res?.success) {
-          router.navigate(['/dashboard']);
-        }
-      });
+      const userService = inject(UserService);
+      const res = await firstValueFrom(authService.refresh());
+      if (res?.success) {
+        await firstValueFrom(userService.getUser());
+      }
     }),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),

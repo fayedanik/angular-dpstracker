@@ -1,0 +1,72 @@
+<div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-col gap-1">
+      <span class="title-large">Members</span>
+      <span class="label-small text-gray-400">List of all the members</span>
+    </div>
+    <!-- <div class="hidden md:block">
+      <button
+        matFab
+        extended
+        color="primary"
+        (click)="openCreateTransactionDialog()"
+      >
+        <mat-icon>add</mat-icon>
+        Add Transaction
+      </button>
+    </div>
+    <div class="block md:hidden">
+      <button matFab color="primary" (click)="openCreateTransactionDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div> -->
+  </div>
+  @if(isPlatformBrowser) {
+  <div class="table-wrapper">
+    <ngx-datatable
+      class="material custom-datatable"
+      [rows]="rows()"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [rowHeight]="'auto'"
+      [scrollbarH]="true"
+      [footerHeight]="50"
+    >
+    </ngx-datatable>
+  </div>
+  }
+</div>
+
+<ng-template #displayNameCellTemplate let-row="row" let-value="value">
+  <div class="flex flex-col gap-1">
+    <span class="font-bold">{{ value }}</span>
+    <span>{{ row.roles.join(", ") }}</span>
+  </div>
+</ng-template>
+
+<ng-template #emailCellTemplate let-row="row" let-value="value">
+  <span class="text-gray-500">{{ value }}</span>
+</ng-template>
+
+<ng-template #phoneNumberCellTemplate let-row="row" let-value="value">
+  <span class="text-gray-500">{{ value }}</span>
+</ng-template>
+
+<ng-template #createdAtCellTemplate let-value="value">
+  {{ value | date : "dd. MM. yyyy" }}, {{ value | date : "hh:mm a" }}
+</ng-template>
+
+<ng-template #statusCellTemplate let-value="value">
+  <span>{{ value ? "Active" : "In Active" }}</span>
+</ng-template>
+
+<ng-template #actionCellTemplate let-value="value">
+  <span
+    class="text-red-500 flex flex-row gap-1 select-none cursor-pointer"
+    (click)="sendInvitation(value)"
+  >
+    <mat-icon svgIcon="arrow_up_square"></mat-icon>
+    Invite
+  </span>
+</ng-template>
