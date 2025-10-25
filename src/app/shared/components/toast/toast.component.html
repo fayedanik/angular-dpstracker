@@ -1,0 +1,24 @@
+<div class="toast-root" role="status" aria-live="polite">
+  <div class="toast-icon">
+    @switch (data.type) { @case('success') {
+    <mat-icon>check_circle</mat-icon>
+    } @case('error') {
+    <mat-icon>error</mat-icon>
+    } @case('warn') {
+    <mat-icon>report_problem</mat-icon>
+    } @default {
+    <mat-icon>info</mat-icon>
+    } }
+  </div>
+  <div class="toast-body">
+    @if (data.title) {
+    <div class="toast-title">{{ data.title }}</div>
+    }
+    <div class="toast-message">{{ data.message }}</div>
+  </div>
+  @if (data.actionText) {
+  <button mat-button class="toast-action">
+    {{ data.actionText }}
+  </button>
+  }
+</div>

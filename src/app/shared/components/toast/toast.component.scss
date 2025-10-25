@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+.toast-root {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+}
+.toast-icon mat-icon {
+  font-size: 20px;
+}
+.toast-body {
+  flex: 1;
+  min-width: 0;
+}
+.toast-title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.toast-message {
+  font-size: 13px;
+  line-height: 1.25;
+  color: rgba(0, 0, 0, 0.8);
+}
+.toast-action {
+  margin-left: 8px;
+  align-self: flex-start;
+}
+@media (max-width: 420px) {
+  .toast-root {
+    padding-right: 6px;
+  }
+}

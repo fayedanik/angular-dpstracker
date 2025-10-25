@@ -4,47 +4,50 @@
   [class.bottom-sheet-header]="isPlatformMobile"
 >
   <mat-icon>add_circle</mat-icon>
-  <span>{{ "APP.ADD_ACCOUNT" | translate }}</span>
+  <span>{{
+    isUpdate
+      ? ("APP.UPDATE_ACCOUNT" | translate)
+      : ("APP.ADD_ACCOUNT" | translate)
+  }}</span>
 </div>
 <mat-divider [ngClass]="{ 'my-4': isPlatformMobile }"></mat-divider>
 <mat-dialog-content>
   <form
     [formGroup]="addBankAccountForm"
-    (ngSubmit)="addTransaction()"
     [ngClass]="{ 'p-4 pb-0': isPlatformMobile }"
   >
     <mat-form-field class="w-full mb-4">
       <mat-label>A/C No.</mat-label>
-      <input type="text" matInput formControlName="accountNumber" />
-      @if(addBankAccountForm.get('accountNumber')?.hasError('required')) {
+      <input type="text" matInput formControlName="accountNo" />
+      @if(addBankAccountForm.get('accountNo')?.hasError('required')) {
       <mat-error>A/C No. is required</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
       <mat-label>Select Bank</mat-label>
       <mat-select
-        formControlName="bankName"
-        (selectionChange)="selectBank($event)"
+        formControlName="bank"
+        (selectionChange)="selectBank($event.value)"
       >
         @for (bank of bankList(); track $index) {
         <mat-option [value]="bank">{{ bank.name }}</mat-option>
         }
       </mat-select>
-      @if(addBankAccountForm.get('bankName')?.hasError('required')) {
+      @if(addBankAccountForm.get('bank')?.hasError('required')) {
       <mat-error>Bank Name is required</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
       <mat-label>Select Branch</mat-label>
-      <mat-select formControlName="branchName">
+      <mat-select formControlName="branch">
         @for (branch of branchList(); track $index) {
         <mat-option [value]="branch"
           >{{ branch.branch_name }} ({{ branch.routing_number }})</mat-option
         >
         }
       </mat-select>
-      @if(addBankAccountForm.get('branchName')?.hasError('required')) {
+      @if(addBankAccountForm.get('branch')?.hasError('required')) {
       <mat-error>Branch Name is required</mat-error>
       }
     </mat-form-field>
@@ -65,13 +68,15 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions [ngClass]="{ 'bottom-sheet-footer': isPlatformMobile }">
-  <button matButton mat-dialog-close>{{ "CANCEL" | translate }}</button>
+  <button matButton (click)="close()">
+    {{ "CANCEL" | translate }}
+  </button>
   <button
     matButton="filled"
-    [mat-dialog-close]="addTransaction()"
-    [disabled]="addBankAccountForm.invalid"
-    cdkFocusInitial
+    [disabled]="addBankAccountForm.invalid || !addBankAccountForm.dirty"
+    type="submit"
+    (click)="addUpdateTransaction()"
   >
-    {{ "ADD" | translate }}
+    {{ isUpdate ? ("UPDATE" | translate) : ("ADD" | translate) }}
   </button>
 </mat-dialog-actions>

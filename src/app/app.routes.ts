@@ -68,6 +68,14 @@ export const routes: Routes = [
           ).then((m) => m.BankAccountListComponent),
         canActivate: [authGuard],
       },
+      {
+        path: 'dps',
+        loadComponent: () =>
+          import('./features/dps/components/dps-list/dps-list.component').then(
+            (m) => m.DpsListComponent
+          ),
+        canActivate: [authGuard],
+      },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },

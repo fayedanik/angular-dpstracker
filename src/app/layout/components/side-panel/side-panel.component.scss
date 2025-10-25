@@ -1,4 +1,9 @@
 /* styles.css */
+@import "../../../styles/colors.scss";
+.side-nav-conatiner {
+  background: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-surface-on-variant);
+}
 .active-link {
   background-color: var(--mat-sys-inverse-primary);
   color: var(--mat-sys-on-primary-container);

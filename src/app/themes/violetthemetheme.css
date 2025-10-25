@@ -295,6 +295,8 @@ html {
   --mat-sys-hover-state-layer-opacity: 0.08;
   --mat-sys-pressed-state-layer-opacity: 0.12;
 
+  --custom-black-and-white: light-dark(rgba(0, 0, 0, 0.5), #fff);
+
   @media (prefers-contrast: more) {
     /* Primary palette variables */
     --mat-sys-primary: light-dark(#33196e, #f5edff);
@@ -364,5 +366,7 @@ html {
       #322f37,
       #322f37
     ); /* Variable used for the sidenav scrim (container background shadow when opened) */
+
+    --custom-black-and-white: light-dark(rgba(0, 0, 0, 0.5), #fff);
   }
 }

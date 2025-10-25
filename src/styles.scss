@@ -68,8 +68,8 @@ body {
 }
 @include mat.sidenav-overrides(
   (
-    container-background-color: var(--mat-sys-surface-variant),
-    container-text-color: var(--mat-sys-surface-on-variant),
+    //container-background-color: var(--mat-sys-surface-variant),
+    //container-text-color: var(--mat-sys-surface-on-variant),
     container-shape: none,
     //container-width: 200px,
   )
@@ -89,7 +89,7 @@ body {
     actions-alignment: "space-between",
     container-max-width: 600px,
     container-min-width: 350px,
-    subhead-color: #666,
+    subhead-color: var(--custom-black-and-white),
     subhead-size: var(--mat-sys-headline-small-size),
     container-color: var(--mat-sys-surface-bright),
   )
@@ -104,6 +104,19 @@ body {
 @include mat.list-overrides(());
 
 @include mat.menu-overrides(());
+
+@include mat.snack-bar-overrides(
+  (
+    container-color: transparent,
+    container-shape: 12px,
+  )
+);
+
+@include mat.progress-spinner-overrides(
+  (
+    active-indicator-color: orange,
+  )
+);
 
 .mat-mdc-menu-panel {
   min-width: 200px !important;
@@ -228,4 +241,74 @@ body {
   align-items: center;
   padding: 16px;
   justify-content: end;
+}
+
+/* base panel - neutral */
+.toast-panel {
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+}
+
+/* success */
+.toast-success {
+  background: linear-gradient(180deg, #e6f4ea 0%, #dff1e3 100%);
+  color: #184e2c;
+  border-radius: 12px;
+  border: 1px solid #2e7d3280;
+  .toast-title {
+    color: #2e7d32;
+  }
+  .mat-icon {
+    color: #2e7d32;
+  }
+}
+
+/* error */
+.toast-error {
+  background: linear-gradient(180deg, #fdecea 0%, #fbe6e9 100%);
+  color: #5a1414;
+  border-radius: 12px;
+  border: 1px solid #d32f2f;
+  .toast-title {
+    color: #d32f2f;
+  }
+  .mat-icon {
+    color: #d32f2f;
+  }
+}
+
+/* info */
+.toast-info {
+  background: linear-gradient(180deg, #e8f3ff 0%, #e2f0ff 100%);
+  color: #0a3a66;
+  border-radius: 12px;
+  .toast-title {
+    color: #1976d2;
+  }
+  .mat-icon {
+    color: #1976d2;
+  }
+}
+
+/* warn */
+.toast-warn {
+  background: linear-gradient(180deg, #fff8e1 0%, #fff3d6 100%);
+  color: #6a4a00;
+  border-radius: 12px;
+  .toast-title {
+    color: #ed6c02;
+  }
+  .mat-icon {
+    color: #ed6c02;
+  }
+}
+
+/* small responsive tweaks */
+@media (max-width: 600px) {
+  .toast-panel {
+    max-width: calc(100vw - 16px);
+    padding: 10px;
+  }
 }

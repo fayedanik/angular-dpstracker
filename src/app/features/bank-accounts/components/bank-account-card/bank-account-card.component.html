@@ -1,0 +1,36 @@
+@let account = bankAccount();
+<div class="bank-card">
+  <div class="bank-header">
+    <div class="bank-name">{{ account.bankName }}</div>
+    <button
+      matIconButton
+      matTooltip="{{ 'ADD_MEMBER' | translate }}"
+      (click)="openDrawer.emit()"
+    >
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </div>
+
+  <div class="card-body">
+    <span class="label">Account No</span>
+    <span class="value">{{ account.accountNo }}</span>
+
+    <span class="label">Branch Name</span>
+    <span class="value">{{ account.branchName }}</span>
+
+    <span class="label">Account Type</span>
+    <span class="value">{{ account.accountType | titlecase }}</span>
+
+    <span class="label">Total Members</span>
+    <span class="value">{{ account.accountHolders.length }}</span>
+  </div>
+
+  <div class="footer">
+    <button matButton="filled" (click)="deleteAccount.emit()">
+      Delete Account
+    </button>
+    <button matButton="elevated" (click)="updateAccount.emit()">
+      Edit Account
+    </button>
+  </div>
+</div>

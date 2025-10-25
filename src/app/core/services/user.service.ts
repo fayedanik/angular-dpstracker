@@ -1,5 +1,6 @@
 import { HttpClient, httpResource } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, Signal, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { IUserListResponse } from '../../features/user-list/user-list.component';
@@ -37,12 +38,15 @@ export class UserService {
       );
   }
 
-  getAllUsers() {
+  getAllUsers(search: Signal<any> = toSignal(of(''))) {
     const URL = this._baseUrl + '/SecurityQuery/GetUsers';
     return httpResource<IQueryResponse<IUserListResponse>>(() => ({
       url: URL,
       method: 'GET',
       credentials: 'include',
+      params: {
+        searchText: search(),
+      },
     }));
   }
 

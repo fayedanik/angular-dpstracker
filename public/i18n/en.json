@@ -3,11 +3,23 @@
     "LOGIN": "Login",
     "BANK_ACCOUNTS": "Bank Accounts",
     "FIND_BANK_ACCOUNTS_HERE": "Find all of your bank accounts here",
-    "ADD_ACCOUNT": "Add Account"
+    "ADD_ACCOUNT": "Add Account",
+    "UPDATE_ACCOUNT": "Update Account"
   },
   "ADD": "Add",
+  "UPDATE": "Update",
   "CANCEL": "Cancel",
   "INVALID_CREDENTIALS": "Wrong email or password",
   "LOGIN_SUCCESSFUL": "Login successful",
-  "LOG_OUT": "Log out"
+  "ACCOUNT_ADDED": "Account successfully added",
+  "ACCOUNT_UPDATED": "Account successfully updated",
+  "SOMETHING_WENT_WRONG": "Something went wrong",
+  "ARE_YOU_SURE": "Are you sure",
+  "CONFIRM": "Confirm",
+  "LOG_OUT": "Log out",
+  "CONFIRMATION_DIALOG_CONTENT_BODY": "Are you sure you want to delete this item? This can't be undone.",
+  "ADD_MEMBER": "Add Member",
+  "NO_RESULT_FOUND": "No search result found",
+  "SUGGESTED_MEMBERS": "Suggested Members",
+  "MEMBER_ADDED": "Member successfully added"
 }

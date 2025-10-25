@@ -1,0 +1,21 @@
+<div mat-dialog-title>
+  <mat-icon>info</mat-icon>
+  <span>{{ "ARE_YOU_SURE" | translate }}?</span>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <div class="dialog-content center flex flex-col gap-4">
+    <mat-icon class="text-center">warning</mat-icon>
+    <span class="body-large mb-4 text-center">{{
+      "CONFIRMATION_DIALOG_CONTENT_BODY" | translate
+    }}</span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="cancel()">
+    {{ "CANCEL" | translate }}
+  </button>
+  <button matButton="filled" type="submit" (click)="confirm()">
+    {{ "CONFIRM" | translate }}
+  </button>
+</mat-dialog-actions>

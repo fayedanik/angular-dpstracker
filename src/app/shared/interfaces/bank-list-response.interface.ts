@@ -1,4 +1,4 @@
-export interface IBankListResponse {
+export interface IBankInfo {
   name: string;
   bank_code: string;
   districts: IBankDistrictInfo[];

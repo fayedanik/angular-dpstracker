@@ -1,35 +1,115 @@
-<div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
-  <div class="flex flex-row justify-between">
-    <div class="flex flex-col gap-1">
-      <span class="title-large">{{ "APP.BANK_ACCOUNTS" | translate }}</span>
-      <span class="label-small text-gray-400">{{
-        "APP.FIND_BANK_ACCOUNTS_HERE" | translate
-      }}</span>
+<ng-template #mainContent>
+  @let accounts = accountList() || [];
+  <div
+    class="w-full p-4 flex flex-col gap-4"
+    [animate.enter]="'enter-animation'"
+  >
+    <div class="flex flex-row justify-between">
+      <div class="flex flex-col gap-1">
+        <span class="title-large">{{ "APP.BANK_ACCOUNTS" | translate }}</span>
+        <span class="label-small text-gray-400">{{
+          "APP.FIND_BANK_ACCOUNTS_HERE" | translate
+        }}</span>
+      </div>
+      <div class="hidden md:block">
+        <button
+          matFab
+          extended
+          color="primary"
+          (click)="updateBankAccount()"
+          type="button"
+        >
+          <mat-icon>add</mat-icon>
+          {{ "APP.ADD_ACCOUNT" | translate }}
+        </button>
+      </div>
+      <div class="block md:hidden">
+        <button matFab color="primary" (click)="updateBankAccount()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
     </div>
-    <div class="hidden md:block">
-      <button matFab extended color="primary" (click)="addBankAccount()">
-        <mat-icon>add</mat-icon>
-        {{ "APP.ADD_ACCOUNT" | translate }}
+    @if (accounts.length > 0) {
+    <div class="card-container">
+      @if(accounts.length > 0) { @for (account of accounts; track $index) {
+      <app-bank-account-card
+        [bankAccount]="account"
+        (openDrawer)="openDrawer(account)"
+        (updateAccount)="updateBankAccount(account)"
+        (deleteAccount)="deleteBankAccount(account)"
+      />
+      } }
+    </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #addUser>
+  <div class="user-container bg-red p-4 flex flex-col h-full">
+    <div class="flex flex-row justify-between gap-4 items-center mb-4">
+      <span class="title-large">{{ "ADD_MEMBER" | translate }}</span>
+      <button mat-icon-button (click)="drawer.close()">
+        <mat-icon>close</mat-icon>
       </button>
     </div>
-    <div class="block md:hidden">
-      <button matFab color="primary" (click)="addBankAccount()">
-        <mat-icon>add</mat-icon>
+
+    <mat-form-field class="w-full mb-1">
+      <mat-label>Search</mat-label>
+      <input type="text" matInput [formControl]="searchControl" />
+    </mat-form-field>
+
+    <span class="label-medium text-gray-500 mb-1">{{
+      "SUGGESTED_MEMBERS" | translate
+    }}</span>
+
+    @if(userList.isLoading()) {
+    <div class="flex flex-row justify-center mt-4">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+    } @else { @if (members().length == 0) {
+    <span class="text-center mt-4">{{ "NO_RESULT_FOUND" | translate }}</span>
+    }
+    <div class="flex flex-col gap-6 h-full">
+      <mat-selection-list [formControl]="selectedMembers">
+        @for (member of members(); track $index) {
+        <mat-list-option [value]="member.id">
+          <span
+            class="flex flex-row items-center gap-2 cursor-pointer my-[6px]"
+          >
+            <app-avatar [displayName]="member.displayName" />
+            <span class="body-medium">{{ member.displayName }}</span>
+          </span>
+        </mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
+    }
+
+    <div class="w-full flex flex-row justify-between mt-8">
+      <button matButton (click)="drawer.close()">
+        {{ "CANCEL" | translate }}
+      </button>
+      <button
+        matButton="filled"
+        [disabled]="(selectedMembersValue || []).length == 0"
+        (click)="addMember()"
+      >
+        {{ "ADD_MEMBER" | translate }}
       </button>
     </div>
   </div>
-  <!-- @if(isPlatformBrowser) {
-  <div class="table-wrapper">
-    <ngx-datatable
-      class="material custom-datatable"
-      [rows]="rows"
-      [columns]="columns"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [rowHeight]="'auto'"
-      [footerHeight]="50"
-    >
-    </ngx-datatable>
-  </div>
-  } -->
-</div>
+</ng-template>
+
+<mat-drawer-container
+  autosize
+  class="h-[calc(100vh-96px)]"
+  [hasBackdrop]="false"
+  [autofocus]="false"
+>
+  <mat-drawer-content>
+    <ng-container [ngTemplateOutlet]="mainContent"></ng-container>
+  </mat-drawer-content>
+  <mat-drawer #drawer mode="over" [position]="'end'">
+    <ng-container [ngTemplateOutlet]="addUser"> </ng-container>
+  </mat-drawer>
+</mat-drawer-container>

@@ -3,11 +3,23 @@
     "LOGIN": "লগইন",
     "BANK_ACCOUNTS": "ব্যাংক একাউন্টস",
     "FIND_BANK_ACCOUNTS_HERE": "আপনার সকল ব্যাংক অ্যাকাউন্ট এখানে খুঁজুন",
-    "ADD_ACCOUNT": "অ্যাকাউন্ট যোগ করুন"
+    "ADD_ACCOUNT": "অ্যাকাউন্ট যোগ করুন",
+    "UPDATE_ACCOUNT": "আপডেট অ্যাকাউন্ট"
   },
   "ADD": "যোগ করুন",
+  "UPDATE": "আপডেট করুন",
   "CANCEL": "বাতিল করুন",
   "INVALID_CREDENTIALS": "ভুল ইমেইল অথবা পাসওয়ার্ড",
   "LOGIN_SUCCESSFUL": "লগইন সফল",
-  "LOG_OUT": "লগ আউট"
+  "ACCOUNT_ADDED": "অ্যাকাউন্ট সফলভাবে যোগ করা হয়েছে",
+  "ACCOUNT_UPDATED": "অ্যাকাউন্ট সফলভাবে আপডেট করা হয়েছে",
+  "SOMETHING_WENT_WRONG": "কিছু ভুল হয়েছে",
+  "ARE_YOU_SURE": "আপনি কি নিশ্চিত",
+  "CONFIRM": "নিশ্চিত করুন",
+  "LOG_OUT": "লগ আউট",
+  "CONFIRMATION_DIALOG_CONTENT_BODY": "আপনি কি নিশ্চিত যে আপনি এই আইটেমটি মুছে ফেলতে চান? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+  "ADD_MEMBER": "মেম্বার যোগ করুন",
+  "NO_RESULT_FOUND": "কোন অনুসন্ধান ফলাফল পাওয়া যায়নি",
+  "SUGGESTED_MEMBERS": "সম্ভাব্য নমুনা",
+  "MEMBER_ADDED": "মেম্বার সফলভাবে যোগ করা হয়েছে"
 }
