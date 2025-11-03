@@ -1,1 +1,125 @@
-<p>add-dps works!</p>
+<div
+  mat-dialog-title
+  class="header-container"
+  [class.bottom-sheet-header]="isPlatformMobile"
+>
+  <mat-icon>add_circle</mat-icon>
+  <span>{{ "APP.CREATE_DPS" | translate }}</span>
+</div>
+<mat-divider [ngClass]="{ 'my-4': isPlatformMobile }"></mat-divider>
+<mat-dialog-content>
+  <form [formGroup]="addDpsForm" [ngClass]="{ 'p-4 pb-0': isPlatformMobile }">
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Select A/C No.</mat-label>
+      <mat-select formControlName="accountNumber">
+        @for (account of accountList(); track $index) {
+        <mat-option [value]="account.accountNo"
+          >{{ account.bankName }} - {{ account.accountNo }}</mat-option
+        >
+        }
+      </mat-select>
+      @if(addDpsForm.get('accountNumber')?.hasError('required')) {
+      <mat-error>A/C No. is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Monthly Deposit</mat-label>
+      <input
+        type="text"
+        [attr.inputmode]="'numeric'"
+        appDigitsOnly
+        maxlength="8"
+        matInput
+        formControlName="monthlyDeposit"
+      />
+      @if(addDpsForm.get('monthlyDeposit')?.hasError('required')) {
+      <mat-error>Monthly Deposit is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Duration Months</mat-label>
+      <input
+        type="text"
+        matInput
+        appDigitsOnly
+        maxlength="3"
+        formControlName="durationMonths"
+        (change)="durationMonthChange($event)"
+      />
+      @if(addDpsForm.get('durationMonths')?.hasError('required')) {
+      <mat-error>Duration months is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Start Date</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="startDate"
+        [matDatepicker]="startDatePicker"
+        (dateChange)="startDateChange('change', $event)"
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="startDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      @if(addDpsForm.get('startDate')?.hasError('required')) {
+      <mat-error>Start Date is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Maturity Date</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="maturityDate"
+        [matDatepicker]="maturityDatePicker"
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="maturityDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #maturityDatePicker></mat-datepicker>
+      @if(addDpsForm.get('maturityDate')?.hasError('required')) {
+      <mat-error>Maturity Date is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
+      <mat-label>Interest Rates</mat-label>
+      <input
+        type="text"
+        matInput
+        appDigitsOnly
+        maxlength="3"
+        formControlName="interestRate"
+      />
+      @if(addDpsForm.get('interestRate')?.hasError('required')) {
+      <mat-error>Interest Rate is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Select Owners</mat-label>
+      <mat-select formControlName="dpsOwners" multiple>
+        @for (owner of selectedAccountOwners(); track owner.userId) {
+        <mat-option [value]="owner.userId">{{ owner.displayName }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions [ngClass]="{ 'bottom-sheet-footer': isPlatformMobile }">
+  <button matButton (click)="close()">
+    {{ "CANCEL" | translate }}
+  </button>
+  <button
+    matButton="filled"
+    [disabled]="addDpsForm.invalid || !addDpsForm.dirty"
+    type="submit"
+    (click)="addDps()"
+  >
+    {{ "CREATE" | translate }}
+  </button>
+</mat-dialog-actions>

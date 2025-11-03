@@ -1,4 +1,6 @@
-<mat-toolbar class="flex flex-row justify-between gap-4 w-full">
+<mat-toolbar
+  class="flex flex-row justify-between gap-4 w-full sticky top-0 z-9999"
+>
   <button matIconButton (click)="toggleSideNav.emit()">
     @if(isOpendedSideNav()) {
     <mat-icon svgIcon="left_panel_close"></mat-icon>

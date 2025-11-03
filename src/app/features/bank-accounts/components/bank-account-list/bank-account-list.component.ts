@@ -25,7 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { catchError, debounceTime, of, tap } from 'rxjs';
-import { BankService } from '../../../../core/services/bank.service';
+import { BankAccountService } from '../../../../core/services/bank-account.service';
 import { UserService } from '../../../../core/services/user.service';
 import { AvatarComponent } from '../../../../shared/components/avatar/avatar.component';
 import { ConfirmationModalComponent } from '../../../../shared/components/confirmation-modal/confirmation-modal.component';
@@ -69,10 +69,10 @@ export class BankAccountListComponent {
 
   $searchStream = this.searchControl.valueChanges.pipe(debounceTime(300));
 
-  private readonly _bankSerice = inject(BankService);
+  private readonly _bankAccountSerice = inject(BankAccountService);
   private readonly _bottomSheet = inject(MatBottomSheet);
   private readonly _platformDetectorService = inject(PlatformDetectorService);
-  private readonly _accountListResponse = this._bankSerice.getAccounts();
+  private readonly _accountListResponse = this._bankAccountSerice.getAccounts();
   private readonly _dialogRootService = inject(DialogRootService);
   private readonly _translateService = inject(TranslateService);
   private readonly _toastMessageService = inject(ToastMessageService);
@@ -127,7 +127,7 @@ export class BankAccountListComponent {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this._bankSerice
+          this._bankAccountSerice
             .deleteBankAccount({ id: data.id })
             .subscribe((res) => {
               if (res?.success) this._accountListResponse.reload();
@@ -159,7 +159,7 @@ export class BankAccountListComponent {
     const failedMessage = this._translateService.instant(
       ErrorMessageConst.SOMETHING_WENT_WRONG
     );
-    this._bankSerice
+    this._bankAccountSerice
       .updateBankAccount({
         id: this._selectedAccount()?.id,
         accountType: this._selectedAccount()?.accountType,

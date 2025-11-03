@@ -31,14 +31,14 @@
     </div>
     @if (accounts.length > 0) {
     <div class="card-container">
-      @if(accounts.length > 0) { @for (account of accounts; track $index) {
+      @for (account of accounts; track $index) {
       <app-bank-account-card
         [bankAccount]="account"
         (openDrawer)="openDrawer(account)"
         (updateAccount)="updateBankAccount(account)"
         (deleteAccount)="deleteBankAccount(account)"
       />
-      } }
+      }
     </div>
     }
   </div>

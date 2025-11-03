@@ -1,1 +1,29 @@
-<p>dps-list works!</p>
+@let dpslist = dpsList() || [];
+<div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-col gap-1">
+      <span class="title-large">{{ "APP.DPS" | translate }}</span>
+      <span class="label-small text-gray-400">{{
+        "APP.FIND_DPS_HERE" | translate
+      }}</span>
+    </div>
+    <div class="hidden md:block">
+      <button matFab extended color="primary" type="button" (click)="addDps()">
+        <mat-icon>add</mat-icon>
+        {{ "APP.CREATE_DPS" | translate }}
+      </button>
+    </div>
+    <div class="block md:hidden">
+      <button matFab color="primary" (click)="addDps()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+  @if (dpslist.length > 0) {
+  <div class="card-container">
+    @for (dps of dpslist; track $index) {
+    <app-dps-card [dpsIn]="dps" />
+    }
+  </div>
+  }
+</div>

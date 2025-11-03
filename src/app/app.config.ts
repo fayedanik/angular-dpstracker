@@ -10,6 +10,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import {
   provideClientHydration,
@@ -50,5 +51,6 @@ export const appConfig: ApplicationConfig = {
       }),
       fallbackLang: 'en',
     }),
+    provideNativeDateAdapter(),
   ],
 };

@@ -25,8 +25,6 @@ export class AppLottie implements OnInit {
   ) {}
 
   async ngOnInit() {
-    console.log(this.src);
-    console.log(this.el.nativeElement);
     if (!isPlatformBrowser(this.platformId)) return;
     if (!this.src) return;
     this.loadAnimation();

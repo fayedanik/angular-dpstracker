@@ -13,7 +13,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class BankService {
+export class BankAccountService {
   private readonly _baseUrl = environment.apiBaseUrl;
   private readonly _http = inject(HttpClient);
 

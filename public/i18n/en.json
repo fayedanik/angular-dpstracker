@@ -4,7 +4,10 @@
     "BANK_ACCOUNTS": "Bank Accounts",
     "FIND_BANK_ACCOUNTS_HERE": "Find all of your bank accounts here",
     "ADD_ACCOUNT": "Add Account",
-    "UPDATE_ACCOUNT": "Update Account"
+    "UPDATE_ACCOUNT": "Update Account",
+    "DPS": "DPS (Deposit Pension Scheme)",
+    "FIND_DPS_HERE": "Find all the dps schemes here",
+    "CREATE_DPS": "Create DPS"
   },
   "ADD": "Add",
   "UPDATE": "Update",
@@ -21,5 +24,7 @@
   "ADD_MEMBER": "Add Member",
   "NO_RESULT_FOUND": "No search result found",
   "SUGGESTED_MEMBERS": "Suggested Members",
-  "MEMBER_ADDED": "Member successfully added"
+  "MEMBER_ADDED": "Member successfully added",
+  "CREATE": "Create",
+  "DPS_ADDED": "Dps successfully created"
 }

@@ -34,7 +34,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { catchError, of, tap } from 'rxjs';
-import { BankService } from '../../../../core/services/bank.service';
+import { BankAccountService } from '../../../../core/services/bank-account.service';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
 import { IAddUpdateBankAccountPayload } from '../../../../shared/interfaces/add-bank-account-payload.interface';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
@@ -65,8 +65,8 @@ import { ToastMessageService } from '../../../../shared/services/toast-message.s
 })
 export class AddBankAccountComponent implements OnInit {
   private readonly _fb = inject(FormBuilder);
-  private readonly _bankService = inject(BankService);
-  private readonly _bankList = this._bankService.getBankList();
+  private readonly _bankAccountSerice = inject(BankAccountService);
+  private readonly _bankList = this._bankAccountSerice.getBankList();
   private readonly _selectedBank = signal<IBankInfo | null>(null);
   private readonly _platformDetectorService = inject(PlatformDetectorService);
   private readonly _toastMessageService = inject(ToastMessageService);
@@ -178,7 +178,6 @@ export class AddBankAccountComponent implements OnInit {
           }
         }),
         catchError((err) => {
-          console.log(err);
           this._toastMessageService.showFailed(failedMessage);
           return of(null);
         })
@@ -202,8 +201,8 @@ export class AddBankAccountComponent implements OnInit {
 
   bindCall(payload: IAddUpdateBankAccountPayload) {
     return this.isUpdate
-      ? this._bankService.updateBankAccount(payload)
-      : this._bankService.addBankAccount(payload);
+      ? this._bankAccountSerice.updateBankAccount(payload)
+      : this._bankAccountSerice.addBankAccount(payload);
   }
 
   selectBank(event: IBankInfo) {
