@@ -1,9 +1,14 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { accountType } from '../../shared/consts/business.const';
+import { DialogRootService } from '../../shared/services/dialog-root.service';
+import { PlatformDetectorService } from '../../shared/services/platform-detector.service';
+import { ToastMessageService } from '../../shared/services/toast-message.service';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 @Component({
   selector: 'app-transactions',
@@ -12,9 +17,14 @@ import { AddTransactionComponent } from './components/add-transaction/add-transa
   styleUrl: './transactions.component.scss',
 })
 export class TransactionsComponent {
-  private readonly _dialog = inject(MatDialog);
+  private readonly _bottomSheet = inject(MatBottomSheet);
+  private readonly _platformDetectorService = inject(PlatformDetectorService);
+  private readonly _dialogRootService = inject(DialogRootService);
+  private readonly _translateService = inject(TranslateService);
+  private readonly _toastMessageService = inject(ToastMessageService);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   rows = [
     { name: 'Austin', gender: 'Male', company: 'Swimlane' },
     { name: 'Dany', gender: 'Male', company: 'KFC' },
@@ -26,16 +36,25 @@ export class TransactionsComponent {
     { name: 'Transaction No.', prop: 'company' },
   ];
 
+  readonly accountType = accountType;
+
   get isPlatformBrowser() {
     return isPlatformBrowser(this.platformId);
   }
 
-  openCreateTransactionDialog() {
-    this._dialog.open(AddTransactionComponent, {
-      width: '400px',
-      maxWidth: '400px',
-      enterAnimationDuration: '500ms',
-      exitAnimationDuration: '200ms',
-    });
+  openCreateTransactionDialog(data?: any) {
+    if (this._platformDetectorService.isPlaformMobile) {
+      this._bottomSheet
+        .open(AddTransactionComponent, {
+          data: data,
+        })
+        .afterDismissed()
+        .subscribe(() => {});
+    } else {
+      this._dialogRootService
+        .openDialog(AddTransactionComponent, { data: data })
+        .afterClosed()
+        .subscribe(() => {});
+    }
   }
 }

@@ -71,6 +71,9 @@ export class AddDpsComponent {
   });
 
   addDpsForm: FormGroup<AddDpsForm> = this._fb.group<AddDpsForm>({
+    dpsName: this._fb.control('', {
+      validators: [Validators.required],
+    }),
     accountNumber: this._fb.control('', {
       validators: [Validators.required],
     }),
@@ -173,6 +176,7 @@ export class AddDpsComponent {
   private getPayloadForAddDps(): IAddDpsPayload {
     const formValue = this.addDpsForm.getRawValue();
     return {
+      dpsName: formValue.dpsName,
       accountNumber: formValue.accountNumber,
       monthlyDeposit: Number(formValue.monthlyDeposit),
       durationMonths: Number(formValue.durationMonths),
@@ -185,6 +189,7 @@ export class AddDpsComponent {
 }
 
 interface AddDpsForm {
+  dpsName: FormControl<string | null>;
   accountNumber: FormControl<string | null>;
   monthlyDeposit: FormControl<number | null>;
   durationMonths: FormControl<number | null>;

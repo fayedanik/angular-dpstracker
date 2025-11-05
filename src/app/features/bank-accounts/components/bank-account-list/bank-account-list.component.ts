@@ -29,6 +29,7 @@ import { BankAccountService } from '../../../../core/services/bank-account.servi
 import { UserService } from '../../../../core/services/user.service';
 import { AvatarComponent } from '../../../../shared/components/avatar/avatar.component';
 import { ConfirmationModalComponent } from '../../../../shared/components/confirmation-modal/confirmation-modal.component';
+import { NoDataViewComponent } from '../../../../shared/components/no-data-view/no-data-view.component';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
 import { IAddUpdateBankAccountPayload } from '../../../../shared/interfaces/add-bank-account-payload.interface';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
@@ -56,6 +57,7 @@ import { BankAccountCardComponent } from '../bank-account-card/bank-account-card
     MatListModule,
     MatProgressSpinnerModule,
     BankAccountCardComponent,
+    NoDataViewComponent,
   ],
   templateUrl: './bank-account-list.component.html',
   styleUrl: './bank-account-list.component.scss',
@@ -129,8 +131,18 @@ export class BankAccountListComponent {
         if (res) {
           this._bankAccountSerice
             .deleteBankAccount({ id: data.id })
+            .pipe(
+              tap((res) => res.success),
+              catchError((err) => of(false))
+            )
             .subscribe((res) => {
-              if (res?.success) this._accountListResponse.reload();
+              if (res) this._accountListResponse.reload();
+              else
+                this._toastMessageService.showFailed(
+                  this._translateService.instant(
+                    ErrorMessageConst.SOMETHING_WENT_WRONG_WHILE_DELETING_ACCOUNT
+                  )
+                );
             });
         }
       });

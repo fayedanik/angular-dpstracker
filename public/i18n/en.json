@@ -7,7 +7,8 @@
     "UPDATE_ACCOUNT": "Update Account",
     "DPS": "DPS (Deposit Pension Scheme)",
     "FIND_DPS_HERE": "Find all the dps schemes here",
-    "CREATE_DPS": "Create DPS"
+    "CREATE_DPS": "Create DPS",
+    "ADD_TRANSACTION": "Add Transaction"
   },
   "ADD": "Add",
   "UPDATE": "Update",
@@ -26,5 +27,7 @@
   "SUGGESTED_MEMBERS": "Suggested Members",
   "MEMBER_ADDED": "Member successfully added",
   "CREATE": "Create",
-  "DPS_ADDED": "Dps successfully created"
+  "DPS_ADDED": "Dps successfully created",
+  "SOMETHING_WENT_WRONG_WHILE_DELETING_ACCOUNT": "Something went wrong while deleting account",
+  "SOMETHING_WENT_WRONG_WHILE_DELETING_DPS": "Something went wrong while deleting dps"
 }

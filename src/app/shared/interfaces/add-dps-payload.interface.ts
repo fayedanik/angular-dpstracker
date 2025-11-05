@@ -1,4 +1,5 @@
 export interface IAddDpsPayload {
+  dpsName: string;
   accountNumber: string;
   monthlyDeposit: number;
   durationMonths: number;

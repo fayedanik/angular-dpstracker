@@ -1,53 +1,77 @@
 @let dps = dpsIn();
 <mat-card appearance="outlined" class="h-full max-w-[400px]">
-  <mat-card-header class="flex flex-row items-start gap-1">
-    <mat-card-title class="flex flex-row gap-4">
-      <span>{{ dps.accountNo }}</span>
-    </mat-card-title>
-    <span class="text-green-600 body-small">Active</span>
+  <mat-card-header class="flex flex-row justify-between w-full">
+    <div class="flex flex-row gap-1 w-full">
+      <mat-card-title class="flex flex-row gap-4">
+        <span>{{ dps.dpsName }}</span>
+      </mat-card-title>
+      <span class="text-green-600 body-small">Active</span>
+    </div>
+    <button matIconButton [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu>
+      <button mat-menu-item (click)="deleteDps.emit()">
+        <mat-icon>delete</mat-icon>
+        <span>Delete Dps</span>
+      </button>
+    </mat-menu>
   </mat-card-header>
   <mat-card-content>
-    <div class="mt-4 flex flex-row space-between items-center w-full gap-4">
-      <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Monthly Installment</span>
-        <span class="body-large text-gray-600">{{ dps.monthlyAmount }}</span>
-      </div>
-      <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Duration (In Months)</span>
-        <span class="body-large text-gray-600">{{ dps.durationMonths }}</span>
-      </div>
-    </div>
-
-    <div class="mt-4 flex flex-row space-between items-center w-full gap-4">
-      <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Start Date</span>
-        <span class="body-large text-gray-600">{{
-          dps.startDate | date : "dd. MM. yyyy"
-        }}</span>
-      </div>
-      <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Maturity Date</span>
-        <span class="body-large text-gray-600">{{
-          dps.maturityDate | date : "dd. MM. yyyy"
-        }}</span>
-      </div>
-    </div>
-
-    @if((dps.dpsOwners || []).length > 0) {
-    <div class="mt-4 flex flex-col gap-4 w-full">
-      <span class="body-small text-gray-400">Dps Owners</span>
-      <div class="flex flex-wrap gap-2">
-        @for (owner of dps.dpsOwners; track $index) {
-        <div class="chip">
-          <div class="flex flex-row gap-1 py-2">
-            <app-avatar [displayName]="owner.displayName" />
-            <span>{{ owner.displayName }}</span>
-          </div>
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-row space-between items-center w-full gap-4">
+        <div class="flex flex-col w-full gap-1">
+          <span class="body-small text-gray-400">Account No</span>
+          <span class="body-large text-gray-600">{{ dps.accountNo }}</span>
         </div>
-        }
+        <div class="flex flex-col w-full gap-1">
+          <span class="body-small text-gray-400">Interest Rate</span>
+          <span class="body-large text-gray-600">{{ dps.interestRate }}%</span>
+        </div>
       </div>
-    </div>
 
-    }
+      <div class="flex flex-row space-between items-center w-full gap-4">
+        <div class="flex flex-col w-full gap-1">
+          <span class="body-small text-gray-400">Monthly Installment</span>
+          <span class="body-large text-gray-600">{{ dps.monthlyAmount }}</span>
+        </div>
+        <div class="flex flex-col w-full gap-1">
+          <span class="body-small text-gray-400">Duration (In Months)</span>
+          <span class="body-large text-gray-600">{{ dps.durationMonths }}</span>
+        </div>
+      </div>
+
+      <div class="flex flex-row space-between items-center w-full gap-4">
+        <div class="flex flex-col w-full gap-1">
+          <span class="body-small text-gray-400">Start Date</span>
+          <span class="body-large text-gray-600">{{
+            dps.startDate | date : "dd. MM. yyyy"
+          }}</span>
+        </div>
+        <div class="flex flex-col w-full gap-1">
+          <span class="body-small text-gray-400">Maturity Date</span>
+          <span class="body-large text-gray-600">{{
+            dps.maturityDate | date : "dd. MM. yyyy"
+          }}</span>
+        </div>
+      </div>
+
+      @if((dps.dpsOwners || []).length > 0) {
+      <div class="flex flex-col gap-4 w-full">
+        <span class="body-small text-gray-400">Dps Owners</span>
+        <div class="flex flex-wrap gap-2">
+          @for (owner of dps.dpsOwners; track $index) {
+          <div class="border-1 border-gray-300 rounded-xl px-2 py-1">
+            <div class="flex flex-row gap-1 py-2">
+              <app-avatar [displayName]="owner.displayName" />
+              <span>{{ owner.displayName }}</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      }
+    </div>
   </mat-card-content>
 </mat-card>

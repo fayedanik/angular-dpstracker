@@ -30,4 +30,11 @@ export class DpsService {
       withCredentials: true,
     });
   }
+
+  deleteDps(payload: { id: string }) {
+    const URL = this._baseUrl + '/DpsCommand/DeleteDps';
+    return this._http.post<ICommandResponse<boolean>>(URL, payload, {
+      withCredentials: true,
+    });
+  }
 }

@@ -1,27 +1,36 @@
 <div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
-  <div class="flex flex-row justify-between">
+  <div class="flex flex-col md:flex-row gap-4 justify-between">
     <div class="flex flex-col gap-1">
       <span class="title-large">Transactions</span>
       <span class="label-small text-gray-400"
         >Find all the transactions here</span
       >
     </div>
-    <div class="hidden md:block">
+    <div class="flex flex-row gap-2">
       <button
         matFab
         extended
+        (click)="openCreateTransactionDialog({ isTransfer: true })"
         color="primary"
-        (click)="openCreateTransactionDialog()"
       >
-        <mat-icon>add</mat-icon>
-        Add Transaction
+        <mat-icon>wallet</mat-icon>
+        Transfer Money
+      </button>
+      <button
+        matFab
+        extended
+        class="secondary"
+        (click)="openCreateTransactionDialog({ isTransfer: false })"
+      >
+        <mat-icon>payment_arrow_down</mat-icon>
+        Make Payment
       </button>
     </div>
-    <div class="block md:hidden">
+    <!-- <div class="block md:hidden">
       <button matFab color="primary" (click)="openCreateTransactionDialog()">
         <mat-icon>add</mat-icon>
       </button>
-    </div>
+    </div> -->
   </div>
   @if(isPlatformBrowser) {
   <div class="table-wrapper">

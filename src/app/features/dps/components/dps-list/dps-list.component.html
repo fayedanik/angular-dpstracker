@@ -22,8 +22,10 @@
   @if (dpslist.length > 0) {
   <div class="card-container">
     @for (dps of dpslist; track $index) {
-    <app-dps-card [dpsIn]="dps" />
+    <app-dps-card [dpsIn]="dps" (deleteDps)="deleteDps(dps)" />
     }
   </div>
+  }@else {
+  <app-no-data-view />
   }
 </div>

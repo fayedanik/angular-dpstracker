@@ -11,16 +11,12 @@
 @import "./app/themes/violetthemetheme.css";
 
 html {
-  // @include mat.theme(
-  //   (
-  //     color: (
-  //       primary: mat.$rose-palette,
-  //       tertiary: mat.$red-palette,
-  //     ),
-  //     typography: Roboto,
-  //     density: 0,
-  //   )
-  // );
+  @include mat.theme(
+    (
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
 body {
@@ -103,7 +99,11 @@ body {
 
 @include mat.list-overrides(());
 
-@include mat.menu-overrides(());
+@include mat.menu-overrides(
+  (
+    item-label-text-color: var(--custom-black-and-white),
+  )
+);
 
 @include mat.snack-bar-overrides(
   (
@@ -117,6 +117,24 @@ body {
     active-indicator-color: orange,
   )
 );
+
+.secondary {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-secondary),
+      foreground-color: var(--mat-sys-on-secondary),
+    )
+  );
+}
+
+.accent {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-tertiary),
+      foreground-color: var(--mat-sys-on-tertiary),
+    )
+  );
+}
 
 .mat-mdc-menu-panel {
   min-width: 200px !important;

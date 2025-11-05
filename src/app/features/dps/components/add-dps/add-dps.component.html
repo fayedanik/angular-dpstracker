@@ -10,6 +10,13 @@
 <mat-dialog-content>
   <form [formGroup]="addDpsForm" [ngClass]="{ 'p-4 pb-0': isPlatformMobile }">
     <mat-form-field class="w-full mb-4">
+      <mat-label>Dps Name</mat-label>
+      <input type="text" matInput formControlName="dpsName" />
+      @if(addDpsForm.get('dpsName')?.hasError('required')) {
+      <mat-error>Dps Name is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full mb-4">
       <mat-label>Select A/C No.</mat-label>
       <mat-select formControlName="accountNumber">
         @for (account of accountList(); track $index) {

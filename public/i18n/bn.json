@@ -7,7 +7,8 @@
     "UPDATE_ACCOUNT": "আপডেট অ্যাকাউন্ট",
     "DPS": "ডিপিএস (ডিপোজিট পেনশন স্কিম)",
     "FIND_DPS_HERE": "আপনার সকল ডিপিএস স্কিম এখানে খুঁজুন",
-    "CREATE_DPS": "ডিপিএস যোগ করুন"
+    "CREATE_DPS": "ডিপিএস যোগ করুন",
+    "ADD_TRANSACTION": "Add Transaction"
   },
   "ADD": "যোগ করুন",
   "UPDATE": "আপডেট করুন",
@@ -24,5 +25,9 @@
   "ADD_MEMBER": "মেম্বার যোগ করুন",
   "NO_RESULT_FOUND": "কোন অনুসন্ধান ফলাফল পাওয়া যায়নি",
   "SUGGESTED_MEMBERS": "সম্ভাব্য নমুনা",
-  "MEMBER_ADDED": "মেম্বার সফলভাবে যোগ করা হয়েছে"
+  "MEMBER_ADDED": "মেম্বার সফলভাবে যোগ করা হয়েছে",
+  "CREATE": "Create",
+  "DPS_ADDED": "Dps successfully created",
+  "SOMETHING_WENT_WRONG_WHILE_DELETING_ACCOUNT": "Something went wron while deleting the account",
+  "SOMETHING_WENT_WRONG_WHILE_DELETING_DPS": "Something went wrong while deleting the dps"
 }

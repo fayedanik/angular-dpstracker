@@ -35,6 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { catchError, of, tap } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
+import { accountType } from '../../../../shared/consts/business.const';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
 import { IAddUpdateBankAccountPayload } from '../../../../shared/interfaces/add-bank-account-payload.interface';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
@@ -105,16 +106,7 @@ export class AddBankAccountComponent implements OnInit {
     });
   }
 
-  accountType = [
-    {
-      label: 'Personal',
-      Value: 'personal',
-    },
-    {
-      label: 'Joint',
-      Value: 'joint',
-    },
-  ];
+  readonly accountType = accountType;
 
   bankList = computed(() => {
     const banks = this._bankList.hasValue() ? this._bankList.value() : [];
