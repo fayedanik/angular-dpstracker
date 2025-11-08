@@ -51,6 +51,7 @@ export const routes: Routes = [
           import('./features/transactions/transactions.component').then(
             (m) => m.TransactionsComponent
           ),
+        canActivate: [authGuard],
       },
       {
         path: 'members',

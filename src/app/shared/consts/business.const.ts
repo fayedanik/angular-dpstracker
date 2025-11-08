@@ -23,3 +23,14 @@ export const paymentType = [
     value: 'others',
   },
 ];
+
+export enum TransactionTypeEnum {
+  TransferMoney = 'transfermoney',
+  Payment = 'payment',
+}
+
+export const Role = {
+  Admin: 'admin',
+  User: 'user',
+  Anonymous: 'anonymous',
+};

@@ -19,6 +19,7 @@ import {
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -29,14 +30,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { catchError, map, of } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
 import { DpsService } from '../../../../core/services/dps.service';
+import { TransactionService } from '../../../../core/services/transaction.service';
 import {
   accountType,
   paymentType,
 } from '../../../../shared/consts/business.const';
+import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
+import { IMakePaymentPayload } from '../../../../shared/interfaces/make-payment-payload.interface';
+import { ITransferMoneyPayload } from '../../../../shared/interfaces/transfer-money-payload.interface';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
+import { ToastMessageService } from '../../../../shared/services/toast-message.service';
+import { normalizeDateToUTC } from '../../../../shared/utils/date-utils';
 
 @Component({
   selector: 'app-add-transaction',
@@ -51,6 +59,7 @@ import { PlatformDetectorService } from '../../../../shared/services/platform-de
     MatSelectModule,
     MatDividerModule,
     TranslatePipe,
+    MatDatepickerModule,
   ],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.scss',
@@ -62,6 +71,9 @@ export class AddTransactionComponent implements OnInit {
   private readonly _platformDetectorService = inject(PlatformDetectorService);
   private readonly _dpsService = inject(DpsService);
   private readonly _dpsListResponse = this._dpsService.getDpsList();
+  private readonly _transactionService = inject(TransactionService);
+  private readonly _translateService = inject(TranslateService);
+  private readonly _toastMessageService = inject(ToastMessageService);
 
   dpsList = computed(() => {
     return this._dpsListResponse.hasValue() &&
@@ -97,6 +109,7 @@ export class AddTransactionComponent implements OnInit {
       transactionNumber: this._fb.control('', [Validators.required]),
       amount: this._fb.control(null, [Validators.required]),
       benificiaryAccountNumber: this._fb.control('', [Validators.required]),
+      date: this._fb.control(null, [Validators.required]),
       paymentType: this._fb.control('', [Validators.required]),
       dpsId: this._fb.control('', [Validators.required]),
       note: this._fb.control('', []),
@@ -105,7 +118,14 @@ export class AddTransactionComponent implements OnInit {
       this.addTransactionForm.controls.paymentType.removeValidators([
         Validators.required,
       ]);
+      this.addTransactionForm.controls.dpsId.removeValidators([
+        Validators.required,
+      ]);
       this.addTransactionForm.updateValueAndValidity;
+    } else {
+      this.addTransactionForm.controls.benificiaryAccountNumber.removeValidators(
+        [Validators.required]
+      );
     }
   }
 
@@ -128,7 +148,87 @@ export class AddTransactionComponent implements OnInit {
     );
   });
 
-  addTransaction() {}
+  addTransaction() {
+    if (this.addTransactionForm.invalid) return;
+    this.isTransfer ? this.transferMoney() : this.makePayment();
+  }
+
+  private transferMoney() {
+    const succesMessage = this._translateService.instant(
+      ErrorMessageConst.SUCCESSFULLY_TRANSFERED_MONEY
+    );
+    const failedMessage = this._translateService.instant(
+      ErrorMessageConst.SOMETHING_WENT_WRONG
+    );
+    const payload = this.getPayloadOfTransferMoney();
+    return this._transactionService
+      .transferMoney(payload)
+      .pipe(
+        map((res) => res?.success),
+        catchError((err) => of(false))
+      )
+      .subscribe((res) => {
+        if (res) {
+          this._toastMessageService.showSuccess(succesMessage);
+        } else {
+          this._toastMessageService.showFailed(failedMessage);
+        }
+        this.close(res);
+      });
+  }
+
+  private makePayment() {
+    const succesMessage = this._translateService.instant(
+      ErrorMessageConst.PAYMENT_SUCCESSFULLY_DONE
+    );
+    const failedMessage = this._translateService.instant(
+      ErrorMessageConst.SOMETHING_WENT_WRONG
+    );
+    const payload = this.getPayloadOfMakePayment();
+    return this._transactionService
+      .makePayment(payload)
+      .pipe(
+        map((res) => res?.success),
+        catchError((err) => of(false))
+      )
+      .subscribe((res) => {
+        if (res) {
+          this._toastMessageService.showSuccess(succesMessage);
+        } else {
+          this._toastMessageService.showFailed(failedMessage);
+        }
+        this.close(res);
+      });
+  }
+
+  private getPayloadOfTransferMoney(): ITransferMoneyPayload {
+    const formValue = this.addTransactionForm.getRawValue();
+    return {
+      sourceAc: formValue.accountNo,
+      beneficiaryAc: formValue.benificiaryAccountNumber,
+      amount: Number(formValue.amount),
+      transactionNumber: formValue.transactionNumber,
+      transactionDate: formValue.date
+        ? normalizeDateToUTC(formValue.date).toISOString()
+        : null,
+      note: formValue.note,
+    } as ITransferMoneyPayload;
+  }
+
+  private getPayloadOfMakePayment(): IMakePaymentPayload {
+    const formValue = this.addTransactionForm.getRawValue();
+    return {
+      sourceAc: formValue.accountNo,
+      paymentType: formValue.paymentType,
+      dpsId: formValue.dpsId,
+      amount: Number(formValue.amount),
+      transactionNumber: formValue.transactionNumber,
+      paymentDate: formValue.date
+        ? normalizeDateToUTC(formValue.date).toISOString()
+        : null,
+      note: formValue.note,
+    } as IMakePaymentPayload;
+  }
 
   close(success: boolean = false) {
     if (this._dialogRef) this._dialogRef.close(success);
@@ -152,7 +252,8 @@ interface AddTransactionForm {
   transactionNumber: FormControl<string | null>;
   amount: FormControl<number | null>;
   benificiaryAccountNumber: FormControl<string | null>;
+  date: FormControl<Date | null>;
   paymentType: FormControl<string | null>;
-  dpsId?: FormControl<string | null>;
+  dpsId: FormControl<string | null>;
   note: FormControl<string | null>;
 }

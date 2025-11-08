@@ -1,5 +1,6 @@
 .bank-card {
   max-width: 400px;
+  height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
   background: linear-gradient(135deg, #513a8d, #ccb8ff);

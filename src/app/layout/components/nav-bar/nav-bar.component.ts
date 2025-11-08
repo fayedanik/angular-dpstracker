@@ -41,13 +41,11 @@ export class NavBarComponent {
   isOpendedSideNav = input<boolean>(false);
   toggleLightDarkMode() {
     if (!document.body.classList.contains('dark')) {
-      document.body.classList.remove('light');
-      document.body.classList.add('dark');
-      this.isDark.set(true);
+      this.goToDarkMode();
+      localStorage.setItem('theme', 'dark');
     } else {
-      document.body.classList.remove('dark');
-      document.body.classList.add('light');
-      this.isDark.set(false);
+      this.goToLightMode();
+      localStorage.setItem('theme', 'light');
     }
   }
 
@@ -64,5 +62,29 @@ export class NavBarComponent {
       if (!res) return;
       await this.router.navigate(['/login']);
     });
+  }
+
+  constructor() {
+    const saved = localStorage.getItem('theme');
+    if (
+      saved == 'dark' ||
+      (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      this.goToDarkMode();
+    } else {
+      this.goToLightMode();
+    }
+  }
+
+  private goToDarkMode() {
+    document.body.classList.remove('light');
+    document.body.classList.add('dark');
+    this.isDark.set(true);
+  }
+
+  private goToLightMode() {
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+    this.isDark.set(false);
   }
 }

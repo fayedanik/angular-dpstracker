@@ -2,7 +2,7 @@
   <div class="flex flex-col md:flex-row gap-4 justify-between">
     <div class="flex flex-col gap-1">
       <span class="title-large">Transactions</span>
-      <span class="label-small text-gray-400"
+      <span class="label-small text-gray-400 dark:text-green-600"
         >Find all the transactions here</span
       >
     </div>
@@ -17,6 +17,7 @@
         Transfer Money
       </button>
       <button
+        [allowedFor]="'admin'"
         matFab
         extended
         class="secondary"
@@ -26,24 +27,68 @@
         Make Payment
       </button>
     </div>
-    <!-- <div class="block md:hidden">
-      <button matFab color="primary" (click)="openCreateTransactionDialog()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div> -->
   </div>
-  @if(isPlatformBrowser) {
-  <div class="table-wrapper">
-    <ngx-datatable
-      class="material custom-datatable"
-      [rows]="rows"
-      [columns]="columns"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [rowHeight]="'auto'"
-      [footerHeight]="50"
+
+  <div>
+    <mat-tab-group
+      dynamicHeight
+      animationDuration="1000ms"
+      mat-stretch-tabs="false"
     >
-    </ngx-datatable>
+      <mat-tab label="Transfer History">
+        @if(isPlatformBrowser) {
+        <div class="table-wrapper mt-6">
+          <ngx-datatable
+            class="material custom-datatable"
+            [rows]="transferMoneyTransactions()"
+            [columns]="transferMoneyColumns"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [rowHeight]="'auto'"
+            [scrollbarH]="true"
+            [footerHeight]="50"
+          >
+          </ngx-datatable>
+        </div>
+        }
+      </mat-tab>
+      @if (shouldHide()) {
+      <mat-tab label="Payment History">
+        @if(isPlatformBrowser) {
+        <div class="table-wrapper mt-6">
+          <ngx-datatable
+            class="material custom-datatable"
+            [rows]="paymentTransactions()"
+            [columns]="paymentColumns"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [rowHeight]="'auto'"
+            [scrollbarH]="true"
+            [footerHeight]="50"
+          >
+          </ngx-datatable>
+        </div>
+        }
+      </mat-tab>
+      }
+    </mat-tab-group>
   </div>
-  }
 </div>
+
+<ng-template #paymentTypeCellTemplate let-value="value">
+  <span class="text-pink-600 dark:text-white">{{ value | titlecase }}</span>
+</ng-template>
+
+<ng-template #dpsCellTemplate let-value="value">
+  {{ getDpsInfo(value) }}
+</ng-template>
+
+<ng-template #transactionDateCellTemplate let-value="value">
+  {{ value | date : "dd. MM. yyyy" }}
+</ng-template>
+
+<ng-template #statusCellTemplate let-value="value">
+  <span [ngClass]="value == 'success' ? 'text-green-600' : 'text-yellow-600'">
+    {{ value | titlecase }}
+  </span>
+</ng-template>

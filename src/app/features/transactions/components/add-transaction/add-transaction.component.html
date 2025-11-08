@@ -93,6 +93,30 @@
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
+      <mat-label>
+        {{ isTransfer ? "Transaction Date" : "Payment Date" }}
+      </mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="date"
+        [matDatepicker]="datePicker"
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="datePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
+      @if(addTransactionForm.get('date')?.hasError('required')) {
+      <mat-error
+        >{{ isTransfer ? "Transaction Date" : "Payment Date" }} is
+        required</mat-error
+      >
+      }
+    </mat-form-field>
+
+    <mat-form-field class="w-full mb-4">
       <mat-label>Transaction Number</mat-label>
       <input type="text" matInput formControlName="transactionNumber" />
       @if(addTransactionForm.get('transactionNumber')?.hasError('required')) {

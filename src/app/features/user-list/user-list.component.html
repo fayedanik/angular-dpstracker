@@ -41,7 +41,9 @@
 <ng-template #displayNameCellTemplate let-row="row" let-value="value">
   <div class="flex flex-col gap-1">
     <span class="font-bold">{{ value }}</span>
-    <span>{{ row.roles.join(", ") }}</span>
+    @for (role of row.roles; track $index;) {
+    <span>{{ role | titlecase }}</span>
+    }
   </div>
 </ng-template>
 

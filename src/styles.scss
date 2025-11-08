@@ -5,7 +5,7 @@
 // custom components at https://material.angular.dev/guide/theming
 
 @use "@angular/material" as mat;
-@use "tailwindcss";
+@use "./app/styles/tailwind.css";
 @use "./app/styles/typography.scss";
 @use "./app/styles/colors.scss";
 @import "./app/themes/violetthemetheme.css";
