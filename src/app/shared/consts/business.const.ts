@@ -24,6 +24,11 @@ export const paymentType = [
   },
 ];
 
+export enum bankAccountTypeEnum {
+  Personal = 'personal',
+  Joint = 'joint',
+}
+
 export enum TransactionTypeEnum {
   TransferMoney = 'transfermoney',
   Payment = 'payment',

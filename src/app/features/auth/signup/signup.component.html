@@ -29,39 +29,76 @@
           }
         </mat-form-field>
 
-        <!-- <mat-form-field class="w-full mb-4">
+        <mat-form-field class="w-full mb-4">
           <mat-label>Phone</mat-label>
           <span matPrefix class="ml-4">+880&nbsp;</span>
           <input
             matInput
             formControlName="phoneNumber"
-            type="tel"
+            type="text"
+            minlength="10"
+            maxlength="10"
             inputmode="numeric"
             placeholder="1XXXXXXXXXX"
             (keypress)="allowOnlyDigit($event)"
           />
-          @if (signupForm.get('phoneNumber')?.hasError('required')) {
+          @if (form.phoneNumber.hasError('required')) {
           <mat-error>Phone Number is required</mat-error>
+          } @if(form.phoneNumber.hasError('maxlength') ||
+          form.phoneNumber.hasError('minlength')) {
+          <mat-error>Invalid phone number</mat-error>
           }
-        </mat-form-field> -->
+        </mat-form-field>
 
-        <mat-form-field class="w-full mb-2">
+        <mat-form-field
+          class="w-full mb-2"
+          [ngClass]="{ 'mb-10': form.password.hasError('pattern') }"
+        >
           <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" />
+          <input
+            matInput
+            formControlName="password"
+            [type]="hidePasswod() ? 'password' : 'text'"
+          />
+          <button
+            matIconButton
+            matSuffix
+            (click)="togglePasswordVisibility($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePasswod()"
+          >
+            <mat-icon>{{
+              hidePasswod() ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
           @if(signupForm.get('password')?.hasError('required')) {
           <mat-error> Password is required </mat-error>
+          } @if(form.password.hasError('pattern')) {
+          <mat-error class="pb-6"
+            >Password should be at least 8 characters long and include one
+            uppercase letter, one lowercase letter, one digit, and one special
+            character</mat-error
+          >
           }
         </mat-form-field>
 
         <mat-form-field class="w-full mb-2">
           <mat-label>Confirm Password</mat-label>
           <input matInput formControlName="confirmPassword" type="password" />
-          @if(signupForm.get('confirmPassword')?.hasError('required')) {
+          @if(form.confirmPassword.hasError('required')) {
           <mat-error> Confirm Password is required </mat-error>
+          } @if(form.confirmPassword.hasError('passwordsMisMatch')) {
+          <mat-error>Password doesn't match</mat-error>
           }
         </mat-form-field>
 
-        <button matButton="filled" class="w-full">Register</button>
+        <button
+          matButton="filled"
+          class="w-full"
+          [disabled]="signupForm.invalid"
+        >
+          Register
+        </button>
       </form>
 
       <button class="mdc-notched-outline__notch"></button>

@@ -66,7 +66,7 @@ export class AddDpsComponent {
   accountList = computed(() => {
     return this._accountListResponse.hasValue() &&
       (this._accountListResponse.value().data || []).length > 0
-      ? this._accountListResponse.value().data
+      ? this._accountListResponse.value().data?.filter((x) => x.canUpdate)
       : [];
   });
 

@@ -8,4 +8,5 @@ export interface IQueryResponse<T> {
   success: boolean;
   message: string;
   data: T | null;
+  totalCount?: number;
 }

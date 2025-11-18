@@ -7,8 +7,13 @@ export interface IDps {
   startDate: Date | string;
   maturityDate: Date | string;
   interestRate: number;
-  dpsOwners: {
-    userId: string;
-    displayName: string;
-  }[];
+  dpsOwners: IDpsOwner[];
+  canUpdate?: boolean;
+  canDelete?: boolean;
+}
+export interface IDpsOwner {
+  userId: string;
+  displayName: string;
+  installmentDates: Date[];
+  amountPaid: number;
 }

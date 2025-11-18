@@ -35,7 +35,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { catchError, of, tap } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
-import { accountType } from '../../../../shared/consts/business.const';
+import {
+  accountType,
+  bankAccountTypeEnum,
+} from '../../../../shared/consts/business.const';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
 import { IAddUpdateBankAccountPayload } from '../../../../shared/interfaces/add-bank-account-payload.interface';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
@@ -107,6 +110,7 @@ export class AddBankAccountComponent implements OnInit {
   }
 
   readonly accountType = accountType;
+  readonly accountTypeEnum = bankAccountTypeEnum;
 
   bankList = computed(() => {
     const banks = this._bankList.hasValue() ? this._bankList.value() : [];
@@ -138,6 +142,9 @@ export class AddBankAccountComponent implements OnInit {
       accountType: this._fb.control('', {
         validators: [Validators.required],
       }),
+      availableBalance: this._fb.control(null, {
+        validators: [],
+      }),
     });
   }
 
@@ -148,6 +155,9 @@ export class AddBankAccountComponent implements OnInit {
       this.addBankAccountForm.controls.accountType.setValue(
         account.accountType
       );
+    this.addBankAccountForm.controls.availableBalance.setValue(
+      account?.balance ?? 0
+    );
   }
 
   addUpdateTransaction() {
@@ -188,6 +198,7 @@ export class AddBankAccountComponent implements OnInit {
       branchName: formValue?.branch?.branch_name ?? '',
       accountType: formValue?.accountType ?? '',
       userIds: [],
+      balance: Number(formValue?.availableBalance ?? 0),
     } as IAddUpdateBankAccountPayload;
   }
 
@@ -218,12 +229,15 @@ export class AddBankAccountComponent implements OnInit {
       this.populateAccountDataToForm(this._dialogData.account);
     } else if (this._bottomSheetData?.account) {
       this.populateAccountDataToForm(this._bottomSheetData.account);
-    } else {
     }
   }
 
   get isUpdate() {
     return this._dialogData?.account || this._bottomSheetData?.account;
+  }
+
+  get selectedAccountType() {
+    return this.addBankAccountForm.controls.accountType.value;
   }
 }
 
@@ -232,4 +246,5 @@ interface AddAccountForm {
   bank: FormControl<IBankInfo | null>;
   branch: FormControl<IBranchInfo | null>;
   accountType: FormControl<string | null>;
+  availableBalance: FormControl<number | null>;
 }

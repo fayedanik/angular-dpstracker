@@ -1,11 +1,15 @@
+import { registerLocaleData } from '@angular/common';
 import {
   provideHttpClient,
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
+import localeBn from '@angular/common/locales/bn';
 import {
   ApplicationConfig,
+  DEFAULT_CURRENCY_CODE,
   inject,
+  LOCALE_ID,
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
@@ -25,6 +29,8 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
 import { UserService } from './core/services/user.service';
 
+registerLocaleData(localeBn);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withFetch(), withInterceptors([AuthInterceptor])),
@@ -43,6 +49,14 @@ export const appConfig: ApplicationConfig = {
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
+    },
+    {
+      provide: DEFAULT_CURRENCY_CODE,
+      useValue: 'BDT',
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'en-US',
     },
     provideTranslateService({
       loader: provideTranslateHttpLoader({

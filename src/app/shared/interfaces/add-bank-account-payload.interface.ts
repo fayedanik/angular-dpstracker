@@ -7,4 +7,5 @@ export interface IAddUpdateBankAccountPayload {
   branchId: string;
   accountType: string;
   userIds: string[];
+  balance: number;
 }

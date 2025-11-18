@@ -4,7 +4,11 @@
   [class.bottom-sheet-header]="isPlatformMobile"
 >
   <mat-icon>add_circle</mat-icon>
-  <span>{{ "APP.ADD_TRANSACTION" | translate }}</span>
+  <span>{{
+    isTransfer
+      ? ("APP.TRANSFER_MONEY" | translate)
+      : ("APP.MAKE_PAYMENT" | translate)
+  }}</span>
 </div>
 <mat-divider [ngClass]="{ 'my-4': isPlatformMobile }"></mat-divider>
 <mat-dialog-content>
@@ -30,13 +34,19 @@
     } @else {
     <mat-form-field class="w-full mb-4">
       <mat-label>From A/C No.</mat-label>
-      <mat-select formControlName="accountNo">
+      <mat-select
+        formControlName="accountNo"
+        (selectionChange)="selectAccount($event)"
+      >
         @for (account of accountList(); track $index) {
         <mat-option [value]="account.accountNo"
           >{{ account.bankName }} - {{ account.accountNo }}</mat-option
         >
         }
       </mat-select>
+      <mat-hint
+        >Available Balance is {{ availableBalanceOfSelectedAccount }}</mat-hint
+      >
       @if(addTransactionForm.get('accountNo')?.hasError('required')) {
       <mat-error>A/C No. is required</mat-error>
       }
@@ -70,12 +80,16 @@
       <mat-error>Payment Type is required</mat-error>
       }
     </mat-form-field>
-    } @if(!isTransfer) {
+    } @if(!isTransfer && paymentTypeFormValue == 'dps') {
     <mat-form-field class="w-full mb-4">
       <mat-label>Select Dps</mat-label>
       <mat-select formControlName="dpsId">
-        @for (dps of dpsList(); track $index) {
+        @for (dps of dpsListByAccountNo; track $index) {
         <mat-option [value]="dps.id">{{ dps.dpsName }} </mat-option>
+        }@empty {
+        <mat-option>{{
+          "NO_DPS_FOUND_ASSOCIATED_WITH_ACCOUNT" | translate
+        }}</mat-option>
         }
       </mat-select>
       @if(addTransactionForm.get('dpsId')?.hasError('required')) {
@@ -101,6 +115,7 @@
         matInput
         formControlName="date"
         [matDatepicker]="datePicker"
+        [max]="todayDate"
       />
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle

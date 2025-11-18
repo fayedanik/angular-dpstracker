@@ -2,6 +2,7 @@
 <div class="bank-card">
   <div class="bank-header">
     <div class="bank-name">{{ account.bankName }}</div>
+    @if(account.accountType == bankAccountTypeEnum.Joint) {
     <button
       matIconButton
       matTooltip="{{ 'ADD_MEMBER' | translate }}"
@@ -9,6 +10,7 @@
     >
       <mat-icon>person_add</mat-icon>
     </button>
+    }
   </div>
 
   <div class="card-body">
@@ -18,6 +20,9 @@
     <span class="label">Branch Name</span>
     <span class="value">{{ account.branchName }}</span>
 
+    <span class="label">Balance</span>
+    <span class="value">{{ account.balance }} </span>
+
     <span class="label">Account Type</span>
     <span class="value">{{ account.accountType | titlecase }}</span>
 
@@ -26,11 +31,14 @@
   </div>
 
   <div class="footer">
+    @if(account.canDelete) {
     <button matButton="filled" (click)="deleteAccount.emit()">
       Delete Account
     </button>
+    } @if(account.canUpdate) {
     <button matButton="elevated" (click)="updateAccount.emit()">
       Edit Account
     </button>
+    }
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { DpsDetailsComponent } from './features/dps/components/dps-details/dps-details.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
@@ -67,6 +68,19 @@ export const routes: Routes = [
           import(
             './features/bank-accounts/components/bank-account-list/bank-account-list.component'
           ).then((m) => m.BankAccountListComponent),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'accounts/:id',
+        loadComponent: () =>
+          import(
+            './features/bank-accounts/components/account-details/account-details.component'
+          ).then((m) => m.AccountDetailsComponent),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'dps/:id',
+        component: DpsDetailsComponent,
         canActivate: [authGuard],
       },
       {

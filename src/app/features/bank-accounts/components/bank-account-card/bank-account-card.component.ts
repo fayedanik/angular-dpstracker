@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslatePipe } from '@ngx-translate/core';
+import { bankAccountTypeEnum } from '../../../../shared/consts/business.const';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
 
 @Component({
@@ -23,4 +24,5 @@ export class BankAccountCardComponent {
   openDrawer = output<void>();
   deleteAccount = output<void>();
   updateAccount = output<void>();
+  readonly bankAccountTypeEnum = bankAccountTypeEnum;
 }

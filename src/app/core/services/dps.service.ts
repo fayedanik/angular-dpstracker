@@ -1,6 +1,7 @@
 import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { IAddDpsMoneyPayload } from '../../shared/interfaces/add-dps-money-payload.interface';
 import { IAddDpsPayload } from '../../shared/interfaces/add-dps-payload.interface';
 import {
   ICommandResponse,
@@ -24,8 +25,29 @@ export class DpsService {
     }));
   }
 
+  getDpsById(dpsId: string | null) {
+    if (!dpsId) return null;
+    const params: Record<string, any> = {
+      dpsId: dpsId ?? '',
+    };
+    const URL = this._baseUrl + '/DpsQuery/GetDpsById';
+    return httpResource<IQueryResponse<IDps>>(() => ({
+      url: URL,
+      params: params,
+      method: 'GET',
+      credentials: 'include',
+    }));
+  }
+
   addDps(payload: IAddDpsPayload) {
     const URL = this._baseUrl + '/DpsCommand/CreateDps';
+    return this._http.post<ICommandResponse<boolean>>(URL, payload, {
+      withCredentials: true,
+    });
+  }
+
+  updateDps(payload: IAddDpsMoneyPayload) {
+    const URL = this._baseUrl + '/DpsCommand/UpdateDps';
     return this._http.post<ICommandResponse<boolean>>(URL, payload, {
       withCredentials: true,
     });

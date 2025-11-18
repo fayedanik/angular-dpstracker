@@ -22,7 +22,6 @@ export class PlatformDetectorService {
       this.userAgent = navigator.userAgent.toLowerCase();
       const uaPlatform = this.detectUA();
       if (uaPlatform) {
-        console.log(uaPlatform);
         this._platform.set(uaPlatform);
       }
     }
@@ -30,8 +29,8 @@ export class PlatformDetectorService {
     this.breakpointObserver
       .observe([
         '(max-width: 599px)', // Mobile
-        '(min-width: 600px) and (max-width: 1023px)', // Tablet
-        '(min-width: 1024px) and (max-width: 1439px)', // Web/Desktop
+        '(min-width: 600px) and (max-width: 1249px)', // Tablet
+        '(min-width: 1250px) and (max-width: 1439px)', // Web/Desktop
         '(min-width: 1440px)',
       ])
       .pipe(
@@ -39,7 +38,7 @@ export class PlatformDetectorService {
           if (result.breakpoints['(max-width: 599px)']) {
             return 'mobile';
           } else if (
-            result.breakpoints['(min-width: 600px) and (max-width: 1023px)']
+            result.breakpoints['(min-width: 600px) and (max-width: 1249px)']
           ) {
             return 'tablet';
           }

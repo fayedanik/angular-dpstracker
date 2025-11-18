@@ -112,12 +112,6 @@ body {
   )
 );
 
-@include mat.progress-spinner-overrides(
-  (
-    active-indicator-color: orange,
-  )
-);
-
 .secondary {
   @include mat.fab-overrides(
     (
@@ -136,6 +130,52 @@ body {
   );
 }
 
+@include mat.progress-bar-overrides(
+  (
+    active-indicator-color: orange,
+    track-shape: 8px 8px,
+    track-height: 12px,
+    active-indicator-height: 12px,
+  )
+);
+
+@include mat.progress-spinner-overrides(
+  (
+    active-indicator-color: orange,
+  )
+);
+
+@include mat.card-overrides(
+  (
+    outlined-container-color: var(--mat-sys-surface-bright),
+    outlined-outline-color: var(--mat-sys-surface-variant),
+    outlined-outline-width: 2px,
+  )
+);
+
+.warn {
+  @include mat.progress-spinner-overrides(
+    (
+      active-indicator-color: var(--mat-sys-error),
+    )
+  );
+  @include mat.chips-overrides(
+    (
+      label-text-color: var(--mat-sys-error),
+      outline-color: var(--mat-sys-error),
+    )
+  );
+}
+
+.success {
+  @include mat.chips-overrides(
+    (
+      label-text-color: green,
+      outline-color: green,
+    )
+  );
+}
+
 .mat-mdc-menu-panel {
   min-width: 200px !important;
 }
@@ -144,6 +184,7 @@ body {
   border: 2px solid var(--mat-sys-surface-variant);
   border-radius: 12px;
   overflow: hidden;
+  width: 100% !important;
   .ngx-datatable.material {
     background-color: var(--mat-sys-surface);
     color: var(--mat-sys-on-surface);

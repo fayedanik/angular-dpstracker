@@ -17,6 +17,7 @@ export class DialogRootService {
     maxWidth: '400px',
     enterAnimationDuration: '500ms',
     exitAnimationDuration: '200ms',
+    autoFocus: false,
   };
   private _dialogRef: MatDialogRef<any, any> | null = null;
   openDialog(component: ComponentType<unknown>, config: MatDialogConfig = {}) {

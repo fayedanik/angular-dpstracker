@@ -2,8 +2,9 @@ import { Component, computed, inject } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { DpsService } from '../../../../core/services/dps.service';
 import { ConfirmationModalComponent } from '../../../../shared/components/confirmation-modal/confirmation-modal.component';
 import { NoDataViewComponent } from '../../../../shared/components/no-data-view/no-data-view.component';
@@ -35,7 +36,7 @@ export class DpsListComponent {
   private readonly _translateService = inject(TranslateService);
   private readonly _dpsService = inject(DpsService);
   private readonly _dpsListResponse = this._dpsService.getDpsList();
-
+  private router = inject(Router);
   dpsList = computed(() => {
     return this._dpsListResponse.hasValue() &&
       (this._dpsListResponse.value().data || []).length > 0
@@ -72,7 +73,7 @@ export class DpsListComponent {
         this._dpsService
           .deleteDps({ id: data.id })
           .pipe(
-            tap((res) => res.success),
+            map((res) => res.success),
             catchError((err) => of(false))
           )
           .subscribe((res) => {
@@ -85,5 +86,9 @@ export class DpsListComponent {
               );
           });
       });
+  }
+
+  gotoDpsDetails(id: string) {
+    this.router.navigate(['dps', id]);
   }
 }

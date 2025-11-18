@@ -33,6 +33,7 @@ import { NoDataViewComponent } from '../../../../shared/components/no-data-view/
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
 import { IAddUpdateBankAccountPayload } from '../../../../shared/interfaces/add-bank-account-payload.interface';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
+import { IGetUsersQuery } from '../../../../shared/interfaces/get-user-query.interface';
 import { MaterialModule } from '../../../../shared/modules/material.module';
 import { DialogRootService } from '../../../../shared/services/dialog-root.service';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
@@ -80,11 +81,17 @@ export class BankAccountListComponent {
   private readonly _toastMessageService = inject(ToastMessageService);
   private readonly _userService = inject(UserService);
   private readonly _searchSignal = toSignal(this.$searchStream, {
-    initialValue: this.searchControl.value ?? '',
+    initialValue: '',
   });
   private readonly _selectedAccount = signal<IBankAccount | null>(null);
 
-  userList = this._userService.getAllUsers(this._searchSignal);
+  userList = this._userService.getAllUsers(
+    signal<IGetUsersQuery>({
+      searchText: this._searchSignal,
+      pageIndex: 0,
+      pageLimit: 100,
+    })
+  );
 
   members = computed(() => {
     const users = this.userList.hasValue()

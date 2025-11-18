@@ -8,4 +8,5 @@ export interface User {
   roles: string[];
   createdAt?: Date | string | null;
   isActive: boolean;
+  activationDate: Date;
 }

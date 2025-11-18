@@ -1,0 +1,116 @@
+@let dps = dpsRes();
+
+<div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
+  @if(dps) {
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-col gap-1 items-center">
+      <div class="flex flex-row gap-1 items-center">
+        <button mat-icon-button (click)="goBack()">
+          <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+        <div class="flex flex-row gap-1">
+          <span class="title-large">{{ dps.dpsName }}</span>
+          <span class="label-small text-green-600">{{
+            "Active" | translate
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row space-between gap-4 ml-3 mt-4 w-full">
+    <div class="flex flex-col gap-8 w-full max-w-[380px]">
+      <div class="flex flex-row gap-4">
+        <div class="flex flex-col gap-4 w-full">
+          <div class="flex flex-col gap-1">
+            <span class="body-small text-gray-400">Account No</span>
+            <span class="body-large text-gray-600 dark:text-gray-300">{{
+              dps.accountNo
+            }}</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="body-small text-gray-400">Monthly Installment</span>
+            <span class="body-large text-gray-600 dark:text-gray-300">{{
+              dps.monthlyAmount | currency : "BDT"
+            }}</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="body-small text-gray-400">Start Date</span>
+            <span class="body-large text-gray-600 dark:text-gray-300">{{
+              dps.startDate | date : "dd. MM. yyyy"
+            }}</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 w-full">
+          <div class="flex flex-col gap-1">
+            <span class="body-small text-gray-400">Interest Rate</span>
+            <span class="body-large text-gray-600 dark:text-gray-300"
+              >{{ dps.interestRate }}%</span
+            >
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="body-small text-gray-400">Duration (In Months)</span>
+            <span class="body-large text-gray-600 dark:text-gray-300">{{
+              dps.durationMonths
+            }}</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="body-small text-gray-400">Maturity Date</span>
+            <span class="body-large text-gray-600 dark:text-gray-300">{{
+              dps.maturityDate | date : "dd. MM. yyyy"
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-4 items-center relative">
+        <span class="title-large text-gray-400"> Dps Overview </span>
+        <mat-spinner
+          class="relative"
+          [mode]="'determinate'"
+          [diameter]="150"
+          [value]="getTotalInstallPercentageAmount(dps)"
+          [strokeWidth]="10"
+        ></mat-spinner>
+        <span class="absolute top-[55%] body-medium font-bold"
+          >{{ totalAmountPaid() }}/{{
+            dps.monthlyAmount * dps.durationMonths * dps.dpsOwners.length
+          }}</span
+        >
+      </div>
+    </div>
+
+    <div class="flex flex-col space-between items-start w-full gap-4">
+      <span class="body-small text-gray-400 dark:text-gray-300"
+        >Dps Owners</span
+      >
+      @for (owner of dps.dpsOwners; track $index) {
+      <span
+        class="flex flex-row items-center gap-2 cursor-pointer my-[6px] w-full pr-4"
+      >
+        <app-avatar [displayName]="owner.displayName" />
+        <div class="flex flex-col w-[90%] gap-4">
+          <span class="body-medium">{{ owner.displayName }}</span>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="getOwnerInstallmentPercentageAmount(dps, owner)"
+          ></mat-progress-bar>
+          <div class="flex flex-row gap-1">
+            @for (installmentDate of owner.installmentDates; track $index) {
+            <mat-chip>{{ installmentDate | date : "MMM yyyy" }}</mat-chip>
+            }
+          </div>
+        </div>
+        @if(dps.canUpdate) {
+        <button mat-icon-button (click)="addMoneyToDps(owner)">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+        }
+      </span>
+      }
+    </div>
+  </div>
+
+  } @else {
+  <app-no-data-view />
+  }
+</div>

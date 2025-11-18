@@ -2,7 +2,7 @@
   <div class="flex flex-col md:flex-row gap-4 justify-between">
     <div class="flex flex-col gap-1">
       <span class="title-large">Transactions</span>
-      <span class="label-small text-gray-400 dark:text-green-600"
+      <span class="label-small text-gray-500 dark:text-gray-400"
         >Find all the transactions here</span
       >
     </div>
@@ -39,17 +39,26 @@
         @if(isPlatformBrowser) {
         <div class="table-wrapper mt-6">
           <ngx-datatable
+            #transferMoneyTable
             class="material custom-datatable"
-            [rows]="transferMoneyTransactions()"
+            [rows]="transferMoneyTransactions()?.data"
             [columns]="transferMoneyColumns"
             [columnMode]="'force'"
             [headerHeight]="50"
             [rowHeight]="'auto'"
             [scrollbarH]="true"
             [footerHeight]="50"
+            (activate)="onClickRow($event)"
           >
           </ngx-datatable>
         </div>
+        <mat-paginator
+          [length]="transferMoneyTransactions()?.totalCount"
+          [pageSize]="tranferMoneyPageLimit()"
+          (page)="changeTransferMoneyPage($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
         }
       </mat-tab>
       @if (shouldHide()) {
@@ -57,17 +66,27 @@
         @if(isPlatformBrowser) {
         <div class="table-wrapper mt-6">
           <ngx-datatable
+            #paymentListTable
             class="material custom-datatable"
-            [rows]="paymentTransactions()"
+            [rows]="paymentTransactions()?.data"
             [columns]="paymentColumns"
             [columnMode]="'force'"
             [headerHeight]="50"
             [rowHeight]="'auto'"
             [scrollbarH]="true"
             [footerHeight]="50"
+            (activate)="onClickRow($event)"
           >
           </ngx-datatable>
         </div>
+        <mat-paginator
+          [length]="paymentTransactions()?.totalCount"
+          [pageSize]="paymentPageLimit()"
+          (page)="changePaymentPage($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+
         }
       </mat-tab>
       }
@@ -75,8 +94,11 @@
   </div>
 </div>
 
+<ng-template #senderDisplayNameCellTemplate let-value="value">
+  <span class="body-medium text-amber-600">{{ value }}</span>
+</ng-template>
 <ng-template #paymentTypeCellTemplate let-value="value">
-  <span class="text-pink-600 dark:text-white">{{ value | titlecase }}</span>
+  <span class="text-pink-600 dark:text-pink-500">{{ value | titlecase }}</span>
 </ng-template>
 
 <ng-template #dpsCellTemplate let-value="value">
@@ -88,7 +110,13 @@
 </ng-template>
 
 <ng-template #statusCellTemplate let-value="value">
-  <span [ngClass]="value == 'success' ? 'text-green-600' : 'text-yellow-600'">
+  @if (value == 'success') {
+  <span class="text-green-600 dark:text-green-500">
     {{ value | titlecase }}
   </span>
+  } @else {
+  <span class="text-yellow-600 dark:text-amber-400">
+    {{ value | titlecase }}
+  </span>
+  }
 </ng-template>

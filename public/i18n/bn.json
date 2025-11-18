@@ -8,7 +8,11 @@
     "DPS": "ডিপিএস (ডিপোজিট পেনশন স্কিম)",
     "FIND_DPS_HERE": "আপনার সকল ডিপিএস স্কিম এখানে খুঁজুন",
     "CREATE_DPS": "ডিপিএস যোগ করুন",
-    "ADD_TRANSACTION": "Add Transaction"
+    "ADD_TRANSACTION": "Add Transaction",
+    "TRANSACTION_DETAILS": "Transaction Details",
+    "TRANSFER_MONEY": "Transfer Money",
+    "MAKE_PAYMENT": "Make Payment",
+    "DPS_PAYMENT": "Dps Payment"
   },
   "ADD": "যোগ করুন",
   "UPDATE": "আপডেট করুন",
@@ -29,5 +33,13 @@
   "CREATE": "Create",
   "DPS_ADDED": "Dps successfully created",
   "SOMETHING_WENT_WRONG_WHILE_DELETING_ACCOUNT": "Something went wron while deleting the account",
-  "SOMETHING_WENT_WRONG_WHILE_DELETING_DPS": "Something went wrong while deleting the dps"
+  "SOMETHING_WENT_WRONG_WHILE_DELETING_DPS": "Something went wrong while deleting the dps",
+  "SUCCESSFULLY_TRANSFERED_MONEY": "Transfer money request has been sent",
+  "TRANSACTION_APPROVED": "Transaction has been approved",
+  "PAYMENT_SUCCESSFULLY_DONE": "Payment request has been sent",
+  "CLOSE": "Close",
+  "NO_DPS_FOUND_ASSOCIATED_WITH_ACCOUNT": "No Dps found",
+  "ARE_YOU_SURE_WANT_TO_INVITE_THIS_USER": "Are you sure you want to activate this user?",
+  "USER_CREATED_SUCCESSFULLY": "You have registered to the system succesfully. Please wait for admin approval.",
+  "ACCOUNT_ACTIVATED_SUCCESSFULLY": "Account has been activated"
 }

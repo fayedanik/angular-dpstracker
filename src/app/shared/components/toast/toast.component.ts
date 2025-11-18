@@ -11,10 +11,11 @@ import { ToastData } from '../../services/toast-message.service';
 @Component({
   selector: 'app-toast',
   imports: [CommonModule, MatIconModule, MatButtonModule],
+  standalone: true,
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.scss',
 })
 export class ToastComponent {
-  snackBarRef = inject(MatSnackBarRef);
+  snackBarRef = inject(MatSnackBarRef<ToastComponent>);
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: ToastData) {}
 }

@@ -1,0 +1,116 @@
+<div
+  mat-dialog-title
+  class="header-container"
+  [class.bottom-sheet-header]="isPlatformMobile"
+>
+  <mat-icon>details</mat-icon>
+  <span>{{ "APP.TRANSACTION_DETAILS" | translate }}</span>
+</div>
+<mat-divider [ngClass]="{ 'my-4': isPlatformMobile }"></mat-divider>
+<mat-dialog-content>
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-row space-between items-center w-full gap-4">
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Source A/C</span>
+        <span class="body-large text-gray-600 dark:text-gray-300">{{
+          transaction.sourceAc
+        }}</span>
+      </div>
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Sender Name</span>
+        <span class="body-large text-amber-600">{{
+          transaction.senderDisplayName
+        }}</span>
+      </div>
+    </div>
+
+    @if(transaction.transactionType == transactionTypeEnum.TransferMoney) {
+    <div class="flex flex-row space-between items-center w-full gap-4">
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Beneficiary A/C</span>
+        <span class="body-large text-gray-600 dark:text-gray-300">{{
+          transaction.destAc
+        }}</span>
+      </div>
+    </div>
+    } @if(transaction.transactionType == transactionTypeEnum.Payment) {
+    <div class="flex flex-row space-between items-center w-full gap-4">
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Payment Type</span>
+        <span class="body-large text-pink-600 dark:text-pink-500">{{
+          transaction.paymentType | titlecase
+        }}</span>
+      </div>
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Dps</span>
+        <span class="body-large text-gray-600 dark:text-gray-300">{{
+          transaction.dpsName
+        }}</span>
+      </div>
+    </div>
+    }
+
+    <div class="flex flex-row space-between items-center w-full gap-4">
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Amount</span>
+        <span class="body-large text-gray-600 dark:text-gray-300">{{
+          transaction.amount
+        }}</span>
+      </div>
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Transaction ID</span>
+        <span class="body-large text-gray-600 dark:text-gray-300">{{
+          transaction.transactionNo
+        }}</span>
+      </div>
+    </div>
+
+    <div class="flex flex-row space-between items-center w-full gap-4">
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Transfer Date</span>
+        <span class="body-large text-gray-600 dark:text-gray-300">{{
+          transaction.transactionDate | date : "dd. MM. yyyy"
+        }}</span>
+      </div>
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Status</span>
+        <span class="body-large">
+          @if (transaction.status == 'success') {
+          <span class="text-green-600 dark:text-green-500">
+            {{ transaction.status | titlecase }}
+          </span>
+          } @else {
+          <span class="text-yellow-600 dark:text-amber-400">
+            {{ transaction.status | titlecase }}
+          </span>
+          }
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-row space-between items-center w-full gap-4">
+      <div class="flex flex-col w-full gap-1">
+        <span class="body-small text-gray-400">Note</span>
+        <span class="body-large text-gray-600 dark:text-gray-300">{{
+          transaction.note
+        }}</span>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions
+  [ngClass]="{ 'bottom-sheet-footer': isPlatformMobile }"
+  class="flex flex-row justify-end items-center"
+>
+  @if(transaction.status == 'success' || !shouldVisible()) {
+  <div></div>
+  }
+  <button matButton (click)="close()">
+    {{ "CLOSE" | translate }}
+  </button>
+  @if(transaction.status != 'success' && shouldVisible()) {
+  <button matButton="filled" type="submit" (click)="updateStatus()">
+    {{ "CONFIRM" | translate }}
+  </button>
+  }
+</mat-dialog-actions>

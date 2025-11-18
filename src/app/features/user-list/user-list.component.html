@@ -25,7 +25,7 @@
   <div class="table-wrapper">
     <ngx-datatable
       class="material custom-datatable"
-      [rows]="rows()"
+      [rows]="users()"
       [columns]="columns"
       [columnMode]="'force'"
       [headerHeight]="50"
@@ -35,15 +35,26 @@
     >
     </ngx-datatable>
   </div>
+  <mat-paginator
+    [length]="totalCount()"
+    [pageSize]="usersQueryPageLimit()"
+    (page)="changePage($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
   }
 </div>
 
 <ng-template #displayNameCellTemplate let-row="row" let-value="value">
   <div class="flex flex-col gap-1">
     <span class="font-bold">{{ value }}</span>
-    @for (role of row.roles; track $index;) {
-    <span>{{ role | titlecase }}</span>
-    }
+    <div class="flex flex-wrap gap-1">
+      @if(hasTargetedRoles(row.roles, role.Admin)) {
+      <mat-chip class="success">{{ role.Admin | titlecase }}</mat-chip>
+      } @if(hasTargetedRoles(row.roles, role.User)) {
+      <mat-chip class="warn">{{ role.User | titlecase }}</mat-chip>
+      }
+    </div>
   </div>
 </ng-template>
 
@@ -60,15 +71,29 @@
 </ng-template>
 
 <ng-template #statusCellTemplate let-value="value">
-  <span>{{ value ? "Active" : "In Active" }}</span>
+  @if(value) {
+  <span class="text-green-500">{{ "Active" | translate }}</span>
+  } @else {
+  <span class="text-amber-600">{{ "Not Active" | translate }}</span>
+  }
 </ng-template>
 
-<ng-template #actionCellTemplate let-value="value">
+<ng-template #actionCellTemplate let-value="value" let-row="row">
+  @if(row.isActive) {
+  <span class="flex flex-col gap-1" (click)="sendInvitation(value)">
+    <span class="text-gray-400"> {{ "Activated At " | translate }} </span>
+    <span class="text-gray-600 dark:text-gray-300">
+      {{ row.activationDate | date : "dd. MM. yyyy" }},
+      {{ row.activationDate | date : "hh:mm a" }}
+    </span>
+  </span>
+  } @else {
   <span
-    class="text-red-500 flex flex-row gap-1 select-none cursor-pointer"
+    class="text-red-700 dark:text-red-400 flex flex-row gap-1 select-none cursor-pointer"
     (click)="sendInvitation(value)"
   >
     <mat-icon svgIcon="arrow_up_square"></mat-icon>
     Invite
   </span>
+  }
 </ng-template>

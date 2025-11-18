@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
+  DestroyRef,
   Inject,
   inject,
   OnInit,
   Optional,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormControl,
@@ -29,7 +31,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { catchError, map, of } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
@@ -40,6 +42,7 @@ import {
   paymentType,
 } from '../../../../shared/consts/business.const';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
+import { IDps } from '../../../../shared/interfaces/dps.interface';
 import { IMakePaymentPayload } from '../../../../shared/interfaces/make-payment-payload.interface';
 import { ITransferMoneyPayload } from '../../../../shared/interfaces/transfer-money-payload.interface';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
@@ -74,6 +77,9 @@ export class AddTransactionComponent implements OnInit {
   private readonly _transactionService = inject(TransactionService);
   private readonly _translateService = inject(TranslateService);
   private readonly _toastMessageService = inject(ToastMessageService);
+  private readonly _destroyRef = inject(DestroyRef);
+
+  todayDate = new Date();
 
   dpsList = computed(() => {
     return this._dpsListResponse.hasValue() &&
@@ -81,6 +87,8 @@ export class AddTransactionComponent implements OnInit {
       ? this._dpsListResponse.value().data
       : [];
   });
+
+  dpsListByAccountNo: IDps[] = [];
 
   constructor(
     @Optional()
@@ -101,6 +109,26 @@ export class AddTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.addTransactionForm.controls.paymentType.valueChanges
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((type) => {
+        const ctrl = this.addTransactionForm.controls.dpsId;
+        if (type == 'dps') {
+          ctrl.addValidators(Validators.required);
+        } else {
+          ctrl.setValue(null);
+          ctrl.clearValidators();
+        }
+        ctrl.updateValueAndValidity();
+      });
+    this.addTransactionForm.controls.dpsId.valueChanges
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((dpsId) => {
+        const dps = this.dpsList()?.find((x) => x.id == dpsId);
+        if (!dps) return;
+        this.addTransactionForm.controls.amount.setValue(dps.monthlyAmount);
+        this.addTransactionForm.controls.amount.disable();
+      });
   }
 
   private initForm() {
@@ -111,22 +139,19 @@ export class AddTransactionComponent implements OnInit {
       benificiaryAccountNumber: this._fb.control('', [Validators.required]),
       date: this._fb.control(null, [Validators.required]),
       paymentType: this._fb.control('', [Validators.required]),
-      dpsId: this._fb.control('', [Validators.required]),
+      dpsId: this._fb.control({ value: '', disabled: true }, []),
       note: this._fb.control('', []),
     });
     if (this.isTransfer) {
       this.addTransactionForm.controls.paymentType.removeValidators([
         Validators.required,
       ]);
-      this.addTransactionForm.controls.dpsId.removeValidators([
-        Validators.required,
-      ]);
-      this.addTransactionForm.updateValueAndValidity;
     } else {
       this.addTransactionForm.controls.benificiaryAccountNumber.removeValidators(
         [Validators.required]
       );
     }
+    this.addTransactionForm.updateValueAndValidity();
   }
 
   accountList = computed(() => {
@@ -244,6 +269,42 @@ export class AddTransactionComponent implements OnInit {
       (this._dialogData && this._dialogData.isTransfer) ||
       (this._bottomSheetData && this._bottomSheetData.isTransfer)
     );
+  }
+
+  get paymentTypeFormValue() {
+    return this.addTransactionForm.controls.paymentType.value;
+  }
+
+  changePaymentType() {
+    setTimeout(() => {
+      if (this.paymentTypeFormValue == 'dps') {
+        this.addTransactionForm.controls.dpsId.addValidators([
+          Validators.required,
+        ]);
+      } else {
+        this.addTransactionForm.controls.dpsId.clearValidators();
+      }
+      this.addTransactionForm.updateValueAndValidity();
+    });
+  }
+
+  selectAccount(event: MatSelectChange<any>) {
+    if (!event.value) return;
+    this.dpsListByAccountNo = (this.dpsList() || []).filter(
+      (x) => x.accountNo == event.value
+    );
+    this.addTransactionForm.controls.dpsId.enable();
+  }
+
+  get availableBalanceOfSelectedAccount() {
+    const accountNo = this.addTransactionForm.controls.accountNo.value;
+    if (!accountNo) return 'N/A';
+    else {
+      return (
+        this.accountList()?.find((x) => x.accountNo == accountNo)?.balance ??
+        'N/A'
+      );
+    }
   }
 }
 
