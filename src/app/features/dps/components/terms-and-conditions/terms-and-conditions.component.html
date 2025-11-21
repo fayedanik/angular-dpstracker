@@ -1,0 +1,32 @@
+<div
+  mat-dialog-title
+  class="header-container"
+  [class.bottom-sheet-header]="isPlatformMobile"
+>
+  <mat-icon>add_circle</mat-icon>
+  <span>{{ "APP.TERMS_AND_CONDITION" | translate }}</span>
+</div>
+<mat-divider [ngClass]="{ 'my-4': isPlatformMobile }"></mat-divider>
+<mat-dialog-content>
+  <div
+    class="space-y-3 text-sm leading-relaxed"
+    [ngClass]="{ 'p-4 pb-0': isPlatformMobile }"
+  >
+    @for (p of sections; let i = $index;track $index;) {
+    <h3 class="font-semibold">
+      {{ i + 1 + ". " + (p.title | translate) }}
+    </h3>
+    <ul class="list-disc ml-5 mt-1">
+      @for (line of p.body; track $index) {
+      <li>{{ line | translate }}</li>
+      }
+    </ul>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions [ngClass]="{ 'bottom-sheet-footer': isPlatformMobile }">
+  <div></div>
+  <button matButton="filled" (click)="close()">
+    {{ "CLOSE" | translate }}
+  </button>
+</mat-dialog-actions>

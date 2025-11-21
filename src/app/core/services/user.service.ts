@@ -14,6 +14,7 @@ import { User } from '../domain-models/user.model';
 export class UserService {
   private readonly _baseUrl = environment.apiBaseUrl;
   private readonly _http = inject(HttpClient);
+  private readonly _appList = signal<string[]>([]);
   private readonly _user = signal<User | null>(null);
 
   constructor() {}
@@ -63,11 +64,28 @@ export class UserService {
     }));
   }
 
+  getApps() {
+    const URL = this._baseUrl + '/SecurityQuery/GetApps';
+    return this._http.get(URL, { withCredentials: true }).pipe(
+      map((res: any) => {
+        this._appList.set(res);
+        return res;
+      }),
+      catchError((err) => {
+        return of([]);
+      })
+    );
+  }
+
   resetUser() {
     this._user.set(null);
   }
 
   get User() {
     return this._user.asReadonly();
+  }
+
+  get AppList() {
+    return this._appList.asReadonly();
   }
 }

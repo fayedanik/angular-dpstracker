@@ -35,11 +35,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { catchError, of, tap } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
+import { UserService } from '../../../../core/services/user.service';
 import {
   accountType,
   bankAccountTypeEnum,
+  Role,
 } from '../../../../shared/consts/business.const';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
+import { DigitsOnlyDirective } from '../../../../shared/directives/digits-only.directive';
 import { IAddUpdateBankAccountPayload } from '../../../../shared/interfaces/add-bank-account-payload.interface';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
 import {
@@ -63,6 +66,7 @@ import { ToastMessageService } from '../../../../shared/services/toast-message.s
     TranslatePipe,
     MatSelectModule,
     MatBottomSheetModule,
+    DigitsOnlyDirective,
   ],
   templateUrl: './add-bank-account.component.html',
   styleUrl: './add-bank-account.component.scss',
@@ -112,6 +116,8 @@ export class AddBankAccountComponent implements OnInit {
   readonly accountType = accountType;
   readonly accountTypeEnum = bankAccountTypeEnum;
 
+  user = inject(UserService).User;
+
   bankList = computed(() => {
     const banks = this._bankList.hasValue() ? this._bankList.value() : [];
     return banks;
@@ -155,9 +161,9 @@ export class AddBankAccountComponent implements OnInit {
       this.addBankAccountForm.controls.accountType.setValue(
         account.accountType
       );
-    this.addBankAccountForm.controls.availableBalance.setValue(
-      account?.balance ?? 0
-    );
+    // this.addBankAccountForm.controls.availableBalance.setValue(
+    //   account?.balance ?? 0
+    // );
   }
 
   addUpdateTransaction() {
@@ -238,6 +244,10 @@ export class AddBankAccountComponent implements OnInit {
 
   get selectedAccountType() {
     return this.addBankAccountForm.controls.accountType.value;
+  }
+
+  get isAdmin() {
+    return this.user()?.roles.includes(Role.Admin);
   }
 }
 

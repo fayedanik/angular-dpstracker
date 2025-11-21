@@ -17,14 +17,14 @@
     [ngClass]="{ 'p-4 pb-0': isPlatformMobile }"
   >
     <mat-form-field class="w-full mb-4">
-      <mat-label>A/C No.</mat-label>
+      <mat-label>{{ "APP.ACCOUNT_NUMBER" | translate }}</mat-label>
       <input type="text" matInput formControlName="accountNo" />
       @if(addBankAccountForm.get('accountNo')?.hasError('required')) {
-      <mat-error>A/C No. is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
-      <mat-label>Select Bank</mat-label>
+      <mat-label>{{ "SELECT_BANK" | translate }}</mat-label>
       <mat-select
         formControlName="bank"
         (selectionChange)="selectBank($event.value)"
@@ -34,12 +34,12 @@
         }
       </mat-select>
       @if(addBankAccountForm.get('bank')?.hasError('required')) {
-      <mat-error>Bank Name is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>Select Branch</mat-label>
+      <mat-label>{{ "SELECT_BRANCH" | translate }}</mat-label>
       <mat-select formControlName="branch">
         @for (branch of branchList(); track $index) {
         <mat-option [value]="branch"
@@ -48,28 +48,38 @@
         }
       </mat-select>
       @if(addBankAccountForm.get('branch')?.hasError('required')) {
-      <mat-error>Branch Name is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>Select Account Type</mat-label>
+      <mat-label>{{ "SELECT_ACCOUNT_TYPE" | translate }}</mat-label>
       <mat-select formControlName="accountType">
-        @for (accountType of accountType; track $index) {
-        <mat-option [value]="accountType.value">{{
-          accountType.label
-        }}</mat-option>
+        @if(isAdmin) {
+        <mat-option [value]="accountTypeEnum.Joint">
+          {{ accountTypeEnum.Joint | uppercase | translate }}
+        </mat-option>
         }
+        <mat-option [value]="accountTypeEnum.Personal">
+          {{ accountTypeEnum.Personal | uppercase | translate }}
+        </mat-option>
       </mat-select>
       @if(addBankAccountForm.get('accountType')?.hasError('required')) {
-      <mat-error>Account Type is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
 
     @if(selectedAccountType == accountTypeEnum.Personal) {
     <mat-form-field class="w-full mb-4">
-      <mat-label>Available Balance</mat-label>
-      <input type="text" matInput formControlName="availableBalance" />
+      <mat-label>{{ "ADD_MONEY" | translate }}</mat-label>
+      <input
+        type="text"
+        [attr.inputmode]="'numeric'"
+        appDigitsOnly
+        maxlength="8"
+        matInput
+        formControlName="availableBalance"
+      />
     </mat-form-field>
     }
   </form>

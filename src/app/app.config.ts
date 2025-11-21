@@ -39,6 +39,7 @@ export const appConfig: ApplicationConfig = {
       const userService = inject(UserService);
       const res = await firstValueFrom(authService.refresh());
       if (res?.success) {
+        await firstValueFrom(userService.getApps());
         await firstValueFrom(userService.getUser());
       }
     }),

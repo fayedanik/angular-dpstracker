@@ -3,6 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BankAccountService } from '../../core/services/bank-account.service';
 import { DpsService } from '../../core/services/dps.service';
 import { TransactionService } from '../../core/services/transaction.service';
@@ -26,6 +27,7 @@ import { TakaPipe } from '../../shared/pipes/taka-currency.pipe';
     TakaPipe,
     NoDataViewComponent,
     MatProgressSpinnerModule,
+    TranslatePipe,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

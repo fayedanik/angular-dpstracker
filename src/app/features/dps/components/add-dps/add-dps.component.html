@@ -10,14 +10,14 @@
 <mat-dialog-content>
   <form [formGroup]="addDpsForm" [ngClass]="{ 'p-4 pb-0': isPlatformMobile }">
     <mat-form-field class="w-full mb-4">
-      <mat-label>Dps Name</mat-label>
+      <mat-label>{{ "DPS_NAME" | translate }}</mat-label>
       <input type="text" matInput formControlName="dpsName" />
       @if(addDpsForm.get('dpsName')?.hasError('required')) {
-      <mat-error>Dps Name is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
-      <mat-label>Select A/C No.</mat-label>
+      <mat-label>{{ "SELECT_ACCOUNT_NUMBER" | translate }}</mat-label>
       <mat-select formControlName="accountNumber">
         @for (account of accountList(); track $index) {
         <mat-option [value]="account.accountNo"
@@ -26,11 +26,11 @@
         }
       </mat-select>
       @if(addDpsForm.get('accountNumber')?.hasError('required')) {
-      <mat-error>A/C No. is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
-      <mat-label>Monthly Deposit</mat-label>
+      <mat-label>{{ "MONTHLY_DEPOSIT" | translate }}</mat-label>
       <input
         type="text"
         [attr.inputmode]="'numeric'"
@@ -40,11 +40,11 @@
         formControlName="monthlyDeposit"
       />
       @if(addDpsForm.get('monthlyDeposit')?.hasError('required')) {
-      <mat-error>Monthly Deposit is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
-      <mat-label>Duration Months</mat-label>
+      <mat-label>{{ "DURATION_MONTHS" | translate }}</mat-label>
       <input
         type="text"
         matInput
@@ -54,11 +54,11 @@
         (change)="durationMonthChange($event)"
       />
       @if(addDpsForm.get('durationMonths')?.hasError('required')) {
-      <mat-error>Duration months is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
-      <mat-label>Start Date</mat-label>
+      <mat-label>{{ "START_DATE" | translate }}</mat-label>
       <input
         type="text"
         matInput
@@ -73,11 +73,11 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
       @if(addDpsForm.get('startDate')?.hasError('required')) {
-      <mat-error>Start Date is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
-      <mat-label>Maturity Date</mat-label>
+      <mat-label>{{ "MATURITY_DATE" | translate }}</mat-label>
       <input
         type="text"
         matInput
@@ -91,11 +91,11 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #maturityDatePicker></mat-datepicker>
       @if(addDpsForm.get('maturityDate')?.hasError('required')) {
-      <mat-error>Maturity Date is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full mb-4">
-      <mat-label>Interest Rates</mat-label>
+      <mat-label>{{ "INTEREST_RATE" | translate }}</mat-label>
       <input
         type="text"
         matInput
@@ -104,11 +104,11 @@
         formControlName="interestRate"
       />
       @if(addDpsForm.get('interestRate')?.hasError('required')) {
-      <mat-error>Interest Rate is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>Select Owners</mat-label>
+      <mat-label>{{ "SELECT_OWNERS" | translate }}</mat-label>
       <mat-select formControlName="dpsOwners" multiple>
         @for (owner of selectedAccountOwners(); track owner.userId) {
         <mat-option [value]="owner.userId">{{ owner.displayName }}</mat-option>

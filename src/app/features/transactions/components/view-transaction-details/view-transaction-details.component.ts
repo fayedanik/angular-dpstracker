@@ -18,6 +18,7 @@ import {
 } from '../../../../shared/consts/business.const';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
 import { ITransaction } from '../../../../shared/interfaces/transaction.interface';
+import { TakaPipe } from '../../../../shared/pipes/taka-currency.pipe';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
 
@@ -30,6 +31,7 @@ import { ToastMessageService } from '../../../../shared/services/toast-message.s
     MatButtonModule,
     TranslatePipe,
     MatDialogModule,
+    TakaPipe,
   ],
   templateUrl: './view-transaction-details.component.html',
   styleUrl: './view-transaction-details.component.scss',

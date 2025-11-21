@@ -14,30 +14,30 @@
   </div>
 
   <div class="card-body">
-    <span class="label">Account No</span>
+    <span class="label">{{ "ACCOUNT_NO" | translate }}</span>
     <span class="value">{{ account.accountNo }}</span>
 
-    <span class="label">Branch Name</span>
+    <span class="label">{{ "BRANCH_NAME" | translate }}</span>
     <span class="value">{{ account.branchName }}</span>
 
-    <span class="label">Balance</span>
-    <span class="value">{{ account.balance }} </span>
+    <span class="label">{{ "BALANCE" | translate }}</span>
+    <span class="value">{{ account.balance | taka }} </span>
 
-    <span class="label">Account Type</span>
+    <span class="label">{{ "ACCOUNT_TYPE" | translate }}</span>
     <span class="value">{{ account.accountType | titlecase }}</span>
 
-    <span class="label">Total Members</span>
+    <span class="label">{{ "TOTAL_MEMBERS" | translate }}</span>
     <span class="value">{{ account.accountHolders.length }}</span>
   </div>
 
   <div class="footer">
     @if(account.canDelete) {
     <button matButton="filled" (click)="deleteAccount.emit()">
-      Delete Account
+      {{ "DELETE_ACCOUNT" | translate }}
     </button>
     } @if(account.canUpdate) {
     <button matButton="elevated" (click)="updateAccount.emit()">
-      Edit Account
+      {{ "EDIT_ACCOUNT" | translate }}
     </button>
     }
   </div>

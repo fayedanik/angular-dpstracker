@@ -1,10 +1,10 @@
 @let jAccount = jointAccount();
 <div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
   <div class="flex flex-col gap-1">
-    <span class="title-large">Dashboard</span>
-    <span class="label-small text-gray-400"
-      >Monitor your financial activity</span
-    >
+    <span class="title-large">{{ "DASHBOARD" | translate }}</span>
+    <span class="label-small text-gray-400">{{
+      "MONITOR_FINANCIAL_ACTIVITY" | translate
+    }}</span>
   </div>
 
   <div class="flex flex-col md:flex-row gap-4">
@@ -12,10 +12,9 @@
       @for (dps of dpsList(); track $index) {
       <div class="dashboard-chip rounded-xl p-4 w-full flex flex-col gap-4">
         <span class="body-large"
-          >{{ dps.dpsName }} - {{ dps.dpsOwners.length }} Members ({{
-            dps.startDate | date : "MMM yyyy"
-          }}
-          - {{ dps.maturityDate | date : "MMM yyy" }})</span
+          >{{ dps.dpsName }} - {{ dps.dpsOwners.length }}
+          {{ "MEMBERS" | translate }} ({{ dps.startDate | date : "MMM yyyy" }} -
+          {{ dps.maturityDate | date : "MMM yyy" }})</span
         >
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div
@@ -23,7 +22,9 @@
           >
             <span class="flex gap-3 justify-start items-center">
               <mat-icon class="text-primary">account_balance</mat-icon>
-              <span class="body-large">Team Balance</span>
+              <span class="body-large">{{
+                "APP.TEAM_BALANCE" | translate
+              }}</span>
             </span>
             <span class="flex flex-row gap-1 justify-between items-center">
               <span class="title-medium">{{
@@ -38,9 +39,9 @@
               ></mat-spinner>
             </span>
 
-            <span class="text-gray-400 dark:text-gray-400"
-              >Combined balance till now</span
-            >
+            <span class="text-gray-400 dark:text-gray-400">{{
+              "APP.COMBINED_BALANCE_TILL_NOW" | translate
+            }}</span>
           </div>
           <div
             class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
@@ -50,7 +51,9 @@
                 svgIcon="arrow_trending_up"
                 class="text-primary"
               ></mat-icon>
-              <span class="body-large">Your contribution</span>
+              <span class="body-large">{{
+                "APP.YOUR_CONTRIBUTION" | translate
+              }}</span>
             </span>
             <span class="flex flex-row gap-1 justify-between items-center">
               <span class="title-medium">{{
@@ -65,9 +68,9 @@
               ></mat-spinner>
             </span>
 
-            <span class="text-gray-400 dark:text-gray-400"
-              >Since last month</span
-            >
+            <span class="text-gray-400 dark:text-gray-400">{{
+              "APP.LAST_MONTH" | translate
+            }}</span>
           </div>
           <div
             class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
@@ -76,7 +79,9 @@
               <mat-icon class="text-primary" svgIcon="building_office"
                 >crown</mat-icon
               >
-              <span class="body-large">Maturity Balance</span>
+              <span class="body-large">{{
+                "APP.MATURITY_BALANCE" | translate
+              }}</span>
             </span>
             <span class="flex gap-3 justify-between items-center">
               <span class="title-medium">{{
@@ -86,7 +91,7 @@
 
             <div class="flex flex-row gap-1">
               <span class="text-gray-400 dark:text-gray-400"
-                >Maturity Date:</span
+                >{{ "APP.MATURITY_DATE" | translate }}:</span
               >
               <span class="text-gray-500 dark:text-gray-300">{{
                 dps.maturityDate | date : "MMM yyyy"
@@ -95,6 +100,8 @@
           </div>
         </div>
       </div>
+      } @empty {
+      <app-no-data-view></app-no-data-view>
       }
     </div>
     <div class="w-full md:w-[30%] flex flex-col gap-4">
@@ -109,15 +116,19 @@
           <div class="flex flex-row gap-4 items-start">
             @if(jAccount) {
             <div class="flex flex-col gap-4">
-              <span class="text-gray-500">A/C No:</span>
-              <span class="text-gray-500">Bank:</span>
-              <span class="text-gray-500">Branch:</span>
-              <span class="text-gray-500">Balance:</span>
+              <span class="text-gray-500"
+                >{{ "APP.ACCOUNT_NUMBER" | translate }}:</span
+              >
+              <span class="text-gray-500">{{ "APP.BANK" | translate }}:</span>
+              <span class="text-gray-500">{{ "APP.BRANCH" | translate }}:</span>
+              <span class="text-gray-500"
+                >{{ "APP.BALANCE" | translate }}:</span
+              >
             </div>
             <div class="flex flex-col gap-4">
               <span class="text-pink-600 dark:text-pink-400"
                 >{{ jAccount.accountNo }} ({{
-                  jAccount.accountType | titlecase
+                  jAccount.accountType | uppercase | translate
                 }})</span
               >
               <span class="text-yellow-500 dark:text-yellow-400">{{
@@ -138,11 +149,13 @@
         class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
       >
         <span class="flex gap-3 justify-between items-center">
-          <span class="body-large">Recent Transactions</span>
+          <span class="body-large">{{
+            "APP.RECENT_TRANSACTIONS" | translate
+          }}</span>
           <span
             class="body-small text-gray-400 cursor-pointer"
             (click)="gotoTransaction()"
-            >View All</span
+            >{{ "APP.VIEW_ALL" | translate }}</span
           >
         </span>
         <div class="flex flex-col gap-4 w-full">
@@ -174,6 +187,8 @@
               {{ transaction.amount | taka }}</span
             >
           </div>
+          } @empty {
+          <app-no-data-view></app-no-data-view>
           }
         </div>
       </div>

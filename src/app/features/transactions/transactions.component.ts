@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
   ActivateEvent,
   DatatableComponent,
@@ -33,6 +33,7 @@ import {
 import { AppAllowedForDirectivce } from '../../shared/directives/allowed-for.directive';
 import { IGetTransactionQueryPayload } from '../../shared/interfaces/get-transaction-query.payload.interface';
 import { ITransaction } from '../../shared/interfaces/transaction.interface';
+import { TakaPipe } from '../../shared/pipes/taka-currency.pipe';
 import { DialogRootService } from '../../shared/services/dialog-root.service';
 import { PlatformDetectorService } from '../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../shared/services/toast-message.service';
@@ -48,11 +49,15 @@ import { ViewTransactionDetailsComponent } from './components/view-transaction-d
     MatTabsModule,
     AppAllowedForDirectivce,
     MatPaginatorModule,
+    TranslatePipe,
+    TakaPipe,
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss',
 })
 export class TransactionsComponent implements OnInit {
+  @ViewChild('headerCellTemplate', { static: true })
+  headerCellTemplate!: TemplateRef<any>;
   @ViewChild('transferMoneyTable', { static: true })
   transferMoneyTable!: DatatableComponent<ITransaction>;
   @ViewChild('paymentListTable', { static: true })
@@ -138,41 +143,47 @@ export class TransactionsComponent implements OnInit {
   private initDataTable() {
     this.transferMoneyColumns = [
       {
-        name: 'Source A/C',
+        name: 'SOURCE_AC',
         prop: 'sourceAc',
         width: 150,
         sortable: false,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Sender Name',
+        name: 'SENDER_NAME',
         prop: 'senderDisplayName',
         width: 150,
         sortable: false,
         cellTemplate: this.senderDisplayNameCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Beneficiary A/C',
+        name: 'BENEFICIARY_AC',
         prop: 'destAc',
         width: 150,
         sortable: false,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Amount',
+        name: 'AMOUNT',
         prop: 'amount',
         width: 100,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Transfer Date',
+        name: 'TRANSFER_DATE',
         prop: 'transactionDate',
         sortable: false,
         width: 150,
         cellTemplate: this.transactionDateCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Transaction ID',
+        name: 'TRANSACTION_ID',
         prop: 'transactionNo',
         sortable: false,
         width: 200,
+        headerTemplate: this.headerCellTemplate,
       },
       // {
       //   name: 'Note',
@@ -181,59 +192,67 @@ export class TransactionsComponent implements OnInit {
       //   width: 200,
       // },
       {
-        name: 'Status',
+        name: 'STATUS',
         prop: 'status',
         sortable: false,
         width: 100,
         cellTemplate: this.statusCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
     ];
 
     this.paymentColumns = [
       {
-        name: 'Source A/C',
+        name: 'SOURCE_AC',
         prop: 'sourceAc',
         width: 150,
         sortable: false,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Sender Name',
+        name: 'SENDER_NAME',
         prop: 'senderDisplayName',
         width: 150,
         sortable: false,
         cellTemplate: this.senderDisplayNameCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Payment Type',
+        name: 'PAYMENT_TYPE',
         prop: 'paymentType',
         width: 100,
         sortable: false,
         cellTemplate: this.paymentTypeCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Dps',
+        name: 'DPS',
         prop: 'dpsId',
         width: 150,
         sortable: false,
         cellTemplate: this.dpsCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Amount',
+        name: 'AMOUNT',
         prop: 'amount',
         width: 100,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Transfer Date',
+        name: 'TRANSFER_DATE',
         prop: 'transactionDate',
         sortable: false,
         width: 150,
         cellTemplate: this.transactionDateCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Transaction ID',
+        name: 'TRANSACTION_ID',
         prop: 'transactionNo',
         sortable: false,
         width: 150,
+        headerTemplate: this.headerCellTemplate,
       },
       // {
       //   name: 'Note',
@@ -242,11 +261,12 @@ export class TransactionsComponent implements OnInit {
       //   width: 200,
       // },
       {
-        name: 'Status',
+        name: 'STATUS',
         prop: 'status',
         sortable: false,
         width: 100,
         cellTemplate: this.statusCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
     ];
   }

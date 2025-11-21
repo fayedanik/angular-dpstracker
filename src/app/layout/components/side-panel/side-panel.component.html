@@ -1,9 +1,7 @@
-<div
-  class="flex flex-col justify-center items-center h-full side-nav-conatiner"
->
-  <h1 class="mb-4 text-gray-400 display-medium">In Pay</h1>
+<div class="flex flex-col justify-start items-center h-full side-nav-conatiner">
+  <img src="../../../../assets/images/logo.png" alt="Logo" class="-mt-4" />
   <mat-nav-list>
-    @for (item of menuItems; track $index) {
+    @for (item of appList(); track $index) {
     <a
       class="mb-3 list-item"
       mat-list-item
@@ -12,8 +10,21 @@
       [routerLinkActiveOptions]="{ exact: true }"
     >
       <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-      <span matListItemTitle class="text-on-surface">{{ item.label }}</span>
+      <span matListItemTitle class="text-on-surface">{{
+        item.label | translate
+      }}</span>
     </a>
     }
   </mat-nav-list>
+
+  <div class="sidebar-footer">
+    <div class="text-gray-400 dark:text-gray-300 label-medium">v1.0.0</div>
+    <div
+      class="text-gray-400 dark:text-gray-300 label-medium flex flex-row items-center gap-1"
+    >
+      © {{ copyrightYear() }}
+      <mat-icon svgIcon="heart" class="text-red-500 text-sm"></mat-icon>
+      Fintelligence
+    </div>
+  </div>
 </div>

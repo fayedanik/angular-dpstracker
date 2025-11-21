@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -20,6 +21,7 @@ import { DpsAddMoneyComponent } from '../dps-add-money/dps-add-money.component';
   imports: [
     CommonModule,
     TranslatePipe,
+    MatCardModule,
     NoDataViewComponent,
     MatIconModule,
     MatButtonModule,
@@ -101,5 +103,13 @@ export class DpsDetailsComponent {
         (dps.monthlyAmount * dps.durationMonths * dps.dpsOwners.length)) *
       100
     );
+  }
+
+  get dpsStatus() {
+    const dps = this.dpsRes();
+    if (!dps) return '-';
+    if (new Date(dps.startDate) > new Date()) return 'Upcoming';
+    else if (new Date(dps.maturityDate) < new Date()) return 'Expired';
+    else return 'Active';
   }
 }

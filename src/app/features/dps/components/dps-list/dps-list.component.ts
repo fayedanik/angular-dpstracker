@@ -15,6 +15,7 @@ import { PlatformDetectorService } from '../../../../shared/services/platform-de
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
 import { AddDpsComponent } from '../add-dps/add-dps.component';
 import { DpsCardComponent } from '../dps-card/dps-card.component';
+import { TermsAndConditionsComponent } from '../terms-and-conditions/terms-and-conditions.component';
 
 @Component({
   selector: 'app-dps-list',
@@ -90,5 +91,19 @@ export class DpsListComponent {
 
   gotoDpsDetails(id: string) {
     this.router.navigate(['dps', id]);
+  }
+
+  viewTermsAndCondition() {
+    if (this._platformDetectorService.isPlaformMobile) {
+      this._bottomSheet
+        .open(TermsAndConditionsComponent)
+        .afterDismissed()
+        .subscribe();
+    } else {
+      this._dialogRootService
+        .openDialog(TermsAndConditionsComponent)
+        .afterClosed()
+        .subscribe();
+    }
   }
 }

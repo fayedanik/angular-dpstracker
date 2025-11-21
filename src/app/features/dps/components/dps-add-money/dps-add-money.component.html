@@ -13,11 +13,11 @@
     [ngClass]="{ 'p-4 pb-0': isPlatformMobile }"
   >
     <mat-form-field class="w-full">
-      <mat-label>Paying For</mat-label>
+      <mat-label>{{ "PAYING_FOR" | translate }}</mat-label>
       <input type="text" matInput formControlName="name" />
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>Amount</mat-label>
+      <mat-label>{{ "AMOUNT" | translate }}</mat-label>
       <input type="text" matInput formControlName="amount" />
       @if(dpsAddMoneyForm.get('amount')?.hasError('required')) {
       <mat-error>Amount is required</mat-error>
@@ -26,7 +26,7 @@
 
     <mat-form-field class="w-full">
       <mat-label>
-        {{ "Payment Date" | translate }}
+        {{ "PAYMENT_DATE" | translate }}
       </mat-label>
       <input
         type="text"
@@ -43,7 +43,7 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #datePicker></mat-datepicker>
       @if(dpsAddMoneyForm.get('paymentDate')?.hasError('required')) {
-      <mat-error>{{ "Payment Date" | translate }} is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
   </form>

@@ -5,7 +5,15 @@
       <mat-card-title class="flex flex-row gap-4">
         <span>{{ dps.dpsName }}</span>
       </mat-card-title>
-      <span class="text-green-600 body-small">Active</span>
+      @switch (dpsStatus) { @case ("Active") {
+      <span class="text-green-600 body-small">{{ "ACTIVE" | translate }}</span>
+      } @case ("Upcoming") {
+      <span class="text-yellow-600 body-small">{{
+        "UPCOMING" | translate
+      }}</span>
+      } @default {
+      <span class="text-red-600 body-small">{{ "EXPIRED" | translate }}</span>
+      }}
     </div>
     <button matIconButton [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
@@ -13,12 +21,16 @@
     <mat-menu #menu>
       <button mat-menu-item (click)="gotoDpsDetails(dps.id)">
         <mat-icon>topic</mat-icon>
-        <span>View Details</span>
+        <span>{{ "VIEW_DETAILS" | translate }}</span>
+      </button>
+      <button mat-menu-item (click)="viewTermsAndCondition.emit()">
+        <mat-icon>book_6</mat-icon>
+        <span>{{ "VIEW_TERMS_AND_CONDITIONS" | translate }}</span>
       </button>
       @if (dps.canDelete) {
       <button mat-menu-item (click)="deleteDps.emit()">
         <mat-icon>delete</mat-icon>
-        <span>Delete Dps</span>
+        <span>{{ "DELETE_DPS" | translate }}</span>
       </button>
       }
     </mat-menu>
@@ -27,13 +39,17 @@
     <div class="flex flex-col gap-4">
       <div class="flex flex-row space-between items-center w-full gap-4">
         <div class="flex flex-col w-full gap-1">
-          <span class="body-small text-gray-400">Account No</span>
+          <span class="body-small text-gray-400">{{
+            "ACCOUNT_NO" | translate
+          }}</span>
           <span class="body-large text-gray-600 dark:text-gray-300">{{
             dps.accountNo
           }}</span>
         </div>
         <div class="flex flex-col w-full gap-1">
-          <span class="body-small text-gray-400">Interest Rate</span>
+          <span class="body-small text-gray-400">{{
+            "INTEREST_RATE" | translate
+          }}</span>
           <span class="body-large text-gray-600 dark:text-gray-300"
             >{{ dps.interestRate }}%</span
           >
@@ -42,13 +58,17 @@
 
       <div class="flex flex-row space-between items-center w-full gap-4">
         <div class="flex flex-col w-full gap-1">
-          <span class="body-small text-gray-400">Monthly Installment</span>
+          <span class="body-small text-gray-400">{{
+            "MONTHLY_DEPOSIT" | translate
+          }}</span>
           <span class="body-large text-gray-600 dark:text-gray-300">{{
             dps.monthlyAmount | currency : "BDT"
           }}</span>
         </div>
         <div class="flex flex-col w-full gap-1">
-          <span class="body-small text-gray-400">Duration (In Months)</span>
+          <span class="body-small text-gray-400">{{
+            "DURATION_MONTHS" | translate
+          }}</span>
           <span class="body-large text-gray-600 dark:text-gray-300">{{
             dps.durationMonths
           }}</span>
@@ -57,13 +77,17 @@
 
       <div class="flex flex-row space-between items-center w-full gap-4">
         <div class="flex flex-col w-full gap-1">
-          <span class="body-small text-gray-400">Start Date</span>
+          <span class="body-small text-gray-400">{{
+            "START_DATE" | translate
+          }}</span>
           <span class="body-large text-gray-600 dark:text-gray-300">{{
             dps.startDate | date : "dd. MM. yyyy"
           }}</span>
         </div>
         <div class="flex flex-col w-full gap-1">
-          <span class="body-small text-gray-400">Maturity Date</span>
+          <span class="body-small text-gray-400">{{
+            "MATURITY_DATE" | translate
+          }}</span>
           <span class="body-large text-gray-600 dark:text-gray-300">{{
             dps.maturityDate | date : "dd. MM. yyyy"
           }}</span>
@@ -72,9 +96,9 @@
 
       @if((dps.dpsOwners || []).length > 0) {
       <div class="flex flex-col gap-4 w-full">
-        <span class="body-small text-gray-400 dark:text-gray-300"
-          >Dps Owners</span
-        >
+        <span class="body-small text-gray-400 dark:text-gray-300">{{
+          "DPS_OWNERS" | translate
+        }}</span>
         <div class="flex flex-wrap gap-2">
           @for (owner of dps.dpsOwners; track $index) {
           <div

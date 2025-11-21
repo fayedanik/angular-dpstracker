@@ -19,7 +19,7 @@
   >
     @if (isTransfer) {
     <mat-form-field class="w-full mb-4">
-      <mat-label>Select A/C No.</mat-label>
+      <mat-label>{{ "SELECT_ACCOUNT_NUMBER" | translate }}</mat-label>
       <mat-select formControlName="accountNo">
         @for (account of personalAccountList(); track $index) {
         <mat-option [value]="account.accountNo"
@@ -28,32 +28,33 @@
         }
       </mat-select>
       @if(addTransactionForm.get('accountNo')?.hasError('required')) {
-      <mat-error>A/C No. is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     } @else {
     <mat-form-field class="w-full mb-4">
-      <mat-label>From A/C No.</mat-label>
+      <mat-label>{{ "FROM_ACCOUNT_NUMBER" | translate }}</mat-label>
       <mat-select
         formControlName="accountNo"
         (selectionChange)="selectAccount($event)"
       >
-        @for (account of accountList(); track $index) {
+        @for (account of paymentAccountList(); track $index) {
         <mat-option [value]="account.accountNo"
           >{{ account.bankName }} - {{ account.accountNo }}</mat-option
         >
         }
       </mat-select>
       <mat-hint
-        >Available Balance is {{ availableBalanceOfSelectedAccount }}</mat-hint
+        >{{ "AVAILBLE_BALANCE" | translate }}
+        {{ availableBalanceOfSelectedAccount }}</mat-hint
       >
       @if(addTransactionForm.get('accountNo')?.hasError('required')) {
-      <mat-error>A/C No. is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     } @if(isTransfer) {
     <mat-form-field class="w-full mb-4">
-      <mat-label>Beneficiary A/C No.</mat-label>
+      <mat-label>{{ "BENEFICIARY_AC" | translate }}</mat-label>
       <mat-select formControlName="benificiaryAccountNumber">
         @for (account of beneficiaryAccountList(); track $index) {
         <mat-option [value]="account.accountNo"
@@ -63,26 +64,26 @@
       </mat-select>
       @if(addTransactionForm.get('benificiaryAccountNumber')?.hasError('required'))
       {
-      <mat-error>Beneficiary A/C No. is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     } @if(!isTransfer) {
     <mat-form-field class="w-full mb-4">
-      <mat-label>Payment Type</mat-label>
+      <mat-label>{{ "PAYMENT_TYPE" | translate }}</mat-label>
       <mat-select formControlName="paymentType">
         @for (payment of paymentTypeOptions; track $index) {
         <mat-option [value]="payment.value">{{
-          payment.label | translate
+          payment.label | uppercase | translate
         }}</mat-option>
         }
       </mat-select>
       @if(addTransactionForm.get('paymentType')?.hasError('required')) {
-      <mat-error>Payment Type is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     } @if(!isTransfer && paymentTypeFormValue == 'dps') {
     <mat-form-field class="w-full mb-4">
-      <mat-label>Select Dps</mat-label>
+      <mat-label>{{ "SELECT_DPS" | translate }}</mat-label>
       <mat-select formControlName="dpsId">
         @for (dps of dpsListByAccountNo; track $index) {
         <mat-option [value]="dps.id">{{ dps.dpsName }} </mat-option>
@@ -93,22 +94,26 @@
         }
       </mat-select>
       @if(addTransactionForm.get('dpsId')?.hasError('required')) {
-      <mat-error>Selection of Dps is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
     }
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>Amount</mat-label>
+      <mat-label>{{ "AMOUNT" | translate }}</mat-label>
       <input type="text" matInput formControlName="amount" />
       @if(addTransactionForm.get('amount')?.hasError('required')) {
-      <mat-error>Amount is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
       <mat-label>
-        {{ isTransfer ? "Transaction Date" : "Payment Date" }}
+        {{
+          isTransfer
+            ? ("TRANSFER_DATE" | translate)
+            : ("PAYMENT_DATE" | translate)
+        }}
       </mat-label>
       <input
         type="text"
@@ -124,23 +129,20 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #datePicker></mat-datepicker>
       @if(addTransactionForm.get('date')?.hasError('required')) {
-      <mat-error
-        >{{ isTransfer ? "Transaction Date" : "Payment Date" }} is
-        required</mat-error
-      >
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>Transaction Number</mat-label>
+      <mat-label>{{ "TRANSACTION_ID" | translate }}</mat-label>
       <input type="text" matInput formControlName="transactionNumber" />
       @if(addTransactionForm.get('transactionNumber')?.hasError('required')) {
-      <mat-error>Transaction Number is required</mat-error>
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field class="w-full mb-4">
-      <mat-label>Note</mat-label>
+      <mat-label>{{ "NOTE" | translate }}</mat-label>
       <textarea formControlName="note" matInput></textarea>
     </mat-form-field>
   </form>

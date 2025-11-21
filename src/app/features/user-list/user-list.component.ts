@@ -45,6 +45,8 @@ export interface IUserListResponse {
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent implements OnInit {
+  @ViewChild('headerCellTemplate', { static: true })
+  headerCellTemplate!: TemplateRef<any>;
   @ViewChild('displayNameCellTemplate', { static: true })
   displayNameCellTemplate!: TemplateRef<any>;
   @ViewChild('emailCellTemplate', { static: true })
@@ -97,49 +99,55 @@ export class UserListComponent implements OnInit {
   private initTable() {
     this.columns = [
       {
-        name: 'Name',
+        name: 'NAME',
         prop: 'displayName',
         sortable: false,
         width: 220,
         cellTemplate: this.displayNameCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Email',
+        name: 'EMAIL',
         prop: 'email',
         width: 220,
         sortable: false,
         cellTemplate: this.emailCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Phone Number',
+        name: 'PHONE_NUMBER',
         prop: 'phoneNumber',
         sortable: false,
         cellTemplate: this.phoneNumberCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Create Date',
+        name: 'CREATE_DATE',
         prop: 'createdAt',
         sortable: false,
         width: 200,
         cellTemplate: this.createdAtCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Status',
+        name: 'STATUS',
         prop: 'isActive',
         sortable: false,
         cellTemplate: this.statusCellTemplate,
+        headerTemplate: this.headerCellTemplate,
       },
       {
-        name: 'Actions',
+        name: 'ACTIONS',
         prop: 'id',
         sortable: false,
         cellTemplate: this.actionCellTemplate,
+        headerTemplate: this.headerCellTemplate,
         width: 250,
       },
     ];
   }
 
-  sendInvitation(row: any) {
+  activateUser(row: any) {
     const bodyText = this._translateService.instant(
       'ARE_YOU_SURE_WANT_TO_INVITE_THIS_USER'
     );

@@ -1,10 +1,10 @@
 <div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
   <div class="flex flex-col md:flex-row gap-4 justify-between">
     <div class="flex flex-col gap-1">
-      <span class="title-large">Transactions</span>
-      <span class="label-small text-gray-500 dark:text-gray-400"
-        >Find all the transactions here</span
-      >
+      <span class="title-large">{{ "TRANSACTIONS" | translate }}</span>
+      <span class="label-small text-gray-500 dark:text-gray-400">{{
+        "FIND_ALL_THE_TRANSACTION_HERE" | translate
+      }}</span>
     </div>
     <div class="flex flex-row gap-2">
       <button
@@ -14,17 +14,16 @@
         color="primary"
       >
         <mat-icon>wallet</mat-icon>
-        Transfer Money
+        {{ "TRANSFER_MONEY" | translate }}
       </button>
       <button
-        [allowedFor]="'admin'"
         matFab
         extended
         class="secondary"
         (click)="openCreateTransactionDialog({ isTransfer: false })"
       >
         <mat-icon>payment_arrow_down</mat-icon>
-        Make Payment
+        {{ "MAKE_PAYMENT" | translate }}
       </button>
     </div>
   </div>
@@ -35,7 +34,7 @@
       animationDuration="1000ms"
       mat-stretch-tabs="false"
     >
-      <mat-tab label="Transfer History">
+      <mat-tab label="{{ 'TRANFER_HISTORY' | translate }}">
         @if(isPlatformBrowser) {
         <div class="table-wrapper mt-6">
           <ngx-datatable
@@ -47,6 +46,10 @@
             [headerHeight]="50"
             [rowHeight]="'auto'"
             [scrollbarH]="true"
+            [messages]="{
+              emptyMessage: 'NO_DATA_TO_DISPLAY' | translate,
+              totalMessage: 'TOTAL' | translate
+            }"
             [footerHeight]="50"
             (activate)="onClickRow($event)"
           >
@@ -61,8 +64,7 @@
         </mat-paginator>
         }
       </mat-tab>
-      @if (shouldHide()) {
-      <mat-tab label="Payment History">
+      <mat-tab label="{{ 'PAYMENT_HISTORY' | translate }}">
         @if(isPlatformBrowser) {
         <div class="table-wrapper mt-6">
           <ngx-datatable
@@ -71,6 +73,10 @@
             [rows]="paymentTransactions()?.data"
             [columns]="paymentColumns"
             [columnMode]="'force'"
+            [messages]="{
+              emptyMessage: 'NO_DATA_TO_DISPLAY' | translate,
+              totalMessage: 'TOTAL' | translate
+            }"
             [headerHeight]="50"
             [rowHeight]="'auto'"
             [scrollbarH]="true"
@@ -89,10 +95,13 @@
 
         }
       </mat-tab>
-      }
     </mat-tab-group>
   </div>
 </div>
+
+<ng-template #headerCellTemplate let-column="column">
+  <span>{{ column.name | translate }}</span>
+</ng-template>
 
 <ng-template #senderDisplayNameCellTemplate let-value="value">
   <span class="body-medium text-amber-600">{{ value }}</span>
@@ -112,11 +121,11 @@
 <ng-template #statusCellTemplate let-value="value">
   @if (value == 'success') {
   <span class="text-green-600 dark:text-green-500">
-    {{ value | titlecase }}
+    {{ value | uppercase | translate }}
   </span>
   } @else {
   <span class="text-yellow-600 dark:text-amber-400">
-    {{ value | titlecase }}
+    {{ value | uppercase | translate }}
   </span>
   }
 </ng-template>

@@ -11,13 +11,17 @@
   <div class="flex flex-col gap-4">
     <div class="flex flex-row space-between items-center w-full gap-4">
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Source A/C</span>
+        <span class="body-small text-gray-400">{{
+          "SOURCE_AC" | translate
+        }}</span>
         <span class="body-large text-gray-600 dark:text-gray-300">{{
           transaction.sourceAc
         }}</span>
       </div>
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Sender Name</span>
+        <span class="body-small text-gray-400">{{
+          "SENDER_NAME" | translate
+        }}</span>
         <span class="body-large text-amber-600">{{
           transaction.senderDisplayName
         }}</span>
@@ -27,7 +31,9 @@
     @if(transaction.transactionType == transactionTypeEnum.TransferMoney) {
     <div class="flex flex-row space-between items-center w-full gap-4">
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Beneficiary A/C</span>
+        <span class="body-small text-gray-400">{{
+          "BENEFICIARY_AC" | translate
+        }}</span>
         <span class="body-large text-gray-600 dark:text-gray-300">{{
           transaction.destAc
         }}</span>
@@ -36,13 +42,15 @@
     } @if(transaction.transactionType == transactionTypeEnum.Payment) {
     <div class="flex flex-row space-between items-center w-full gap-4">
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Payment Type</span>
+        <span class="body-small text-gray-400">{{
+          "PAYMENT_TYPE" | translate
+        }}</span>
         <span class="body-large text-pink-600 dark:text-pink-500">{{
-          transaction.paymentType | titlecase
+          transaction.paymentType | uppercase | translate
         }}</span>
       </div>
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Dps</span>
+        <span class="body-small text-gray-400">{{ "DPS" | translate }}</span>
         <span class="body-large text-gray-600 dark:text-gray-300">{{
           transaction.dpsName
         }}</span>
@@ -52,13 +60,15 @@
 
     <div class="flex flex-row space-between items-center w-full gap-4">
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Amount</span>
+        <span class="body-small text-gray-400">{{ "AMOUNT" | translate }}</span>
         <span class="body-large text-gray-600 dark:text-gray-300">{{
-          transaction.amount
+          transaction.amount | taka
         }}</span>
       </div>
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Transaction ID</span>
+        <span class="body-small text-gray-400">{{
+          "TRANSACTION_ID" | translate
+        }}</span>
         <span class="body-large text-gray-600 dark:text-gray-300">{{
           transaction.transactionNo
         }}</span>
@@ -67,7 +77,9 @@
 
     <div class="flex flex-row space-between items-center w-full gap-4">
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Transfer Date</span>
+        <span class="body-small text-gray-400">{{
+          "TRANSFER_DATE" | translate
+        }}</span>
         <span class="body-large text-gray-600 dark:text-gray-300">{{
           transaction.transactionDate | date : "dd. MM. yyyy"
         }}</span>
@@ -77,11 +89,11 @@
         <span class="body-large">
           @if (transaction.status == 'success') {
           <span class="text-green-600 dark:text-green-500">
-            {{ transaction.status | titlecase }}
+            {{ transaction.status | uppercase | translate }}
           </span>
           } @else {
           <span class="text-yellow-600 dark:text-amber-400">
-            {{ transaction.status | titlecase }}
+            {{ transaction.status | uppercase | translate }}
           </span>
           }
         </span>
@@ -90,7 +102,7 @@
 
     <div class="flex flex-row space-between items-center w-full gap-4">
       <div class="flex flex-col w-full gap-1">
-        <span class="body-small text-gray-400">Note</span>
+        <span class="body-small text-gray-400">{{ "NOTE" | translate }}</span>
         <span class="body-large text-gray-600 dark:text-gray-300">{{
           transaction.note
         }}</span>

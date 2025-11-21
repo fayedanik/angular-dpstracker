@@ -12,7 +12,7 @@ import { SvgIconRegistryService } from './shared/services/svgIconRegistry.servic
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('dps-tracker-frontend');
+  protected readonly title = signal('Fintelligence');
   private translate = inject(TranslateService);
   private authService = inject(AuthService);
   constructor(

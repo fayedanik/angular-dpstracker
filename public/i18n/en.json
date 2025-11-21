@@ -12,8 +12,82 @@
     "TRANSACTION_DETAILS": "Transaction Details",
     "TRANSFER_MONEY": "Transfer Money",
     "MAKE_PAYMENT": "Make Payment",
-    "DPS_PAYMENT": "Dps Payment"
+    "DPS_PAYMENT": "Dps Payment",
+    "TERMS_AND_CONDITION": "Terms & Conditions",
+    "TEAM_BALANCE": "Team Balance",
+    "COMBINED_BALANCE_TILL_NOW": "Combined balance till now",
+    "YOUR_CONTRIBUTION": "Your contribution",
+    "LAST_MONTH": "Since last month",
+    "MATURITY_BALANCE": "Maturity Balance",
+    "MATURITY_DATE": "Maturity Date",
+    "ACCOUNT_NUMBER": "A/C No",
+    "BANK": "Bank",
+    "BRANCH": "Branch",
+    "BALANCE": "Balance",
+    "RECENT_TRANSACTIONS": "Recent Transactions",
+    "VIEW_ALL": "View all"
   },
+  "CONSTITUTION": {
+    "SECTION1_TITLE": "Main Goals and Objectives of the Association",
+    "S1": {
+      "LINE1": "To assist members in achieving financial self-reliance.",
+      "LINE2": "To create opportunities for savings and investment through interest-free business activities.",
+      "LINE3": "To establish mutual cooperation, good relations, transparency, and a sense of responsibility among the members."
+    },
+
+    "SECTION2_TITLE": "Membership Application Process",
+    "S2": {
+      "LINE1": "The application form must include name, address, mobile number, signature, and nominee's name.",
+      "LINE2": "The applicant must pay the required amount equivalent to the designated share value.",
+      "LINE3": "The applicant must accept membership with a long-term commitment and planning."
+    },
+
+    "SECTION3_TITLE": "Formation of the Executive Committee",
+    "S3": {
+      "LINE1": "A 5-member executive committee will be formed based on the opinions of the members.",
+      "LINE2": "Committee tenure: 1 (one) year.",
+      "LINE3": "Responsibilities: Administrative tasks, investment decisions, and policy-making."
+    },
+
+    "SECTION4_TITLE": "Profit and Loss Distribution",
+    "S4": {
+      "LINE1": "Any profit or loss of the association will be equally distributed among all members.",
+      "LINE2": "All members will be equally responsible for bearing profits and losses."
+    },
+
+    "SECTION5_TITLE": "Policy for Inclusion of New Members",
+    "S5": {
+      "LINE1": "A new person may be included as a member subject to approval by the majority of existing members.",
+      "LINE2": "A new member must collect the membership form after paying an amount equal to the accumulated capital of the designated share."
+    },
+
+    "SECTION6_TITLE": "Investment Policy",
+    "S6": {
+      "LINE1": "The accumulated funds will be invested in profitable and low-risk sectors.",
+      "LINE2": "The 5-member executive committee will explore potential investment sectors and analyze profitability and risks.",
+      "LINE3": "General members may provide advice regarding investments.",
+      "LINE4": "Final investment decisions must be taken in an emergency meeting with the presence of all members and after considering all opinions."
+    },
+
+    "SECTION7_TITLE": "Policy for Conducting and Modifying Activities",
+    "S7": {
+      "LINE1": "The association's activities will be carried out according to the established policies.",
+      "LINE2": "In unforeseen situations, majority-based decisions to protect members' interests will also be considered policy."
+    },
+
+    "SECTION8_TITLE": "Policy-Based Administration",
+    "S8": {
+      "LINE1": "All activities of the association will be conducted according to the policies specified and approved on official stamp documents."
+    }
+  },
+  "DASHBOARD": "Dashboard",
+  "MONITOR_FINANCIAL_ACTIVITY": "Monitor your financial activity",
+  "TRANSACTIONS": "Transactions",
+  "FIND_ALL_THE_TRANSACTION_HERE": "Find all the transactions here",
+  "DPS": "Dps",
+  "ACCOUNTS": "Accounts",
+  "MEMBERS": "Members",
+  "SETTINGS": "Settings",
   "ADD": "Add",
   "UPDATE": "Update",
   "CANCEL": "Cancel",
@@ -41,5 +115,70 @@
   "NO_DPS_FOUND_ASSOCIATED_WITH_ACCOUNT": "No Dps found",
   "ARE_YOU_SURE_WANT_TO_INVITE_THIS_USER": "Are you sure you want to activate this user?",
   "USER_CREATED_SUCCESSFULLY": "You have registered to the system succesfully. Please wait for admin approval.",
-  "ACCOUNT_ACTIVATED_SUCCESSFULLY": "Account has been activated"
+  "ACCOUNT_ACTIVATED_SUCCESSFULLY": "Account has been activated",
+  "JOINT": "Joint",
+  "PERSONAL": "Personal",
+  "TRANSFER_MONEY": "Transfer Money",
+  "MAKE_PAYMENT": "Make Payment",
+  "SOURCE_AC": "Source A/C",
+  "SENDER_NAME": "Sender Name",
+  "BENEFICIARY_AC": "Beneficiary A/C",
+  "AMOUNT": "Amount",
+  "TRANSFER_DATE": "Transfer Date",
+  "TRANSACTION_ID": "Transaction ID",
+  "STATUS": "Status",
+  "PAYMENT_TYPE": "Payment Type",
+  "TRANFER_HISTORY": "Transfer History",
+  "PAYMENT_HISTORY": "Payment History",
+  "TOTAL": "item(s) found",
+  "NO_DATA_TO_DISPLAY": "No data to display",
+  "SUCCESS": "Success",
+  "PENDING": "Pending",
+  "SELECT_ACCOUNT_NUMBER": "Select A/C No",
+  "FROM_ACCOUNT_NUMBER": "From A/C",
+  "THIS_FIELD_REQUIRED": "This field is mandatory",
+  "AVAILBLE_BALANCE": "Available Balance is",
+  "SELECT_DPS": "Select Dps",
+  "NOTE": "Note",
+  "PAYMENT_DATE": "Payment Date",
+  "OTHERS": "Others",
+  "DPS_NAME": "Dps Name",
+  "MONTHLY_DEPOSIT": "Monthly Installment",
+  "DURATION_MONTHS": "Duration(Months)",
+  "START_DATE": "Start Date",
+  "MATURITY_DATE": "Maturity Date",
+  "INTEREST_RATE": "Interest Rate",
+  "SELECT_OWNERS": "Select Owners",
+  "DPS_OWNERS": "Dps Owners",
+  "ACTIVE": "Active",
+  "UPCOMING": "Upcoming",
+  "EXPIRED": "Expired",
+  "VIEW_DETAILS": "View Details",
+  "VIEW_TERMS_AND_CONDITIONS": "View Terms & Conditions",
+  "DELETE_DPS": "Delete Dps",
+  "ACCOUNT_NO": "Account No",
+  "DPS_OVERVIEW": "Dps Overview",
+  "PAYING_FOR": "Paying For",
+  "BRANCH_NAME": "Branch Name",
+  "BALANCE": "Balance",
+  "ACCOUNT_TYPE": "Account Type",
+  "TOTAL_MEMBERS": "Total Members",
+  "EDIT_ACCOUNT": "Edit Account",
+  "DELETE_ACCOUNT": "Delete Account",
+  "SELECT_BANK": "Select Bank",
+  "SELECT_BRANCH": "Select Branch",
+  "SELECT_ACCOUNT_TYPE": "Select Account Type",
+  "AVAILABLE_BALANCE_1": "Available Balance",
+  "LIST_OF_ALL_MEMBERS": "List of all the members",
+  "NAME": "Name",
+  "EMAIL": "Email",
+  "PHONE_NUMBER": "Phone Number",
+  "CREATE_DATE": "Create Date",
+  "ACTIONS": "Actions",
+  "ACTIVATED_AT": "Activated At",
+  "NOT_ACTIVE": "In Active",
+  "DO_ACTIVE": "Activate Account",
+  "USER": "User",
+  "ADMIN": "Admin",
+  "ADD_MONEY": "Add Money"
 }

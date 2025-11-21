@@ -22,6 +22,7 @@ export class SvgIconRegistryService {
       'building_office',
       'right_panel_close',
       'arrow_up_square',
+      'heart',
     ];
 
     icons.forEach((icon) => {

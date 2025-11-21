@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import {
+  catchError,
+  forkJoin,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ISigninPayload } from '../../features/auth/login/interfaces/auth-payload.interface';
 import { ITokenResponse } from '../../features/auth/login/interfaces/auth-response.interface';
@@ -24,12 +32,17 @@ export class AuthService {
         withCredentials: true,
       })
       .pipe(
-        map((res) => {
+        tap((res) => {
           if (res?.data?.access_token) {
             this._accessToken.set(res.data.access_token);
-            this._userService.getUser().subscribe();
           }
-          return res;
+        }),
+        switchMap((res) => {
+          if (!res?.data?.access_token) return of(res);
+          return forkJoin({
+            user: this._userService.getUser(),
+            apps: this._userService.getApps(),
+          }).pipe(map(() => res));
         }),
         catchError((err) => {
           return of<ICommandResponse<ITokenResponse>>({

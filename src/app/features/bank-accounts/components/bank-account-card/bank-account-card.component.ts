@@ -6,6 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslatePipe } from '@ngx-translate/core';
 import { bankAccountTypeEnum } from '../../../../shared/consts/business.const';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
+import { TakaPipe } from '../../../../shared/pipes/taka-currency.pipe';
 
 @Component({
   selector: 'app-bank-account-card',
@@ -15,6 +16,8 @@ import { IBankAccount } from '../../../../shared/interfaces/bank-account.interfa
     MatIconModule,
     CommonModule,
     MatButtonModule,
+    TranslatePipe,
+    TakaPipe,
   ],
   templateUrl: './bank-account-card.component.html',
   styleUrl: './bank-account-card.component.scss',

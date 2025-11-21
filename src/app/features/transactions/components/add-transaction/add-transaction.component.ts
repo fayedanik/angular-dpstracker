@@ -161,6 +161,10 @@ export class AddTransactionComponent implements OnInit {
       : [];
   });
 
+  paymentAccountList = computed(() => {
+    return (this.accountList() || []).filter((x) => x.canUpdate);
+  });
+
   personalAccountList = computed(() => {
     return this.accountList()?.filter(
       (x) => x.accountType == accountType[0].value

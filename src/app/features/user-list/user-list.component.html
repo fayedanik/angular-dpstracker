@@ -1,8 +1,10 @@
 <div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
   <div class="flex flex-row justify-between">
     <div class="flex flex-col gap-1">
-      <span class="title-large">Members</span>
-      <span class="label-small text-gray-400">List of all the members</span>
+      <span class="title-large">{{ "MEMBERS" | translate }}</span>
+      <span class="label-small text-gray-400">{{
+        "LIST_OF_ALL_MEMBERS" | translate
+      }}</span>
     </div>
     <!-- <div class="hidden md:block">
       <button
@@ -32,6 +34,10 @@
       [rowHeight]="'auto'"
       [scrollbarH]="true"
       [footerHeight]="50"
+      [messages]="{
+        emptyMessage: 'NO_DATA_TO_DISPLAY' | translate,
+        totalMessage: 'TOTAL' | translate
+      }"
     >
     </ngx-datatable>
   </div>
@@ -45,14 +51,20 @@
   }
 </div>
 
+<ng-template #headerCellTemplate let-column="column">
+  <span>{{ column.name | translate }}</span>
+</ng-template>
+
 <ng-template #displayNameCellTemplate let-row="row" let-value="value">
   <div class="flex flex-col gap-1">
     <span class="font-bold">{{ value }}</span>
     <div class="flex flex-wrap gap-1">
       @if(hasTargetedRoles(row.roles, role.Admin)) {
-      <mat-chip class="success">{{ role.Admin | titlecase }}</mat-chip>
+      <mat-chip class="success">{{
+        role.Admin | uppercase | translate
+      }}</mat-chip>
       } @if(hasTargetedRoles(row.roles, role.User)) {
-      <mat-chip class="warn">{{ role.User | titlecase }}</mat-chip>
+      <mat-chip class="warn">{{ role.User | uppercase | translate }}</mat-chip>
       }
     </div>
   </div>
@@ -72,16 +84,16 @@
 
 <ng-template #statusCellTemplate let-value="value">
   @if(value) {
-  <span class="text-green-500">{{ "Active" | translate }}</span>
+  <span class="text-green-500">{{ "ACTIVE" | translate }}</span>
   } @else {
-  <span class="text-amber-600">{{ "Not Active" | translate }}</span>
+  <span class="text-amber-600">{{ "NOT_ACTIVE" | translate }}</span>
   }
 </ng-template>
 
 <ng-template #actionCellTemplate let-value="value" let-row="row">
   @if(row.isActive) {
-  <span class="flex flex-col gap-1" (click)="sendInvitation(value)">
-    <span class="text-gray-400"> {{ "Activated At " | translate }} </span>
+  <span class="flex flex-col gap-1" (click)="activateUser(value)">
+    <span class="text-gray-400"> {{ "ACTIVATED_AT" | translate }} </span>
     <span class="text-gray-600 dark:text-gray-300">
       {{ row.activationDate | date : "dd. MM. yyyy" }},
       {{ row.activationDate | date : "hh:mm a" }}
@@ -90,10 +102,10 @@
   } @else {
   <span
     class="text-red-700 dark:text-red-400 flex flex-row gap-1 select-none cursor-pointer"
-    (click)="sendInvitation(value)"
+    (click)="activateUser(value)"
   >
     <mat-icon svgIcon="arrow_up_square"></mat-icon>
-    Invite
+    {{ "DO_ACTIVE" | translate }}
   </span>
   }
 </ng-template>
