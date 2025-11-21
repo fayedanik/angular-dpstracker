@@ -1,4 +1,4 @@
 export const environment = {
   produciton: true,
-  apiBaseUrl: 'http://my-app.com',
+  apiBaseUrl: 'https://fintelligence-f0he.onrender.com',
 };
