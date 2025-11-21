@@ -2,11 +2,7 @@
   class="flex flex-row justify-between gap-4 w-full sticky top-0 z-9999"
 >
   <button matIconButton (click)="toggleSideNav.emit()">
-    @if(isOpendedSideNav()) {
-    <mat-icon svgIcon="left_panel_close"></mat-icon>
-    } @else {
-    <mat-icon svgIcon="right_panel_close"></mat-icon>
-    }
+    <mat-icon>menu</mat-icon>
   </button>
   <span class="title-small text-gray-500 hidden md:block">{{
     dateNow() | date : "mediumDate"

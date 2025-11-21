@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { catchError, of } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
 import { UserService } from '../../../core/services/user.service';
 import { ErrorMessageConst } from '../../../shared/consts/errorMessage.const';
 import { MaterialModule } from '../../../shared/modules/material.module';
@@ -13,7 +14,13 @@ import { passwordsMatchValidator } from '../../../shared/utils/form-Validator';
 
 @Component({
   selector: 'app-signup',
-  imports: [MaterialModule, CommonModule, RouterModule, MatIconModule],
+  imports: [
+    MaterialModule,
+    CommonModule,
+    RouterModule,
+    MatIconModule,
+    MatProgressBarModule,
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
@@ -23,14 +30,11 @@ export class SignupComponent {
   private readonly _userService = inject(UserService);
   private readonly _toastService = inject(ToastMessageService);
   private readonly _translateService = inject(TranslateService);
+  isLoading = signal(false);
   readonly passwordStrengthRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   hidePasswod = signal(true);
-  constructor() {
-    this.signupForm.valueChanges.subscribe((res) => {
-      console.log(this.signupForm);
-    });
-  }
+  constructor() {}
   signupForm = this._fb.nonNullable.group(
     {
       firstName: ['', [Validators.required]],
@@ -61,7 +65,12 @@ export class SignupComponent {
     payload.phoneNumber = `+880${payload.phoneNumber}`;
     this._userService
       .createUser(payload)
-      .pipe(catchError((err) => of(false)))
+      .pipe(
+        catchError((err) => of(false)),
+        finalize(() => {
+          this.isLoading.set(false);
+        })
+      )
       .subscribe((res) => {
         if (!res) {
           this._toastService.showFailed(

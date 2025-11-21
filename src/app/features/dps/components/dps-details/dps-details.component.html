@@ -131,11 +131,17 @@
               }
             </div>
           </div>
-          @if(dps.canUpdate) {
-          <button mat-icon-button (click)="addMoneyToDps(owner)">
-            <mat-icon>add_circle</mat-icon>
-          </button>
-          }
+          <div class="flex flex-col gap-1">
+            @if(dps.canUpdate) {
+            <button mat-icon-button (click)="addMoneyToDps(owner)">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+            }
+            <span class="text-gray-500 dark:text-gray-600"
+              >{{ (owner.installmentDates ?? []).length }} /
+              {{ dps.durationMonths }}</span
+            >
+          </div>
         </span>
         }
       </div>

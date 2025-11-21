@@ -42,6 +42,7 @@ import {
   paymentType,
 } from '../../../../shared/consts/business.const';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
+import { DigitsOnlyDirective } from '../../../../shared/directives/digits-only.directive';
 import { IDps } from '../../../../shared/interfaces/dps.interface';
 import { IMakePaymentPayload } from '../../../../shared/interfaces/make-payment-payload.interface';
 import { ITransferMoneyPayload } from '../../../../shared/interfaces/transfer-money-payload.interface';
@@ -63,6 +64,7 @@ import { normalizeDateToUTC } from '../../../../shared/utils/date-utils';
     MatDividerModule,
     TranslatePipe,
     MatDatepickerModule,
+    DigitsOnlyDirective,
   ],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.scss',

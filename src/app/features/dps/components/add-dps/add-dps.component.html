@@ -47,6 +47,7 @@
       <mat-label>{{ "DURATION_MONTHS" | translate }}</mat-label>
       <input
         type="text"
+        [attr.inputmode]="'numeric'"
         matInput
         appDigitsOnly
         maxlength="3"

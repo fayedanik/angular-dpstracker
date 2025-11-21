@@ -101,7 +101,14 @@
 
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ "AMOUNT" | translate }}</mat-label>
-      <input type="text" matInput formControlName="amount" />
+      <input
+        type="text"
+        [attr.inputmode]="'numeric'"
+        appDigitsOnly
+        maxlength="8"
+        matInput
+        formControlName="amount"
+      />
       @if(addTransactionForm.get('amount')?.hasError('required')) {
       <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
