@@ -130,14 +130,16 @@ body {
   );
 }
 
-@include mat.progress-bar-overrides(
-  (
-    active-indicator-color: orange,
-    track-shape: 8px 8px,
-    track-height: 12px,
-    active-indicator-height: 12px,
-  )
-);
+.fat {
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-color: orange,
+      track-shape: 8px 8px,
+      track-height: 12px,
+      active-indicator-height: 12px,
+    )
+  );
+}
 
 @include mat.progress-spinner-overrides(
   (

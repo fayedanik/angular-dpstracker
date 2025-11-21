@@ -1,11 +1,10 @@
+@if(isLoading()) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 <div class="flex flex-row items-center justify-center min-h-screen">
   <div class="md:basis-2/3 flex items-center justify-center h-full z-10">
     <div class="w-full max-w-md p-8 rounded">
-      <img
-        src="../../../../assets/images/logo.png"
-        alt="Logo"
-        class="-mt-4 -ml-2"
-      />
+      <img src="assets/images/logo.png" alt="Logo" class="-mt-4 -ml-2" />
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="-mt-14">
         <mat-form-field class="w-full mb-4">
           <mat-label>Email</mat-label>

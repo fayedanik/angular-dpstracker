@@ -121,6 +121,7 @@
           <div class="flex flex-col w-[90%] gap-4">
             <span class="body-medium">{{ owner.displayName }}</span>
             <mat-progress-bar
+              class="fat"
               mode="determinate"
               [value]="getOwnerInstallmentPercentageAmount(dps, owner)"
             ></mat-progress-bar>
