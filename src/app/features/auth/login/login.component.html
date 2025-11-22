@@ -29,7 +29,7 @@
         <button
           matButton="filled"
           class="w-full"
-          [disabled]="loginForm.invalid"
+          [disabled]="loginForm.invalid || isLoading()"
         >
           {{ "APP.LOGIN" | translate }}
         </button>

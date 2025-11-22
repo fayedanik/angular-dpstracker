@@ -7,6 +7,7 @@ import {
   inject,
   OnInit,
   Optional,
+  signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -31,9 +32,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { catchError, map, of } from 'rxjs';
+import { catchError, finalize, map, of } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
 import { DpsService } from '../../../../core/services/dps.service';
 import { TransactionService } from '../../../../core/services/transaction.service';
@@ -65,6 +68,8 @@ import { normalizeDateToUTC } from '../../../../shared/utils/date-utils';
     TranslatePipe,
     MatDatepickerModule,
     DigitsOnlyDirective,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.scss',
@@ -108,6 +113,15 @@ export class AddTransactionComponent implements OnInit {
   addTransactionForm!: FormGroup<AddTransactionForm>;
 
   readonly paymentTypeOptions = paymentType;
+
+  isSubmitting = signal(false);
+
+  isLoading = computed(
+    () =>
+      this.isSubmitting() ||
+      this._dpsListResponse.isLoading() ||
+      this._accountListResponse.isLoading()
+  );
 
   ngOnInit(): void {
     this.initForm();
@@ -192,11 +206,13 @@ export class AddTransactionComponent implements OnInit {
       ErrorMessageConst.SOMETHING_WENT_WRONG
     );
     const payload = this.getPayloadOfTransferMoney();
+    this.isSubmitting.set(true);
     return this._transactionService
       .transferMoney(payload)
       .pipe(
         map((res) => res?.success),
-        catchError((err) => of(false))
+        catchError((err) => of(false)),
+        finalize(() => this.isSubmitting.set(false))
       )
       .subscribe((res) => {
         if (res) {
@@ -216,11 +232,13 @@ export class AddTransactionComponent implements OnInit {
       ErrorMessageConst.SOMETHING_WENT_WRONG
     );
     const payload = this.getPayloadOfMakePayment();
+    this.isSubmitting.set(true);
     return this._transactionService
       .makePayment(payload)
       .pipe(
         map((res) => res?.success),
-        catchError((err) => of(false))
+        catchError((err) => of(false)),
+        finalize(() => this.isSubmitting.set(false))
       )
       .subscribe((res) => {
         if (res) {

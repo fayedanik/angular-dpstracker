@@ -2,6 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { catchError, map, of } from 'rxjs';
@@ -25,6 +26,7 @@ import { TermsAndConditionsComponent } from '../terms-and-conditions/terms-and-c
     MatButtonModule,
     DpsCardComponent,
     NoDataViewComponent,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './dps-list.component.html',
   styleUrl: './dps-list.component.scss',
@@ -45,10 +47,12 @@ export class DpsListComponent {
       : [];
   });
 
+  isLoading = computed(() => this._dpsListResponse.isLoading());
+
   addDps() {
     if (this._platformDetectorService.isPlaformMobile) {
       this._bottomSheet
-        .open(AddDpsComponent)
+        .open(AddDpsComponent, { autoFocus: false })
         .afterDismissed()
         .subscribe((res) => {
           if (!res) return;

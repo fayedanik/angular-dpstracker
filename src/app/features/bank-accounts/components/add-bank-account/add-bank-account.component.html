@@ -1,3 +1,6 @@
+@if (isLoading()) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 <div
   mat-dialog-title
   class="header-container"
@@ -90,10 +93,17 @@
   </button>
   <button
     matButton="filled"
-    [disabled]="addBankAccountForm.invalid || !addBankAccountForm.dirty"
+    [disabled]="
+      addBankAccountForm.invalid || !addBankAccountForm.dirty || isSubmitting()
+    "
     type="submit"
     (click)="addUpdateTransaction()"
   >
-    {{ isUpdate ? ("UPDATE" | translate) : ("ADD" | translate) }}
+    <div class="flex flex-row gap-2">
+      {{ isUpdate ? ("UPDATE" | translate) : ("ADD" | translate) }}
+      @if(isSubmitting()) {
+      <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </div>
   </button>
 </mat-dialog-actions>

@@ -92,11 +92,13 @@
 
 <ng-template #actionCellTemplate let-value="value" let-row="row">
   @if(row.isActive) {
-  <span class="flex flex-col gap-1" (click)="activateUser(value)">
+  <span class="flex flex-col gap-1">
     <span class="text-gray-400"> {{ "ACTIVATED_AT" | translate }} </span>
     <span class="text-gray-600 dark:text-gray-300">
+      @if(row.activationDate) {
       {{ row.activationDate | date : "dd. MM. yyyy" }},
       {{ row.activationDate | date : "hh:mm a" }}
+      } @else { - }
     </span>
   </span>
   } @else {

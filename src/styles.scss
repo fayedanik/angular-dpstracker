@@ -130,6 +130,12 @@ body {
   );
 }
 
+@include mat.progress-bar-overrides(
+  (
+    active-indicator-color: orange,
+  )
+);
+
 .fat {
   @include mat.progress-bar-overrides(
     (

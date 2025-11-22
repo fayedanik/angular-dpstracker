@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, Optional } from '@angular/core';
+import { Component, computed, inject, Optional, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -22,9 +22,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, finalize, of, tap } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
 import { DpsService } from '../../../../core/services/dps.service';
 import { ErrorMessageConst } from '../../../../shared/consts/errorMessage.const';
@@ -48,6 +50,8 @@ import { ToastMessageService } from '../../../../shared/services/toast-message.s
     MatBottomSheetModule,
     MatDatepickerModule,
     DigitsOnlyDirective,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   templateUrl: './add-dps.component.html',
   styleUrl: './add-dps.component.scss',
@@ -69,6 +73,11 @@ export class AddDpsComponent {
       ? this._accountListResponse.value().data?.filter((x) => x.canUpdate)
       : [];
   });
+
+  isSubmitting = signal(false);
+  isLoading = computed(
+    () => this.isSubmitting() || this._accountListResponse.isLoading()
+  );
 
   addDpsForm: FormGroup<AddDpsForm> = this._fb.group<AddDpsForm>({
     dpsName: this._fb.control('', {
@@ -126,6 +135,7 @@ export class AddDpsComponent {
       ErrorMessageConst.SOMETHING_WENT_WRONG
     );
     const payload = this.getPayloadForAddDps();
+    this.isSubmitting.set(true);
     this._dpsService
       .addDps(payload)
       .pipe(
@@ -140,6 +150,9 @@ export class AddDpsComponent {
         catchError((err) => {
           this._toastMessageService.showFailed(failedMessage);
           return of(null);
+        }),
+        finalize(() => {
+          this.isSubmitting.set(false);
         })
       )
       .subscribe();

@@ -1,3 +1,6 @@
+@if (isLoading()) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 <div
   mat-dialog-title
   class="header-container"
@@ -121,8 +124,18 @@
     {{ "CLOSE" | translate }}
   </button>
   @if(transaction.status != 'success' && shouldVisible()) {
-  <button matButton="filled" type="submit" (click)="updateStatus()">
-    {{ "CONFIRM" | translate }}
+  <button
+    matButton="filled"
+    type="submit"
+    (click)="updateStatus()"
+    [disabled]="isSubmitting()"
+  >
+    <div class="flex flex-row gap-2">
+      <span>{{ "CONFIRM" | translate }}</span>
+      @if(isSubmitting()) {
+      <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </div>
   </button>
   }
 </mat-dialog-actions>

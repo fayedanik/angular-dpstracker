@@ -1,4 +1,7 @@
-<div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
+<div
+  class="w-full p-4 flex flex-col gap-4 relative"
+  [animate.enter]="'enter-animation'"
+>
   <div class="flex flex-col md:flex-row gap-4 justify-between">
     <div class="flex flex-col gap-1">
       <span class="title-large">{{ "TRANSACTIONS" | translate }}</span>
@@ -28,7 +31,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="relative">
     <mat-tab-group
       dynamicHeight
       animationDuration="1000ms"
@@ -97,6 +100,13 @@
       </mat-tab>
     </mat-tab-group>
   </div>
+  @if(isLoading()) {
+  <div
+    class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-100"
+  >
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </div>
+  }
 </div>
 
 <ng-template #headerCellTemplate let-column="column">

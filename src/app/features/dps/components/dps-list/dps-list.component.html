@@ -19,13 +19,22 @@
       </button>
     </div>
   </div>
-  @if (dpslist.length > 0) {
-  <div class="card-container">
-    @for (dps of dpslist; track $index) {
-    <app-dps-card [dpsIn]="dps" (deleteDps)="deleteDps(dps)" (viewTermsAndCondition)="viewTermsAndCondition()"/>
-    }
+
+  @if (isLoading()) {
+  <div class="flex justify-center items-center w-full">
+    <mat-spinner [diameter]="40"></mat-spinner>
   </div>
   }@else {
-  <app-no-data-view />
+  <div class="card-container">
+    @for (dps of dpslist; track $index) {
+    <app-dps-card
+      [dpsIn]="dps"
+      (deleteDps)="deleteDps(dps)"
+      (viewTermsAndCondition)="viewTermsAndCondition()"
+    />
+    } @empty {
+    <app-no-data-view />
+    }
+  </div>
   }
 </div>

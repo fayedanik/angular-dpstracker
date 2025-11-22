@@ -14,6 +14,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
@@ -30,10 +31,8 @@ import {
   Role,
   TransactionTypeEnum,
 } from '../../shared/consts/business.const';
-import { AppAllowedForDirectivce } from '../../shared/directives/allowed-for.directive';
 import { IGetTransactionQueryPayload } from '../../shared/interfaces/get-transaction-query.payload.interface';
 import { ITransaction } from '../../shared/interfaces/transaction.interface';
-import { TakaPipe } from '../../shared/pipes/taka-currency.pipe';
 import { DialogRootService } from '../../shared/services/dialog-root.service';
 import { PlatformDetectorService } from '../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../shared/services/toast-message.service';
@@ -47,10 +46,9 @@ import { ViewTransactionDetailsComponent } from './components/view-transaction-d
     NgxDatatableModule,
     CommonModule,
     MatTabsModule,
-    AppAllowedForDirectivce,
     MatPaginatorModule,
     TranslatePipe,
-    TakaPipe,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss',
@@ -96,7 +94,7 @@ export class TransactionsComponent implements OnInit {
     this._transactionService.getTransactions(
       this._transferMoneyTransactionQueryPayload
     );
-  private readonly _paymentTrasnactionsResponse =
+  private readonly _paymentTransactionsResponse =
     this._transactionService.getTransactions(
       this._paymentTransactionQueryPayload
     );
@@ -113,8 +111,8 @@ export class TransactionsComponent implements OnInit {
 
   paymentPageLimit = () => this._paymentTransactionQueryPayload().pageLimit;
   paymentTransactions = computed(() => {
-    return this._paymentTrasnactionsResponse.hasValue()
-      ? this._paymentTrasnactionsResponse.value()
+    return this._paymentTransactionsResponse.hasValue()
+      ? this._paymentTransactionsResponse.value()
       : null;
   });
 
@@ -124,6 +122,12 @@ export class TransactionsComponent implements OnInit {
       ? this._dpsListResponse.value().data
       : [];
   });
+
+  isLoading = computed(
+    () =>
+      this._transferMoneyTrasnactionsResponse.isLoading() ||
+      this._paymentTransactionsResponse.isLoading()
+  );
 
   transferMoneyColumns: TableColumn[] = [];
 
@@ -276,6 +280,7 @@ export class TransactionsComponent implements OnInit {
       this._bottomSheet
         .open(AddTransactionComponent, {
           data: data,
+          autoFocus: false,
         })
         .afterDismissed()
         .subscribe((res) => {
@@ -333,7 +338,7 @@ export class TransactionsComponent implements OnInit {
       });
     } else {
       setTimeout(() => {
-        const reloaded = this._paymentTrasnactionsResponse.reload();
+        const reloaded = this._paymentTransactionsResponse.reload();
         if (reloaded) this.paymentListTable.recalculate();
       });
     }

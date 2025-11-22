@@ -1,3 +1,6 @@
+@if (isLoading()) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 <div
   mat-dialog-title
   class="header-container"
@@ -124,10 +127,15 @@
   </button>
   <button
     matButton="filled"
-    [disabled]="addDpsForm.invalid || !addDpsForm.dirty"
+    [disabled]="addDpsForm.invalid || !addDpsForm.dirty || isSubmitting()"
     type="submit"
     (click)="addDps()"
   >
-    {{ "CREATE" | translate }}
+    <div class="flex flex-row gap-2">
+      <span>{{ "CREATE" | translate }}</span>
+      @if(isSubmitting()) {
+      <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </div>
   </button>
 </mat-dialog-actions>

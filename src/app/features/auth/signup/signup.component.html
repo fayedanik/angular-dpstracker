@@ -98,7 +98,7 @@
         <button
           matButton="filled"
           class="w-full"
-          [disabled]="signupForm.invalid"
+          [disabled]="signupForm.invalid || isLoading()"
         >
           Register
         </button>

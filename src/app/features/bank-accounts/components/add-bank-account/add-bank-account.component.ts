@@ -31,9 +31,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, finalize, of, tap } from 'rxjs';
 import { BankAccountService } from '../../../../core/services/bank-account.service';
 import { UserService } from '../../../../core/services/user.service';
 import {
@@ -51,7 +53,6 @@ import {
 } from '../../../../shared/interfaces/bank-list-response.interface';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
-
 @Component({
   selector: 'app-add-bank-account',
   imports: [
@@ -67,6 +68,8 @@ import { ToastMessageService } from '../../../../shared/services/toast-message.s
     MatSelectModule,
     MatBottomSheetModule,
     DigitsOnlyDirective,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   templateUrl: './add-bank-account.component.html',
   styleUrl: './add-bank-account.component.scss',
@@ -115,6 +118,9 @@ export class AddBankAccountComponent implements OnInit {
 
   readonly accountType = accountType;
   readonly accountTypeEnum = bankAccountTypeEnum;
+
+  isSubmitting = signal(false);
+  isLoading = computed(() => this.isSubmitting() || this._bankList.isLoading());
 
   user = inject(UserService).User;
 
@@ -175,6 +181,7 @@ export class AddBankAccountComponent implements OnInit {
       ErrorMessageConst.SOMETHING_WENT_WRONG
     );
     const payload = this.getPayloadForAddUpdateAccount();
+    this.isSubmitting.set(true);
     this.bindCall(payload)
       .pipe(
         tap((res) => {
@@ -188,6 +195,9 @@ export class AddBankAccountComponent implements OnInit {
         catchError((err) => {
           this._toastMessageService.showFailed(failedMessage);
           return of(null);
+        }),
+        finalize(() => {
+          this.isSubmitting.set(false);
         })
       )
       .subscribe();

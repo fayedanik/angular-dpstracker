@@ -29,7 +29,11 @@
         </button>
       </div>
     </div>
-    @if (accounts.length > 0) {
+    @if(isLoadingAccountList()) {
+    <div class="flex justify-center items-center w-full">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+    } @else {
     <div class="card-container">
       @for (account of accounts; track $index) {
       <app-bank-account-card
@@ -38,10 +42,10 @@
         (updateAccount)="updateBankAccount(account)"
         (deleteAccount)="deleteBankAccount(account)"
       />
+      } @empty {
+      <app-no-data-view />
       }
     </div>
-    } @else {
-    <app-no-data-view />
     }
   </div>
 </ng-template>

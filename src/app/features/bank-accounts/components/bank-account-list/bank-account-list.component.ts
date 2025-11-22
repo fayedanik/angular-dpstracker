@@ -100,6 +100,8 @@ export class BankAccountListComponent {
     return users;
   });
 
+  isLoadingAccountList = computed(() => this._accountListResponse.isLoading());
+
   accountList = computed(() => {
     return this._accountListResponse.hasValue() &&
       (this._accountListResponse.value().data || []).length > 0
@@ -115,24 +117,34 @@ export class BankAccountListComponent {
           data: {
             account: data,
           },
+          autoFocus: false,
         })
         .afterDismissed()
-        .subscribe(() => {
+        .subscribe((res) => {
+          if (!res) return;
           this._accountListResponse.reload();
         });
     } else {
       this._dialogRootService
         .openDialog(AddBankAccountComponent, { data: { account: data } })
         .afterClosed()
-        .subscribe(() => {
+        .subscribe((res) => {
+          if (!res) return;
           this._accountListResponse.reload();
         });
     }
   }
 
   deleteBankAccount(data: IBankAccount) {
+    const deleteAccountConfimrationMsg = this._translateService.instant(
+      ErrorMessageConst.DELETE_ACCOUNT_CONFIRMATION_BODY_TEXT
+    );
     this._dialogRootService
-      .openDialog(ConfirmationModalComponent)
+      .openDialog(ConfirmationModalComponent, {
+        data: {
+          bodyText: deleteAccountConfimrationMsg,
+        },
+      })
       .afterClosed()
       .subscribe((res) => {
         if (res) {

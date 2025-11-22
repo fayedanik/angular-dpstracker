@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Inject } from '@angular/core';
+import { Component, computed, inject, Inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -8,8 +8,10 @@ import {
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { catchError, map, of } from 'rxjs';
+import { catchError, finalize, map, of } from 'rxjs';
 import { TransactionService } from '../../../../core/services/transaction.service';
 import { UserService } from '../../../../core/services/user.service';
 import {
@@ -32,6 +34,8 @@ import { ToastMessageService } from '../../../../shared/services/toast-message.s
     TranslatePipe,
     MatDialogModule,
     TakaPipe,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   templateUrl: './view-transaction-details.component.html',
   styleUrl: './view-transaction-details.component.scss',
@@ -43,6 +47,11 @@ export class ViewTransactionDetailsComponent {
   private readonly _transactionService = inject(TransactionService);
   private readonly _translateService = inject(TranslateService);
   private readonly _toastMessageService = inject(ToastMessageService);
+
+  isSubmitting = signal(false);
+
+  isLoading = computed(() => this.isSubmitting());
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public transaction: ITransaction,
     private readonly _dialogRef: MatDialogRef<ViewTransactionDetailsComponent>
@@ -68,11 +77,13 @@ export class ViewTransactionDetailsComponent {
     const failedMessage = this._translateService.instant(
       ErrorMessageConst.SOMETHING_WENT_WRONG
     );
+    this.isSubmitting.set(false);
     this._transactionService
       .updateStatus(this.transaction.id)
       .pipe(
         map((res) => res?.success),
-        catchError((err) => of(false))
+        catchError((err) => of(false)),
+        finalize(() => this.isSubmitting.set(false))
       )
       .subscribe((res) => {
         if (res) {
