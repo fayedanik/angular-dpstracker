@@ -178,8 +178,8 @@ body {
 .success {
   @include mat.chips-overrides(
     (
-      label-text-color: green,
-      outline-color: green,
+      label-text-color: rgb(106, 203, 106),
+      outline-color: rgb(45, 177, 45),
     )
   );
 }

@@ -1,0 +1,18 @@
+.outer-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.inner-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--mat-sys-surface-bright);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

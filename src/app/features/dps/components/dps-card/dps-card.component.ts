@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AvatarComponent } from '../../../../shared/components/avatar/avatar.component';
 import { IDps } from '../../../../shared/interfaces/dps.interface';
+import { TakaPipe } from '../../../../shared/pipes/taka-currency.pipe';
 
 @Component({
   selector: 'app-dps-card',
@@ -21,6 +22,7 @@ import { IDps } from '../../../../shared/interfaces/dps.interface';
     MatIconModule,
     MatMenuModule,
     TranslatePipe,
+    TakaPipe,
   ],
   templateUrl: './dps-card.component.html',
   styleUrl: './dps-card.component.scss',

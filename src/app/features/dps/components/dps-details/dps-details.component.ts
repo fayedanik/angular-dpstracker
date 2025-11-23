@@ -12,7 +12,9 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { DpsService } from '../../../../core/services/dps.service';
 import { AvatarComponent } from '../../../../shared/components/avatar/avatar.component';
 import { NoDataViewComponent } from '../../../../shared/components/no-data-view/no-data-view.component';
+import { ProgressSpinnerComponent } from '../../../../shared/components/progress-spinner/progress-spinner.component';
 import { IDps, IDpsOwner } from '../../../../shared/interfaces/dps.interface';
+import { TakaPipe } from '../../../../shared/pipes/taka-currency.pipe';
 import { DialogRootService } from '../../../../shared/services/dialog-root.service';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { DpsAddMoneyComponent } from '../dps-add-money/dps-add-money.component';
@@ -29,6 +31,8 @@ import { DpsAddMoneyComponent } from '../dps-add-money/dps-add-money.component';
     AvatarComponent,
     MatProgressBarModule,
     MatChipsModule,
+    ProgressSpinnerComponent,
+    TakaPipe,
   ],
   templateUrl: './dps-details.component.html',
   styleUrl: './dps-details.component.scss',
@@ -71,6 +75,7 @@ export class DpsDetailsComponent {
             dps: this.dpsRes(),
             owner: owner,
           },
+          autoFocus: false,
         })
         .afterDismissed()
         .subscribe(() => {
@@ -93,15 +98,16 @@ export class DpsDetailsComponent {
 
   getOwnerInstallmentPercentageAmount(dps: IDps, owner: IDpsOwner) {
     return (
-      ((owner.amountPaid ?? 0) / (dps.monthlyAmount * dps.durationMonths)) * 100
+      ((owner.amountPaid ?? 0) /
+        (Math.ceil(dps.monthlyAmount / (dps.dpsOwners.length ?? 1)) *
+          dps.durationMonths)) *
+      100
     );
   }
 
   getTotalInstallPercentageAmount(dps: IDps) {
     return (
-      ((this.totalAmountPaid() ?? 0) /
-        (dps.monthlyAmount * dps.durationMonths * dps.dpsOwners.length)) *
-      100
+      ((dps.totalDeposit ?? 0) / (dps.monthlyAmount * dps.durationMonths)) * 100
     );
   }
 

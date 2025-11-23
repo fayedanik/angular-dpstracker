@@ -1,3 +1,6 @@
+@if (isLoading()) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 <div
   mat-dialog-title
   class="header-container"
@@ -25,24 +28,41 @@
     </mat-form-field>
 
     <mat-form-field class="w-full">
-      <mat-label>
-        {{ "PAYMENT_DATE" | translate }}
-      </mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="paymentDate"
-        [matDatepicker]="datePicker"
-        [min]="minDate"
-        [max]="todayDate"
-      />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="datePicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #datePicker></mat-datepicker>
-      @if(dpsAddMoneyForm.get('paymentDate')?.hasError('required')) {
+      <mat-label>{{ "SELECT_YEAR" | translate }}</mat-label>
+      <mat-select
+        formControlName="selectYear"
+        (selectionChange)="changeYear($event)"
+        #selectYear
+      >
+        @for (year of years; track $index) {
+        <mat-option [value]="year">{{ year }}</mat-option>
+        }
+      </mat-select>
+      @if(dpsAddMoneyForm.get('selectYear')?.hasError('required')) {
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>{{ "SELECT_MONTH" | translate }}</mat-label>
+      <mat-select formControlName="selectMonth">
+        @for (idx of monthIdx; track $index) {
+        <mat-option
+          [value]="idx"
+          [disabled]="
+            isPaidAlready(selectYear.value, idx) ||
+            isAhedOfFuture(selectYear.value, idx)
+          "
+          >{{ months[idx].en }}
+          @if(isPaidAlready(selectYear.value, idx)) {
+          <span class="text-green-600 label-medium">{{
+            "PAID" | translate
+          }}</span>
+          }
+        </mat-option>
+        }
+      </mat-select>
+      @if(dpsAddMoneyForm.get('selectMonth')?.hasError('required')) {
       <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
@@ -54,10 +74,17 @@
   </button>
   <button
     matButton="filled"
-    [disabled]="dpsAddMoneyForm.invalid || !dpsAddMoneyForm.dirty"
+    [disabled]="
+      dpsAddMoneyForm.invalid || !dpsAddMoneyForm.dirty || isLoading()
+    "
     type="submit"
     (click)="addDpsMoney()"
   >
-    {{ "ADD" | translate }}
+    <div class="flex flex-row gap-2">
+      <span>{{ "ADD" | translate }}</span>
+      @if(isLoading()) {
+      <mat-spinner [diameter]="20"></mat-spinner>
+      }
+    </div>
   </button>
 </mat-dialog-actions>

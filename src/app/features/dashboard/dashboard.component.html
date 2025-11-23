@@ -1,4 +1,4 @@
-@let jAccount = jointAccount();
+@let personalAccount = personalAccounts();
 <div class="w-full p-4 flex flex-col gap-4" [animate.enter]="'enter-animation'">
   <div class="flex flex-col gap-1">
     <span class="title-large">{{ "DASHBOARD" | translate }}</span>
@@ -9,99 +9,237 @@
 
   <div class="flex flex-col md:flex-row gap-4">
     <div class="w-full md:w-[70%] flex flex-col gap-4">
-      @for (dps of dpsList(); track $index) {
+      @for(account of jointAccounts(); track $index) {
       <div class="dashboard-chip rounded-xl p-4 w-full flex flex-col gap-4">
-        <span class="body-large"
-          >{{ dps.dpsName }} - {{ dps.dpsOwners.length }}
-          {{ "MEMBERS" | translate }} ({{ dps.startDate | date : "MMM yyyy" }} -
-          {{ dps.maturityDate | date : "MMM yyy" }})</span
+        <div
+          class="flex flex-col md:flex-row gap-4 items-center md:justify-between"
         >
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div
-            class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
-          >
-            <span class="flex gap-3 justify-start items-center">
-              <mat-icon class="text-primary">account_balance</mat-icon>
-              <span class="body-large">{{
-                "APP.TEAM_BALANCE" | translate
+          <div class="flex flex-row gap-4 items-start">
+            <div class="flex flex-col gap-4">
+              <span class="text-gray-400 dark:text-gray-300">{{
+                "APP.ACCOUNT_NUMBER" | translate
               }}</span>
-            </span>
-            <span class="flex flex-row gap-1 justify-between items-center">
-              <span class="title-medium">{{
-                getTotalDeposit(dps) | taka
+              <span class="text-gray-400 dark:text-gray-300">{{
+                "APP.BANK" | translate
               }}</span>
-              <mat-spinner
-                class="relative"
-                [mode]="'determinate'"
-                [diameter]="40"
-                [value]="getTotalInstallmentsPercentageAmount(dps)"
-                [strokeWidth]="10"
-              ></mat-spinner>
-            </span>
-
-            <span class="text-gray-400 dark:text-gray-400">{{
-              "APP.COMBINED_BALANCE_TILL_NOW" | translate
-            }}</span>
-          </div>
-          <div
-            class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
-          >
-            <span class="flex gap-3 justify-start items-center">
-              <mat-icon
-                svgIcon="arrow_trending_up"
-                class="text-primary"
-              ></mat-icon>
-              <span class="body-large">{{
-                "APP.YOUR_CONTRIBUTION" | translate
+              <span class="text-gray-400 dark:text-gray-300">{{
+                "APP.BRANCH" | translate
               }}</span>
-            </span>
-            <span class="flex flex-row gap-1 justify-between items-center">
-              <span class="title-medium">{{
-                getUserCurrentBalance(dps) | taka
+              <span class="text-gray-400 dark:text-gray-300">{{
+                "TOTAL_MEMBERS" | translate
               }}</span>
-              <mat-spinner
-                class="relative warn"
-                [mode]="'determinate'"
-                [diameter]="40"
-                [value]="getUserInstallmenetsPercentageAmount(dps)"
-                [strokeWidth]="10"
-              ></mat-spinner>
-            </span>
-
-            <span class="text-gray-400 dark:text-gray-400">{{
-              "APP.LAST_MONTH" | translate
-            }}</span>
-          </div>
-          <div
-            class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
-          >
-            <span class="flex gap-3 justify-start items-center">
-              <mat-icon class="text-primary" svgIcon="building_office"
-                >crown</mat-icon
+            </div>
+            <div class="flex flex-col gap-4">
+              <span class="text-pink-600 dark:text-pink-400"
+                >{{ account.accountNo }}
+                <span class="text-gray-400 dark:text-gray-300"
+                  >({{ account.accountType | uppercase | translate }})</span
+                ></span
               >
-              <span class="body-large">{{
-                "APP.MATURITY_BALANCE" | translate
+              <span class="text-yellow-500 dark:text-yellow-400">{{
+                account.bankName
               }}</span>
-            </span>
-            <span class="flex gap-3 justify-between items-center">
-              <span class="title-medium">{{
-                dps.monthlyAmount * dps.durationMonths | taka
-              }}</span>
-            </span>
-
-            <div class="flex flex-row gap-1">
-              <span class="text-gray-400 dark:text-gray-400"
-                >{{ "APP.MATURITY_DATE" | translate }}:</span
-              >
-              <span class="text-gray-500 dark:text-gray-300">{{
-                dps.maturityDate | date : "MMM yyyy"
+              <span class="text-gray-400">{{ account.branchName }}</span>
+              <span class="text-gray-400">{{
+                account.accountHolders.length
               }}</span>
             </div>
           </div>
+          <div class="flex flex-col gap-4 items-start my-4">
+            <div class="flex flex-row gap-2 items-center">
+              <div
+                class="w-12 h-12 p-4 rounded-full text-2xl bg-amber-200 flex items-center justify-center text-amber-600"
+              >
+                ৳
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="text-gray-400 dark:text-gray-300">{{
+                  "APP.BALANCE" | translate
+                }}</span>
+                <span
+                  class="body-large text-amber-600 dark:text-amber-400 font-bold"
+                  >{{ account.balance | taka }}</span
+                >
+              </div>
+            </div>
+            <div class="flex flex-row gap-2 items-center">
+              <div
+                class="w-12 h-12 p-4 rounded-full text-2xl bg-red-200 flex items-center justify-center text-red-600"
+              >
+                ৳
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="text-gray-400 dark:text-gray-300">{{
+                  "APP.YOUR_CONTRIBUTION" | translate
+                }}</span>
+                <span class="body-large font-bold">{{
+                  getPersonalShare(account.id) | taka
+                }}</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        @for (dps of getDpsListByAccountId(account.accountNo); track $index) {
+        <div
+          class="dashboard-chip rounded-xl p-4 w-full flex flex-col gap-4 w-full"
+        >
+          <div class="flex flex-row gap-2 items-center justify-between w-full">
+            <span class="body-large">{{ dps.dpsName }} </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div
+              class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
+            >
+              <span class="flex gap-3 justify-start items-center">
+                <mat-icon class="text-primary">account_balance</mat-icon>
+                <span class="body-large">{{
+                  "APP.TOTAL_INSTALLMENT" | translate
+                }}</span>
+              </span>
+              <span class="flex flex-row gap-1 justify-between items-center">
+                <div class="flex flex-col gap-2">
+                  <span class="title-medium"
+                    >{{ dps.totalDeposit | taka }}
+                  </span>
+                </div>
+
+                <app-progress-spinner
+                  [occupied]="getTotalInstallmentsPercentageAmount(dps)"
+                ></app-progress-spinner>
+              </span>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-gray-400 dark:text-gray-400"
+                  >{{ dps.installmentDates.length }} / {{ dps.durationMonths }}
+                  {{ "PAYMENT_MADE" | translate }}</span
+                >
+                @let missedInstallments = getNumberOfInstallmentMissing(dps);
+                <div class="flex flex-row gap-1 items-center">
+                  @if(missedInstallments == 0) {
+                  <span class="text-gray-400 dark:text-gray-400"
+                    >{{ "YAHOO" | translate }}!!</span
+                  >
+                  }
+                  <span
+                    class="text-green-600 text-xl"
+                    [ngClass]="{
+                      'text-pink-400 dark:text-pink-400': missedInstallments > 0
+                    }"
+                    >{{ missedInstallments }}</span
+                  >
+                  <span class="text-gray-400 dark:text-gray-400">{{
+                    "INSTALLMENTS_MISSED" | translate
+                  }}</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
+            >
+              <span class="flex gap-3 justify-start items-center">
+                <mat-icon
+                  svgIcon="arrow_trending_up"
+                  class="text-primary"
+                ></mat-icon>
+                <span class="body-large">{{
+                  "APP.YOUR_CONTRIBUTION" | translate
+                }}</span>
+              </span>
+              <span class="flex flex-row gap-1 justify-between items-center">
+                <span class="title-medium">{{
+                  getUserCurrentBalance(dps) | taka
+                }}</span>
+                <app-progress-spinner
+                  [occupied]="getUserInstallmenetsPercentageAmount(dps)"
+                ></app-progress-spinner>
+              </span>
+              @let lastPayment = getUserDpsLastPayment(dps);
+              <span class="text-gray-400 dark:text-gray-400"
+                >{{ "APP.LAST_PAYMENT" | translate }}:
+                {{
+                  lastPayment ? (lastPayment | date : "dd MMM, yyyy") : "N/A"
+                }}</span
+              >
+            </div>
+            <div
+              class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
+            >
+              <span class="flex gap-3 justify-start items-center">
+                <mat-icon class="text-primary" svgIcon="building_office"
+                  >crown</mat-icon
+                >
+                <span class="body-large">{{
+                  "APP.MATURITY_BALANCE" | translate
+                }}</span>
+              </span>
+              <span class="flex gap-3 justify-between items-center">
+                <span class="title-medium">{{
+                  dps.monthlyAmount * dps.durationMonths | taka
+                }}</span>
+              </span>
+
+              <div class="flex flex-row gap-1">
+                <span class="text-gray-400 dark:text-gray-400"
+                  >{{ "APP.MATURITY_DATE" | translate }}:</span
+                >
+                <span class="text-gray-500 dark:text-gray-300">{{
+                  dps.maturityDate | date : "MMM yyyy"
+                }}</span>
+              </div>
+            </div>
+          </div>
+          @if((dps.dpsOwners || []).length > 0) {
+          <div class="flex flex-col gap-4 w-full">
+            <span class="body-small text-gray-400 dark:text-gray-300">{{
+              "DPS_OWNERS" | translate
+            }}</span>
+            <div class="flex flex-wrap gap-2">
+              @for (owner of dps.dpsOwners; track $index) {
+              <div
+                class="border-1 border-gray-300 dark:border-gray-500 rounded-xl px-2 py-1 flex flex-row gap-4 items-center"
+              >
+                @let missingInstallments =
+                getOwnerInstallmentMissing(owner,dps);
+                <div class="flex flex-row gap-1 py-2">
+                  <app-avatar [displayName]="owner.displayName" />
+                  <span
+                    class="text-green-700 dark:text-green-300"
+                    [ngClass]="{
+                      'text-red-500 dark:text-red-300': missingInstallments
+                    }"
+                    >{{ owner.displayName }}</span
+                  >
+                </div>
+                <span class="text-gray-400"
+                  ><span
+                    class="font-bold"
+                    [ngClass]="{
+                      'text-red-700 dark:text-red-500': missingInstallments
+                    }"
+                    >{{ missingInstallments }}</span
+                  >
+                  {{ "INSTALLMENTS_UNPAID" | translate }}
+                </span>
+              </div>
+              }
+            </div>
+          </div>
+
+          }
+        </div>
+        } @empty {
+        <app-no-data-view></app-no-data-view>
+        }
       </div>
       } @empty {
-      <app-no-data-view></app-no-data-view>
+      <div
+        class="dashboard-chip rounded-xl p-4 w-full flex flex-col gap-1 items-center"
+      >
+        <app-no-data-view
+          [message]="'NO_ANY_ACCOUNT_FOUND' | translate"
+        ></app-no-data-view>
+      </div>
       }
     </div>
     <div class="w-full md:w-[30%] flex flex-col gap-4">
@@ -114,29 +252,38 @@
         ></canvas>
         <div class="flex flex-col gap-4 items-center">
           <div class="flex flex-row gap-4 items-start">
-            @if(jAccount) {
+            @if(personalAccount) {
             <div class="flex flex-col gap-4">
-              <span class="text-gray-500"
+              <span class="text-gray-400 dark:text-gray-300"
                 >{{ "APP.ACCOUNT_NUMBER" | translate }}:</span
               >
-              <span class="text-gray-500">{{ "APP.BANK" | translate }}:</span>
-              <span class="text-gray-500">{{ "APP.BRANCH" | translate }}:</span>
-              <span class="text-gray-500"
+              <span class="text-gray-400 dark:text-gray-300"
+                >{{ "APP.BANK" | translate }}:</span
+              >
+              <span class="text-gray-400 dark:text-gray-300"
+                >{{ "APP.BRANCH" | translate }}:</span
+              >
+              <span class="text-gray-400 dark:text-gray-300"
                 >{{ "APP.BALANCE" | translate }}:</span
               >
             </div>
             <div class="flex flex-col gap-4">
               <span class="text-pink-600 dark:text-pink-400"
-                >{{ jAccount.accountNo }} ({{
-                  jAccount.accountType | uppercase | translate
-                }})</span
+                >{{ personalAccount.accountNo }}
+                <span class="text-gray-400 dark:text-gray-300"
+                  >({{
+                    personalAccount.accountType | uppercase | translate
+                  }})</span
+                ></span
               >
               <span class="text-yellow-500 dark:text-yellow-400">{{
-                jAccount.bankName
+                personalAccount.bankName
               }}</span>
-              <span class="text-gray-400">{{ jAccount.branchName }}</span>
+              <span class="text-gray-400">{{
+                personalAccount.branchName
+              }}</span>
               <span class="text-amber-600 dark:text-amber-400">{{
-                jAccount.balance | taka
+                personalAccount.balance | taka
               }}</span>
             </div>
             } @else {

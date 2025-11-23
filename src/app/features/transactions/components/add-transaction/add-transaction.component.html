@@ -30,6 +30,10 @@
         >
         }
       </mat-select>
+      <mat-hint
+        >{{ "AVAILBLE_BALANCE" | translate }}
+        {{ availableBalanceOfSelectedAccount }}</mat-hint
+      >
       @if(addTransactionForm.get('accountNo')?.hasError('required')) {
       <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
@@ -117,6 +121,7 @@
       }
     </mat-form-field>
 
+    @if (paymentTypeFormValue != 'dps') {
     <mat-form-field class="w-full mb-4">
       <mat-label>
         {{
@@ -142,6 +147,50 @@
       <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
+    } @else {
+    <mat-form-field class="w-full mb-4">
+      <mat-label>{{ "SELECT_YEAR" | translate }}</mat-label>
+      <mat-select
+        [formControl]="dpsSelectedYear"
+        (selectionChange)="changeYear($event)"
+        #selectYear
+      >
+        @for (year of years; track $index) {
+        <mat-option [value]="year">{{ year }}</mat-option>
+        }
+      </mat-select>
+      @if(dpsSelectedYear.hasError('required')) {
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="w-full mb-4">
+      <mat-label>{{ "SELECT_MONTH" | translate }}</mat-label>
+      <mat-select
+        [formControl]="dpsSelectedMonth"
+        (selectionChange)="onSelectMonth()"
+      >
+        @for (idx of monthIdx; track $index) {
+        <mat-option
+          [value]="idx"
+          [disabled]="
+            isPaidAlready(selectYear.value, idx) ||
+            isAhedOfFuture(selectYear.value, idx)
+          "
+          >{{ months[idx].en }}
+          @if(isPaidAlready(selectYear.value, idx)) {
+          <span class="text-green-600 label-medium">{{
+            "PAID" | translate
+          }}</span>
+          }
+        </mat-option>
+        }
+      </mat-select>
+      @if(dpsSelectedMonth.hasError('required')) {
+      <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
+      }
+    </mat-form-field>
+    }
 
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ "TRANSACTION_ID" | translate }}</mat-label>

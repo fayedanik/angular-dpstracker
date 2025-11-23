@@ -18,6 +18,7 @@
     "COMBINED_BALANCE_TILL_NOW": "Combined balance till now",
     "YOUR_CONTRIBUTION": "Your contribution",
     "LAST_MONTH": "Since last month",
+    "LAST_PAYMENT": "Last payment",
     "MATURITY_BALANCE": "Maturity Balance",
     "MATURITY_DATE": "Maturity Date",
     "ACCOUNT_NUMBER": "A/C No",
@@ -25,7 +26,8 @@
     "BRANCH": "Branch",
     "BALANCE": "Balance",
     "RECENT_TRANSACTIONS": "Recent Transactions",
-    "VIEW_ALL": "View all"
+    "VIEW_ALL": "View all",
+    "TOTAL_INSTALLMENT": "Total Installment"
   },
   "CONSTITUTION": {
     "SECTION1_TITLE": "Main Goals and Objectives of the Association",
@@ -181,5 +183,16 @@
   "USER": "User",
   "ADMIN": "Admin",
   "ADD_MONEY": "Add Money",
-  "DELETE_ACCOUNT_CONFIRMATION_BODY_TEXT": "Are you sure you want to delete this bank account? All the dps and transactions related to this bank account will be deleted also and this can't be undone."
+  "DELETE_ACCOUNT_CONFIRMATION_BODY_TEXT": "Are you sure you want to delete this bank account? All the dps and transactions related to this bank account will be deleted also and this can't be undone.",
+  "SELECT_YEAR": "Select Year",
+  "SELECT_MONTH": "Select Month",
+  "DPS_PAYEMENT_SUCCESSFULLY_DONE": "Dps payment succesfully added",
+  "PAYMENT_MADE": "installments paid",
+  "INSTALLMENTS_MISSED": "installment missed",
+  "YAHOO": "Yahoo",
+  "NO_DATA_FOUND": "No data found",
+  "YOU_HAVE_NOT_CREATED_ANY_ITEM": "You haven't created any item yet",
+  "NO_ANY_ACCOUNT_FOUND": "Currently you don't have any joint account. Please ask your admin to add into a joint account",
+  "GO_TO_ACCOUNT": "Go to account",
+  "INSTALLMENTS_UNPAID": "installments unpaid"
 }

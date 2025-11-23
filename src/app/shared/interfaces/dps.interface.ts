@@ -3,6 +3,8 @@ export interface IDps {
   dpsName: string;
   accountNo: string;
   monthlyAmount: number;
+  totalDeposit: number;
+  installmentDates: Date[];
   durationMonths: number;
   startDate: Date | string;
   maturityDate: Date | string;

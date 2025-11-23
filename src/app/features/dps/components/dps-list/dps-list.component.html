@@ -32,9 +32,9 @@
       (deleteDps)="deleteDps(dps)"
       (viewTermsAndCondition)="viewTermsAndCondition()"
     />
-    } @empty {
-    <app-no-data-view />
     }
   </div>
-  }
+  @if(dpslist.length == 0) {
+  <app-no-data-view />
+  } }
 </div>

@@ -42,11 +42,11 @@
         (updateAccount)="updateBankAccount(account)"
         (deleteAccount)="deleteBankAccount(account)"
       />
-      } @empty {
-      <app-no-data-view />
       }
     </div>
-    }
+    @if(accounts.length == 0) {
+    <app-no-data-view />
+    } }
   </div>
 </ng-template>
 

@@ -51,7 +51,10 @@ import { IMakePaymentPayload } from '../../../../shared/interfaces/make-payment-
 import { ITransferMoneyPayload } from '../../../../shared/interfaces/transfer-money-payload.interface';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
-import { normalizeDateToUTC } from '../../../../shared/utils/date-utils';
+import {
+  months,
+  normalizeDateToUTC,
+} from '../../../../shared/utils/date-utils';
 
 @Component({
   selector: 'app-add-transaction',
@@ -116,6 +119,18 @@ export class AddTransactionComponent implements OnInit {
 
   isSubmitting = signal(false);
 
+  dpsSelectedYear = new FormControl('', [Validators.required]);
+  dpsSelectedMonth = new FormControl({ value: null, disabled: true }, [
+    Validators.required,
+  ]);
+
+  readonly months = months;
+  minDate!: Date;
+  maxDate!: Date;
+  years: number[] = [];
+  monthIdx: number[] = [];
+  dpsInstallmentDates: Date[] = [];
+
   isLoading = computed(
     () =>
       this.isSubmitting() ||
@@ -131,6 +146,11 @@ export class AddTransactionComponent implements OnInit {
         const ctrl = this.addTransactionForm.controls.dpsId;
         if (type == 'dps') {
           ctrl.addValidators(Validators.required);
+          this.years = [];
+          this.monthIdx = [];
+          this.dpsInstallmentDates = [];
+          this.dpsSelectedYear.reset();
+          this.dpsSelectedMonth.reset();
         } else {
           ctrl.setValue(null);
           ctrl.clearValidators();
@@ -144,6 +164,21 @@ export class AddTransactionComponent implements OnInit {
         if (!dps) return;
         this.addTransactionForm.controls.amount.setValue(dps.monthlyAmount);
         this.addTransactionForm.controls.amount.disable();
+        this.minDate = new Date(dps.startDate);
+        this.maxDate = new Date(dps.maturityDate);
+        for (
+          let year = this.minDate.getFullYear();
+          year <= this.maxDate.getFullYear();
+          year++
+        ) {
+          for (let month = 0; month < 12; month++) {
+            const currDate = new Date(year, month, 1);
+            if (this.minDate <= currDate && currDate < this.maxDate) {
+              this.dpsInstallmentDates.push(currDate);
+            }
+          }
+          this.years.push(year);
+        }
       });
   }
 
@@ -329,6 +364,45 @@ export class AddTransactionComponent implements OnInit {
         'N/A'
       );
     }
+  }
+
+  changeYear(event: MatSelectChange) {
+    const year = event.value;
+    this.monthIdx = this.dpsInstallmentDates
+      .filter((x) => x.getFullYear() == year)
+      .map((x) => x.getMonth());
+    this.dpsSelectedMonth.enable();
+  }
+
+  isPaidAlready(year: number, month: number) {
+    const dpsId = this.addTransactionForm.controls.dpsId.value;
+    if (!dpsId) return false;
+    const dps = this.dpsList()?.find((x) => x.id == dpsId);
+    if (!dps) return false;
+    return (
+      (dps.installmentDates ?? [])
+        .map((x) => new Date(x))
+        .filter((x) => x.getMonth() == month && x.getFullYear() == year)
+        .length > 0
+    );
+  }
+
+  isAhedOfFuture(year: number, month: number) {
+    return new Date(year, month, 1) > new Date();
+  }
+
+  onSelectMonth() {
+    const year = Number(this.dpsSelectedYear.value);
+    const month = Number(this.dpsSelectedMonth.value);
+    const currentDate = new Date();
+    const isCurrentMonthPayment =
+      currentDate.getFullYear() == year && currentDate.getMonth() == month;
+    const paymentDate = new Date(
+      year,
+      month,
+      isCurrentMonthPayment ? currentDate.getDate() : 1
+    );
+    this.addTransactionForm.controls.date.setValue(paymentDate);
   }
 }
 
