@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
   ActivateEvent,
@@ -100,6 +101,8 @@ export class TransactionsComponent implements OnInit {
     );
   private readonly _dpsListResponse = this._dpsService.getDpsList();
   private readonly _userServuce = inject(UserService);
+
+  private readonly _router = inject(Router);
 
   tranferMoneyPageLimit = () =>
     this._transferMoneyTransactionQueryPayload().pageLimit;
@@ -328,6 +331,11 @@ export class TransactionsComponent implements OnInit {
           );
         });
     }
+  }
+
+  gotToDpsDetails(event: MouseEvent, dpsId: string) {
+    event.stopPropagation();
+    this._router.navigate(['dps', dpsId]);
   }
 
   reloadDataTable(isTransferMoney: boolean) {

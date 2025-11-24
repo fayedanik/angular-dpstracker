@@ -83,39 +83,43 @@
         @for (dps of getDpsListByAccountId(account.accountNo); track $index) {
         @let missedInstallments = getNumberOfInstallmentMissing(dps);
         <div
-          class="flex flex-row gap-2 items-center justify-start w-full border-t-1 pt-4 border-gray-300 dark:border-gray-400"
+          class="flex flex-col md:flex-row gap-2 items-start justify-start w-full border-t-1 pt-4 border-gray-300 dark:border-gray-400"
         >
-          <span
-            class="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"
-          ></span>
-          <span class="body-large"
-            >{{ account.accountType | uppercase | translate }}
-            {{ "DPS" | translate }} - {{ dps.dpsName }}
-          </span>
-          <div>
-            @switch (dpsStatus(dps)) { @case ("Active") {
+          <div class="flex flex-row gap-1 items-center">
             <span
-              class="label-medium bg-green-100 text-green-600 dark:bg-lime-100 dark:text-lime-600 px-2 py-1 rounded-sm"
-              >{{ "RUNNING" | translate }}</span
-            >
-            } @case ("Upcoming") {
-            <span
-              class="label-medium bg-yellow-100 text-yellow-600 dark:bg-yellow-100 dark:text-yellow-600 px-2 py-1 rounded-sm"
-              >{{ "UPCOMING" | translate }}</span
-            >
-            } @default {
-            <span
-              class="label-medium bg-red-100 text-red-600 dark:bg-red-100 dark:text-red-600 px-2 py-1 rounded-sm"
-              >{{ "EXPIRED" | translate }}</span
-            >
-            }}
+              class="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"
+            ></span>
+            <span class="body-large"
+              >{{ account.accountType | uppercase | translate }}
+              {{ "DPS" | translate }} - {{ dps.dpsName }}
+            </span>
           </div>
-          @if (missedInstallments) {
-          <span
-            class="label-medium bg-rose-100 text-rose-600 dark:bg-rose-100 dark:text-rose-600 px-2 py-1 rounded-sm"
-            >{{ "OVERDUE" | translate }}</span
-          >
-          }
+          <div class="flex flex-row gap-1">
+            <div>
+              @switch (dpsStatus(dps)) { @case ("Active") {
+              <span
+                class="label-medium bg-green-100 text-green-600 dark:bg-lime-100 dark:text-lime-600 px-2 py-1 rounded-sm"
+                >{{ "RUNNING" | translate }}</span
+              >
+              } @case ("Upcoming") {
+              <span
+                class="label-medium bg-yellow-100 text-yellow-600 dark:bg-yellow-100 dark:text-yellow-600 px-2 py-1 rounded-sm"
+                >{{ "UPCOMING" | translate }}</span
+              >
+              } @default {
+              <span
+                class="label-medium bg-red-100 text-red-600 dark:bg-red-100 dark:text-red-600 px-2 py-1 rounded-sm"
+                >{{ "EXPIRED" | translate }}</span
+              >
+              }}
+            </div>
+            @if (missedInstallments) {
+            <span
+              class="label-medium bg-rose-100 text-rose-600 dark:bg-rose-100 dark:text-rose-600 px-2 py-1 rounded-sm"
+              >{{ "OVERDUE" | translate }}</span
+            >
+            }
+          </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div
@@ -231,7 +235,7 @@
               class="border-1 border-gray-300 dark:border-gray-500 rounded-xl px-2 py-1 flex flex-row items-center w-full md:w-auto"
             >
               @let missingInstallments = getOwnerInstallmentMissing(owner,dps);
-              <div class="flex flex-row gap-1 py-2 items-center">
+              <div class="flex flex-row gap-3 py-2 items-center">
                 <app-avatar [displayName]="owner.displayName" />
                 <div class="flex flex-col gap-1">
                   <span

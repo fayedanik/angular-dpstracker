@@ -7,6 +7,7 @@
       matIconButton
       matTooltip="{{ 'ADD_MEMBER' | translate }}"
       (click)="openDrawer.emit()"
+      [allowedFor]="[role.Admin]"
     >
       <mat-icon>person_add</mat-icon>
     </button>

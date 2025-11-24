@@ -196,5 +196,6 @@
   "GO_TO_ACCOUNT": "Go to account",
   "INSTALLMENTS_UNPAID": "installments unpaid",
   "RUNNING": "Running",
-  "OVERDUE": "Overdue"
+  "OVERDUE": "Overdue",
+  "COPY": "Copy"
 }

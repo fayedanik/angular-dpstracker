@@ -54,9 +54,11 @@
       </div>
       <div class="flex flex-col w-full gap-1">
         <span class="body-small text-gray-400">{{ "DPS" | translate }}</span>
-        <span class="body-large text-gray-600 dark:text-gray-300">{{
-          transaction.dpsName
-        }}</span>
+        <span
+          class="body-large !text-blue-600 underline underline-offset-1 cursor-pointer"
+          (click)="gotToDpsDetails()"
+          >{{ transaction.dpsName }}</span
+        >
       </div>
     </div>
     }
@@ -72,9 +74,17 @@
         <span class="body-small text-gray-400">{{
           "TRANSACTION_ID" | translate
         }}</span>
-        <span class="body-large text-gray-600 dark:text-gray-300">{{
-          transaction.transactionNo
-        }}</span>
+        <div class="flex flex-row gap-1">
+          <span class="body-large text-gray-600 dark:text-gray-300">{{
+            transaction.transactionNo
+          }}</span>
+          <mat-icon
+            [svgIcon]="'clipboard_copy'"
+            class="!text-gray-400 !dark:text-gray-300 cursor-pointer"
+            [matTooltip]="'COPY' | translate"
+            (click)="copyToClipBoard(transaction.transactionNo)"
+          ></mat-icon>
+        </div>
       </div>
     </div>
 

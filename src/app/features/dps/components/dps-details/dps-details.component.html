@@ -8,20 +8,24 @@
         <button mat-icon-button (click)="goBack()">
           <mat-icon>arrow_back_ios</mat-icon>
         </button>
-        <div class="flex flex-row gap-1">
+        <div class="flex flex-col items-start">
           <span class="title-large">{{ dps.dpsName }}</span>
           @switch (dpsStatus) { @case ("Active") {
-          <span class="text-green-600 body-small">{{
-            "ACTIVE" | translate
-          }}</span>
+          <div
+            class="label-medium bg-green-100 text-green-600 dark:bg-lime-100 dark:text-lime-600 px-2 py-1 rounded-sm w-auto"
+          >
+            {{ "RUNNING" | translate }}
+          </div>
           } @case ("Upcoming") {
-          <span class="text-yellow-600 body-small">{{
-            "UPCOMING" | translate
-          }}</span>
+          <span
+            class="label-medium bg-yellow-100 text-yellow-600 dark:bg-yellow-100 dark:text-yellow-600 px-2 py-1 rounded-sm"
+            >{{ "UPCOMING" | translate }}</span
+          >
           } @default {
-          <span class="text-red-600 body-small">{{
-            "EXPIRED" | translate
-          }}</span>
+          <span
+            class="label-medium bg-red-100 text-red-600 dark:bg-red-100 dark:text-red-600 px-2 py-1 rounded-sm"
+            >{{ "EXPIRED" | translate }}</span
+          >
           }}
         </div>
       </div>

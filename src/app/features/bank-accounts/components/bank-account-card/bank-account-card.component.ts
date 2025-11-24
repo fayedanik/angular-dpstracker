@@ -4,7 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslatePipe } from '@ngx-translate/core';
-import { bankAccountTypeEnum } from '../../../../shared/consts/business.const';
+import {
+  bankAccountTypeEnum,
+  Role,
+} from '../../../../shared/consts/business.const';
+import { AppAllowedForDirectivce } from '../../../../shared/directives/allowed-for.directive';
 import { IBankAccount } from '../../../../shared/interfaces/bank-account.interface';
 import { TakaPipe } from '../../../../shared/pipes/taka-currency.pipe';
 
@@ -18,6 +22,7 @@ import { TakaPipe } from '../../../../shared/pipes/taka-currency.pipe';
     MatButtonModule,
     TranslatePipe,
     TakaPipe,
+    AppAllowedForDirectivce,
   ],
   templateUrl: './bank-account-card.component.html',
   styleUrl: './bank-account-card.component.scss',
@@ -28,4 +33,5 @@ export class BankAccountCardComponent {
   deleteAccount = output<void>();
   updateAccount = output<void>();
   readonly bankAccountTypeEnum = bankAccountTypeEnum;
+  readonly role = Role;
 }

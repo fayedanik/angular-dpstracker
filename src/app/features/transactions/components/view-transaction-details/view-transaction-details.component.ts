@@ -1,3 +1,4 @@
+import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, Inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +11,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { catchError, finalize, map, of } from 'rxjs';
 import { TransactionService } from '../../../../core/services/transaction.service';
@@ -36,6 +39,8 @@ import { ToastMessageService } from '../../../../shared/services/toast-message.s
     TakaPipe,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    ClipboardModule,
+    MatTooltipModule,
   ],
   templateUrl: './view-transaction-details.component.html',
   styleUrl: './view-transaction-details.component.scss',
@@ -47,7 +52,8 @@ export class ViewTransactionDetailsComponent {
   private readonly _transactionService = inject(TransactionService);
   private readonly _translateService = inject(TranslateService);
   private readonly _toastMessageService = inject(ToastMessageService);
-
+  private readonly _clipBoard = inject(Clipboard);
+  private readonly _router = inject(Router);
   isSubmitting = signal(false);
 
   isLoading = computed(() => this.isSubmitting());
@@ -93,5 +99,14 @@ export class ViewTransactionDetailsComponent {
           this._toastMessageService.showFailed(failedMessage);
         }
       });
+  }
+
+  copyToClipBoard(value: string) {
+    this._clipBoard.copy(value);
+  }
+
+  async gotToDpsDetails() {
+    await this._router.navigate(['dps', this.transaction.dpsId]);
+    this.close(false);
   }
 }

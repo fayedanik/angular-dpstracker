@@ -196,5 +196,6 @@
   "GO_TO_ACCOUNT": "অ্যাকাউন্টে যান",
   "INSTALLMENTS_UNPAID": "টি অপরিশোধিত কিস্তি আছে",
   "RUNNING": "চলমান",
-  "OVERDUE": "ওভারডিউ"
+  "OVERDUE": "ওভারডিউ",
+  "COPY": "কপি করুন"
 }
