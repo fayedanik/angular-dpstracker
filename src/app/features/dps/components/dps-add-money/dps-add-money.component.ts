@@ -34,7 +34,10 @@ import { IAddDpsMoneyPayload } from '../../../../shared/interfaces/add-dps-money
 import { IDps, IDpsOwner } from '../../../../shared/interfaces/dps.interface';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
-import { months } from '../../../../shared/utils/date-utils';
+import {
+  months,
+  normalizeDateToUTC,
+} from '../../../../shared/utils/date-utils';
 
 @Component({
   selector: 'app-dps-add-money',
@@ -148,11 +151,9 @@ export class DpsAddMoneyComponent {
     const payload: IAddDpsMoneyPayload = {
       dpsId: dps.id,
       ownerId: owner.userId,
-      paymentDate: new Date(
-        Number(formValue.selectYear),
-        Number(formValue.selectMonth),
-        1
-      ),
+      paymentDate: normalizeDateToUTC(
+        new Date(Number(formValue.selectYear), Number(formValue.selectMonth), 1)
+      ).toISOString(),
     };
     this._dpsService
       .updateDps(payload)
@@ -176,9 +177,6 @@ export class DpsAddMoneyComponent {
     this.monthIdx = this.dpsInstallmentDates
       .filter((x) => x.getFullYear() == year)
       .map((x) => x.getMonth());
-    this.monthIdx.forEach((x) => {
-      console.log(this.isPaidAlready(year, x));
-    });
     this.dpsAddMoneyForm.controls.selectMonth.enable();
   }
 

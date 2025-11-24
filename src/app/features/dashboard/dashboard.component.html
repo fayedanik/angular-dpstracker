@@ -82,127 +82,134 @@
 
         @for (dps of getDpsListByAccountId(account.accountNo); track $index) {
         <div
-          class="dashboard-chip rounded-xl p-4 w-full flex flex-col gap-4 w-full"
+          class="flex flex-row gap-2 items-center justify-start w-full border-t-2 pt-4 border-gray-300"
         >
-          <div class="flex flex-row gap-2 items-center justify-between w-full">
-            <span class="body-large">{{ dps.dpsName }} </span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div
-              class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
-            >
-              <span class="flex gap-3 justify-start items-center">
-                <mat-icon class="text-primary">account_balance</mat-icon>
-                <span class="body-large">{{
-                  "APP.TOTAL_INSTALLMENT" | translate
-                }}</span>
-              </span>
-              <span class="flex flex-row gap-1 justify-between items-center">
-                <div class="flex flex-col gap-2">
-                  <span class="title-medium"
-                    >{{ dps.totalDeposit | taka }}
-                  </span>
-                </div>
-
-                <app-progress-spinner
-                  [occupied]="getTotalInstallmentsPercentageAmount(dps)"
-                ></app-progress-spinner>
-              </span>
-
-              <div class="flex flex-col gap-1">
-                <span class="text-gray-400 dark:text-gray-400"
-                  >{{ dps.installmentDates.length }} / {{ dps.durationMonths }}
-                  {{ "PAYMENT_MADE" | translate }}</span
-                >
-                @let missedInstallments = getNumberOfInstallmentMissing(dps);
-                <div class="flex flex-row gap-1 items-center">
-                  @if(missedInstallments == 0) {
-                  <span class="text-gray-400 dark:text-gray-400"
-                    >{{ "YAHOO" | translate }}!!</span
-                  >
-                  }
-                  <span
-                    class="text-green-600 text-xl"
-                    [ngClass]="{
-                      'text-pink-400 dark:text-pink-400': missedInstallments > 0
-                    }"
-                    >{{ missedInstallments }}</span
-                  >
-                  <span class="text-gray-400 dark:text-gray-400">{{
-                    "INSTALLMENTS_MISSED" | translate
-                  }}</span>
-                </div>
+          <span
+            class="w-2 h-2 rounded-full bg-gray-500 dark:bg-gray-400"
+          ></span>
+          <span class="body-large"
+            >{{ account.accountType | uppercase | translate }}
+            {{ "DPS" | translate }} - {{ dps.dpsName }}
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div
+            class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
+          >
+            <span class="flex gap-3 justify-start items-center">
+              <mat-icon class="text-primary">account_balance</mat-icon>
+              <span class="body-large">{{
+                "APP.TOTAL_INSTALLMENT" | translate
+              }}</span>
+            </span>
+            <span class="flex flex-row gap-1 justify-between items-center">
+              <div class="flex flex-col gap-2">
+                <span class="title-medium">{{ dps.totalDeposit | taka }} </span>
               </div>
-            </div>
-            <div
-              class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
-            >
-              <span class="flex gap-3 justify-start items-center">
-                <mat-icon
-                  svgIcon="arrow_trending_up"
-                  class="text-primary"
-                ></mat-icon>
-                <span class="body-large">{{
-                  "APP.YOUR_CONTRIBUTION" | translate
-                }}</span>
-              </span>
-              <span class="flex flex-row gap-1 justify-between items-center">
-                <span class="title-medium">{{
-                  getUserCurrentBalance(dps) | taka
-                }}</span>
-                <app-progress-spinner
-                  [occupied]="getUserInstallmenetsPercentageAmount(dps)"
-                ></app-progress-spinner>
-              </span>
-              @let lastPayment = getUserDpsLastPayment(dps);
+
+              <app-progress-spinner
+                [occupied]="getTotalInstallmentsPercentageAmount(dps)"
+              ></app-progress-spinner>
+            </span>
+
+            <div class="flex flex-col gap-1">
               <span class="text-gray-400 dark:text-gray-400"
-                >{{ "APP.LAST_PAYMENT" | translate }}:
-                {{
-                  lastPayment ? (lastPayment | date : "dd MMM, yyyy") : "N/A"
-                }}</span
+                >{{ dps.installmentDates.length }} / {{ dps.durationMonths }}
+                {{ "PAYMENT_MADE" | translate }}</span
               >
-            </div>
-            <div
-              class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
-            >
-              <span class="flex gap-3 justify-start items-center">
-                <mat-icon class="text-primary" svgIcon="building_office"
-                  >crown</mat-icon
-                >
-                <span class="body-large">{{
-                  "APP.MATURITY_BALANCE" | translate
-                }}</span>
-              </span>
-              <span class="flex gap-3 justify-between items-center">
-                <span class="title-medium">{{
-                  dps.monthlyAmount * dps.durationMonths | taka
-                }}</span>
-              </span>
-
-              <div class="flex flex-row gap-1">
+              @let missedInstallments = getNumberOfInstallmentMissing(dps);
+              <div class="flex flex-row gap-1 items-center">
+                @if(missedInstallments == 0) {
                 <span class="text-gray-400 dark:text-gray-400"
-                  >{{ "APP.MATURITY_DATE" | translate }}:</span
+                  >{{ "YAHOO" | translate }}!!</span
                 >
-                <span class="text-gray-500 dark:text-gray-300">{{
-                  dps.maturityDate | date : "MMM yyyy"
-                }}</span>
+                }
+                <span
+                  class="text-green-600"
+                  [ngClass]="{
+                    'text-pink-400 dark:text-pink-400': missedInstallments > 0
+                  }"
+                  >{{ missedInstallments }}</span
+                >
+                <span
+                  class="text-gray-400 dark:text-gray-400"
+                  [ngClass]="{
+                    'text-pink-400 dark:text-pink-400': missedInstallments > 0
+                  }"
+                  >{{ "INSTALLMENTS_MISSED" | translate }}</span
+                >
               </div>
             </div>
           </div>
-          @if((dps.dpsOwners || []).length > 0) {
-          <div class="flex flex-col gap-4 w-full">
-            <span class="body-small text-gray-400 dark:text-gray-300">{{
-              "DPS_OWNERS" | translate
-            }}</span>
-            <div class="flex flex-wrap gap-2">
-              @for (owner of dps.dpsOwners; track $index) {
-              <div
-                class="border-1 border-gray-300 dark:border-gray-500 rounded-xl px-2 py-1 flex flex-row gap-4 items-center"
+          <div
+            class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-4 justify-start content-center"
+          >
+            <span class="flex gap-3 justify-start items-center">
+              <mat-icon
+                svgIcon="arrow_trending_up"
+                class="text-primary"
+              ></mat-icon>
+              <span class="body-large">{{
+                "APP.YOUR_CONTRIBUTION" | translate
+              }}</span>
+            </span>
+            <span class="flex flex-row gap-1 justify-between items-center">
+              <span class="title-medium">{{
+                getUserCurrentBalance(dps) | taka
+              }}</span>
+              <app-progress-spinner
+                [occupied]="getUserInstallmenetsPercentageAmount(dps)"
+              ></app-progress-spinner>
+            </span>
+            @let lastPayment = getUserDpsLastPayment(dps);
+            <span class="text-gray-400 dark:text-gray-400"
+              >{{ "APP.LAST_PAYMENT" | translate }}:
+              {{
+                lastPayment ? (lastPayment | date : "dd MMM, yyyy") : "N/A"
+              }}</span
+            >
+          </div>
+          <div
+            class="w-full dashboard-chip rounded-xl p-5 flex flex-col gap-5 justify-start content-center"
+          >
+            <span class="flex gap-3 justify-start items-center">
+              <mat-icon class="text-primary" svgIcon="building_office"
+                >crown</mat-icon
               >
-                @let missingInstallments =
-                getOwnerInstallmentMissing(owner,dps);
-                <div class="flex flex-row gap-1 py-2">
-                  <app-avatar [displayName]="owner.displayName" />
+              <span class="body-large">{{
+                "APP.MATURITY_BALANCE" | translate
+              }}</span>
+            </span>
+            <span class="flex gap-3 justify-between items-center">
+              <span class="title-medium">{{
+                dps.monthlyAmount * dps.durationMonths | taka
+              }}</span>
+            </span>
+
+            <div class="flex flex-row gap-1">
+              <span class="text-gray-400 dark:text-gray-400"
+                >{{ "APP.MATURITY_DATE" | translate }}:</span
+              >
+              <span class="text-gray-500 dark:text-gray-300">{{
+                dps.maturityDate | date : "MMM yyyy"
+              }}</span>
+            </div>
+          </div>
+        </div>
+        @if((dps.dpsOwners || []).length > 0) {
+        <div class="flex flex-col gap-4 w-full">
+          <span class="body-small text-gray-400 dark:text-gray-300">{{
+            "DPS_OWNERS" | translate
+          }}</span>
+          <div class="flex flex-wrap gap-2">
+            @for (owner of dps.dpsOwners; track $index) {
+            <div
+              class="border-1 border-gray-300 dark:border-gray-500 rounded-xl px-2 py-1 flex flex-row items-center"
+            >
+              @let missingInstallments = getOwnerInstallmentMissing(owner,dps);
+              <div class="flex flex-row gap-1 py-2 items-center">
+                <app-avatar [displayName]="owner.displayName" />
+                <div class="flex flex-col gap-1">
                   <span
                     class="text-green-700 dark:text-green-300"
                     [ngClass]="{
@@ -210,25 +217,24 @@
                     }"
                     >{{ owner.displayName }}</span
                   >
+                  <span class="text-gray-400"
+                    ><span
+                      class="font-bold"
+                      [ngClass]="{
+                        'text-red-700 dark:text-red-500': missingInstallments
+                      }"
+                      >{{ missingInstallments }}</span
+                    >
+                    {{ "INSTALLMENTS_UNPAID" | translate }}
+                  </span>
                 </div>
-                <span class="text-gray-400"
-                  ><span
-                    class="font-bold"
-                    [ngClass]="{
-                      'text-red-700 dark:text-red-500': missingInstallments
-                    }"
-                    >{{ missingInstallments }}</span
-                  >
-                  {{ "INSTALLMENTS_UNPAID" | translate }}
-                </span>
               </div>
-              }
             </div>
+            }
           </div>
-
-          }
         </div>
-        } @empty {
+
+        } } @empty {
         <app-no-data-view></app-no-data-view>
         }
       </div>

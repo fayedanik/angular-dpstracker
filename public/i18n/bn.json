@@ -188,11 +188,11 @@
   "SELECT_MONTH": "মাস নির্বাচন করুন",
   "DPS_PAYEMENT_SUCCESSFULLY_DONE": "ডিপিএস পেমেন্ট সফলভাবে যোগ করা হয়েছে",
   "PAYMENT_MADE": "কিস্তি পরিশোধ হয়েছে",
-  "INSTALLMENTS_MISSED": "কিস্তি মিস হয়েছে",
+  "INSTALLMENTS_MISSED": "টি কিস্তি মিস হয়েছে",
   "YAHOO": "জোশ!",
   "NO_DATA_FOUND": "কোনো তথ্য পাওয়া যায়নি",
   "YOU_HAVE_NOT_CREATED_ANY_ITEM": "আপনি এখনো কোনো আইটেম তৈরি করেননি",
   "NO_ANY_ACCOUNT_FOUND": "আপনার বর্তমানে কোনো যৌথ অ্যাকাউন্ট নেই। দয়া করে অ্যাডমিনকে আপনাকে একটি যৌথ অ্যাকাউন্টে যুক্ত করতে বলুন",
   "GO_TO_ACCOUNT": "অ্যাকাউন্টে যান",
-  "INSTALLMENTS_UNPAID": "টি অপরিশোধিত কিস্তি"
+  "INSTALLMENTS_UNPAID": "টি অপরিশোধিত কিস্তি আছে"
 }

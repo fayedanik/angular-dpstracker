@@ -34,6 +34,7 @@ import { DigitsOnlyDirective } from '../../../../shared/directives/digits-only.d
 import { IAddDpsPayload } from '../../../../shared/interfaces/add-dps-payload.interface';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
+import { normalizeDateToUTC } from '../../../../shared/utils/date-utils';
 @Component({
   selector: 'app-add-dps',
   imports: [
@@ -193,7 +194,9 @@ export class AddDpsComponent {
       accountNumber: formValue.accountNumber,
       monthlyDeposit: Number(formValue.monthlyDeposit),
       durationMonths: Number(formValue.durationMonths),
-      startDate: formValue.startDate?.toISOString(),
+      startDate: formValue.startDate
+        ? normalizeDateToUTC(formValue.startDate).toISOString()
+        : null,
       maturityDate: formValue.maturityDate?.toISOString(),
       interestRate: Number(formValue.interestRate),
       dpsOwners: formValue.dpsOwners,

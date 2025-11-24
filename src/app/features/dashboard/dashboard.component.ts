@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,7 +39,7 @@ import { TakaPipe } from '../../shared/pipes/taka-currency.pipe';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   private readonly _userService = inject(UserService);
   private readonly _bankAccountService = inject(BankAccountService);
   private readonly _transactionService = inject(TransactionService);
@@ -98,6 +98,13 @@ export class DashboardComponent {
   });
 
   constructor() {}
+  ngOnInit(): void {
+    if (
+      !this._bankAccountListResponse.isLoading() &&
+      this.personalAccounts.length == 0
+    ) {
+    }
+  }
 
   gotoTransaction() {
     this._router.navigate(['transactions']);
@@ -159,7 +166,7 @@ export class DashboardComponent {
         : new Date();
     const totalInstallMents =
       (endDate.getFullYear() - stDate.getFullYear()) * 12 +
-      (endDate.getMonth() - stDate.getMonth());
+      (endDate.getMonth() - stDate.getMonth() + 1);
     return totalInstallMents - installmentPaids;
   }
 
