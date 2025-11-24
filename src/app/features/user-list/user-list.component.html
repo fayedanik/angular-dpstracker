@@ -84,9 +84,15 @@
 
 <ng-template #statusCellTemplate let-value="value">
   @if(value) {
-  <span class="text-green-500">{{ "ACTIVE" | translate }}</span>
+  <span
+    class="bg-green-100 text-green-600 dark:bg-lime-100 dark:text-lime-600 px-2 py-1 rounded-sm"
+    >{{ "ACTIVE" | translate }}</span
+  >
   } @else {
-  <span class="text-amber-600">{{ "NOT_ACTIVE" | translate }}</span>
+  <span
+    class="bg-amber-100 text-amber-600 dark:bg-amber-100 dark:text-amber-600 px-2 py-1 rounded-sm"
+    >{{ "NOT_ACTIVE" | translate }}</span
+  >
   }
 </ng-template>
 

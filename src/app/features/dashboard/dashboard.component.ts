@@ -177,4 +177,11 @@ export class DashboardComponent implements OnInit {
       owner.installmentDates.length
     );
   }
+
+  dpsStatus(dps: IDps) {
+    if (!dps) return '-';
+    if (new Date(dps.startDate) > new Date()) return 'Upcoming';
+    else if (new Date(dps.maturityDate) < new Date()) return 'Expired';
+    else return 'Active';
+  }
 }

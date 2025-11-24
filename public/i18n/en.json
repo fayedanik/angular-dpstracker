@@ -194,5 +194,7 @@
   "YOU_HAVE_NOT_CREATED_ANY_ITEM": "You haven't created any item yet",
   "NO_ANY_ACCOUNT_FOUND": "Currently you don't have any joint account. Please ask your admin to add into a joint account",
   "GO_TO_ACCOUNT": "Go to account",
-  "INSTALLMENTS_UNPAID": "installments unpaid"
+  "INSTALLMENTS_UNPAID": "installments unpaid",
+  "RUNNING": "Running",
+  "OVERDUE": "Overdue"
 }

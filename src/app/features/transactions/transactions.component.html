@@ -130,12 +130,15 @@
 
 <ng-template #statusCellTemplate let-value="value">
   @if (value == 'success') {
-  <span class="text-green-600 dark:text-green-500">
-    {{ value | uppercase | translate }}
-  </span>
+  <span
+    class="label-medium bg-green-100 text-green-600 dark:bg-lime-100 dark:text-lime-600 px-2 py-1 rounded-sm"
+    >{{ value | uppercase | translate }}</span
+  >
   } @else {
-  <span class="text-yellow-600 dark:text-amber-400">
-    {{ value | uppercase | translate }}
-  </span>
+  <span
+    class="label-medium bg-yellow-100 text-yellow-600 dark:bg-yellow-100 dark:text-yellow-600 px-2 py-1 rounded-sm"
+    >{{ value | uppercase | translate }}</span
+  >
+
   }
 </ng-template>
