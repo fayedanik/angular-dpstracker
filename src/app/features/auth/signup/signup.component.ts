@@ -63,6 +63,7 @@ export class SignupComponent {
   onSubmit() {
     const { confirmPassword, ...payload } = this.signupForm.getRawValue();
     payload.phoneNumber = `+880${payload.phoneNumber}`;
+    this.isLoading.set(true);
     this._userService
       .createUser(payload)
       .pipe(
