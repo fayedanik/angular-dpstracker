@@ -121,11 +121,13 @@
 </ng-template>
 
 <ng-template #dpsCellTemplate let-value="value">
+  @if(getDpsInfo(value)) {
   <span
     class="text-blue-600 underline underline-offset-1"
     (click)="gotToDpsDetails($event, value)"
     >{{ getDpsInfo(value) }}</span
   >
+  } @else { - }
 </ng-template>
 
 <ng-template #transactionDateCellTemplate let-value="value">

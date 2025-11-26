@@ -54,11 +54,13 @@
       </div>
       <div class="flex flex-col w-full gap-1">
         <span class="body-small text-gray-400">{{ "DPS" | translate }}</span>
+        @if(transaction.dpsName) {
         <span
           class="body-large !text-blue-600 underline underline-offset-1 cursor-pointer"
           (click)="gotToDpsDetails()"
           >{{ transaction.dpsName }}</span
         >
+        } @else { - }
       </div>
     </div>
     }

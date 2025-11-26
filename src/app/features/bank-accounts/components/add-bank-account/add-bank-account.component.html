@@ -21,7 +21,14 @@
   >
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ "APP.ACCOUNT_NUMBER" | translate }}</mat-label>
-      <input type="text" matInput formControlName="accountNo" />
+      <input
+        type="text"
+        [attr.inputmode]="'numeric'"
+        maxlength="20"
+        appDigitsOnly
+        matInput
+        formControlName="accountNo"
+      />
       @if(addBankAccountForm.get('accountNo')?.hasError('required')) {
       <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }

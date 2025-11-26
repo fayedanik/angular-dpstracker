@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 import { ISigninPayload } from '../../features/auth/login/interfaces/auth-payload.interface';
 import { ITokenResponse } from '../../features/auth/login/interfaces/auth-response.interface';
 import { ICommandResponse } from '../../shared/interfaces/business-response.interface';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -23,7 +24,9 @@ export class AuthService {
   private readonly _userService = inject(UserService);
   private readonly _http = inject(HttpClient);
   private readonly _accessToken = signal<string | null>(null);
+  private readonly _localStorageService = inject(LocalStorageService);
   readonly isLoggedIn = computed(() => !!this._accessToken());
+  private readonly _refreshTokenKey = 'refresh_token';
   constructor() {}
   login(payload: ISigninPayload): Observable<ICommandResponse<ITokenResponse>> {
     const URL = this._baseUrl + '/IdentityCommand/Login';
@@ -34,6 +37,10 @@ export class AuthService {
       .pipe(
         tap((res) => {
           if (res?.data?.access_token) {
+            this._localStorageService.set(
+              this._refreshTokenKey,
+              res.data.refresh_token
+            );
             this._accessToken.set(res.data.access_token);
           }
         }),
@@ -57,9 +64,15 @@ export class AuthService {
   refresh(): Observable<ICommandResponse<ITokenResponse>> {
     const URL = this._baseUrl + '/IdentityCommand/Refresh';
     return this._http
-      .post<ICommandResponse<ITokenResponse>>(URL, null, {
-        withCredentials: true,
-      })
+      .post<ICommandResponse<ITokenResponse>>(
+        URL,
+        {
+          refresh_token: this._localStorageService.get(this._refreshTokenKey),
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .pipe(
         map((res) => {
           if (res?.data?.access_token) {
@@ -87,6 +100,7 @@ export class AuthService {
         map((res) => {
           if (res) {
             this._accessToken.set(null);
+            this._localStorageService.remove(this._refreshTokenKey);
             this._userService.resetUser();
           }
           return res;

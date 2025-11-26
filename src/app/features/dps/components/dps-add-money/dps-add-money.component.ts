@@ -35,6 +35,7 @@ import { IDps, IDpsOwner } from '../../../../shared/interfaces/dps.interface';
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
 import {
+  getInstallmentDates,
   months,
   normalizeDateToUTC,
 } from '../../../../shared/utils/date-utils';
@@ -102,19 +103,10 @@ export class DpsAddMoneyComponent {
     );
     this.minDate = new Date(this.data.dps.startDate);
     this.maxDate = new Date(this.data.dps.maturityDate);
-    for (
-      let year = this.minDate.getFullYear();
-      year <= this.maxDate.getFullYear();
-      year++
-    ) {
-      for (let month = 0; month < 12; month++) {
-        const currDate = new Date(year, month, 1);
-        if (this.minDate <= currDate && currDate < this.maxDate) {
-          this.dpsInstallmentDates.push(currDate);
-        }
-      }
-      this.years.push(year);
-    }
+    this.minDate.setHours(0);
+    const { years, dates } = getInstallmentDates(this.minDate, this.maxDate);
+    this.years = years;
+    this.dpsInstallmentDates = dates;
   }
 
   dpsAddMoneyForm: FormGroup<DpsAddMoneyForm> = this._fb.group<DpsAddMoneyForm>(
@@ -152,7 +144,11 @@ export class DpsAddMoneyComponent {
       dpsId: dps.id,
       ownerId: owner.userId,
       paymentDate: normalizeDateToUTC(
-        new Date(Number(formValue.selectYear), Number(formValue.selectMonth), 1)
+        new Date(
+          Number(formValue.selectYear),
+          Number(formValue.selectMonth),
+          this.minDate.getDate()
+        )
       ).toISOString(),
     };
     this._dpsService
@@ -190,7 +186,11 @@ export class DpsAddMoneyComponent {
   }
 
   isAhedOfFuture(year: number, month: number) {
-    return new Date(year, month, 1) > new Date();
+    const currentDate = new Date();
+    return (
+      year > currentDate.getFullYear() ||
+      (currentDate.getFullYear() == year && month > currentDate.getMonth())
+    );
   }
 }
 

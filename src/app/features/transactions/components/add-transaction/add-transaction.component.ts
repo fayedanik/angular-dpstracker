@@ -52,6 +52,7 @@ import { ITransferMoneyPayload } from '../../../../shared/interfaces/transfer-mo
 import { PlatformDetectorService } from '../../../../shared/services/platform-detector.service';
 import { ToastMessageService } from '../../../../shared/services/toast-message.service';
 import {
+  getInstallmentDates,
   months,
   normalizeDateToUTC,
 } from '../../../../shared/utils/date-utils';
@@ -146,10 +147,7 @@ export class AddTransactionComponent implements OnInit {
         const ctrl = this.addTransactionForm.controls.dpsId;
         if (type == 'dps') {
           ctrl.addValidators(Validators.required);
-          this.years = [];
-          this.monthIdx = [];
-          this.dpsInstallmentDates = [];
-          this.dpsSelectedYear.reset();
+          this.resetDpsTimes();
           this.dpsSelectedMonth.reset();
         } else {
           ctrl.setValue(null);
@@ -164,21 +162,16 @@ export class AddTransactionComponent implements OnInit {
         if (!dps) return;
         this.addTransactionForm.controls.amount.setValue(dps.monthlyAmount);
         this.addTransactionForm.controls.amount.disable();
+        this.resetDpsTimes();
         this.minDate = new Date(dps.startDate);
+        this.minDate.setHours(0);
         this.maxDate = new Date(dps.maturityDate);
-        for (
-          let year = this.minDate.getFullYear();
-          year <= this.maxDate.getFullYear();
-          year++
-        ) {
-          for (let month = 0; month < 12; month++) {
-            const currDate = new Date(year, month, 1);
-            if (this.minDate <= currDate && currDate < this.maxDate) {
-              this.dpsInstallmentDates.push(currDate);
-            }
-          }
-          this.years.push(year);
-        }
+        const { years, dates } = getInstallmentDates(
+          this.minDate,
+          this.maxDate
+        );
+        this.years = years;
+        this.dpsInstallmentDates = dates;
       });
   }
 
@@ -388,7 +381,11 @@ export class AddTransactionComponent implements OnInit {
   }
 
   isAhedOfFuture(year: number, month: number) {
-    return new Date(year, month, 1) > new Date();
+    const currentDate = new Date();
+    return (
+      year > currentDate.getFullYear() ||
+      (currentDate.getFullYear() == year && month > currentDate.getMonth())
+    );
   }
 
   onSelectMonth() {
@@ -403,6 +400,14 @@ export class AddTransactionComponent implements OnInit {
       isCurrentMonthPayment ? currentDate.getDate() : 1
     );
     this.addTransactionForm.controls.date.setValue(paymentDate);
+  }
+
+  private resetDpsTimes() {
+    this.years = [];
+    this.monthIdx = [];
+    this.dpsInstallmentDates = [];
+    this.dpsSelectedYear.reset();
+    this.dpsSelectedMonth.reset();
   }
 }
 

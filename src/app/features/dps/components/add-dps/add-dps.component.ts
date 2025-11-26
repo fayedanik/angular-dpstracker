@@ -172,6 +172,8 @@ export class AddDpsComponent {
     const value = (event.target as HTMLInputElement).value;
     if (value) {
       this.addDpsForm.controls.startDate.enable();
+      this.addDpsForm.controls.startDate.reset();
+      this.addDpsForm.controls.maturityDate.reset();
     } else {
       this.addDpsForm.controls.startDate.disable();
     }
@@ -183,6 +185,7 @@ export class AddDpsComponent {
     if (durationMonth) {
       let maturityDate = new Date(event.value);
       maturityDate.setMonth(maturityDate.getMonth() + Number(durationMonth));
+      console.log(maturityDate);
       this.addDpsForm.controls.maturityDate.setValue(new Date(maturityDate));
     }
   }

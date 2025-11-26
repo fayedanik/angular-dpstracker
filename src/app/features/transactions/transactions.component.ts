@@ -304,7 +304,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   getDpsInfo(dpsId: string) {
-    if (!dpsId || (this.dpsList() || []).length == 0) return '-';
+    if (!dpsId || (this.dpsList() || []).length == 0) return null;
     else {
       return this.dpsList()?.find((x) => x.id == dpsId)?.dpsName;
     }

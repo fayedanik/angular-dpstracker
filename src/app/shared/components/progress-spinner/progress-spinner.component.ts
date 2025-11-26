@@ -12,7 +12,8 @@ export class ProgressSpinnerComponent {
 
   getbackgroundImageProperty() {
     var degPerStep = Math.floor(360 / 100);
-    const occupiedDeg = this.occupied() * degPerStep;
+    let occupiedDeg = this.occupied() * degPerStep;
+    if (this.occupied() == 100) occupiedDeg = 360;
     return `conic-gradient(#e8a111 ${occupiedDeg}deg, #d9d9d9 0deg)`;
   }
 }

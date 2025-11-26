@@ -14,7 +14,7 @@
   <form [formGroup]="addDpsForm" [ngClass]="{ 'p-4 pb-0': isPlatformMobile }">
     <mat-form-field class="w-full mb-4">
       <mat-label>{{ "DPS_NAME" | translate }}</mat-label>
-      <input type="text" matInput formControlName="dpsName" />
+      <input type="text" matInput formControlName="dpsName" maxlength="25" />
       @if(addDpsForm.get('dpsName')?.hasError('required')) {
       <mat-error>{{ "THIS_FIELD_REQUIRED" | translate }}</mat-error>
       }

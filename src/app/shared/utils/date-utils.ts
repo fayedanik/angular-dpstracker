@@ -1,9 +1,28 @@
 export function normalizeDateToUTC(date: Date): Date {
-  console.log(date);
   if (!date) return date;
   return new Date(
     Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
   );
+}
+export function getInstallmentDates(
+  stDate: string | Date,
+  endDate: string | Date
+) {
+  let years: number[] = [];
+  let dates: Date[] = [];
+  if (!stDate || !endDate) return { years, dates };
+  if (typeof stDate == 'string') stDate = new Date(stDate);
+  if (typeof endDate == 'string') endDate = new Date(endDate);
+  for (let year = stDate.getFullYear(); year <= endDate.getFullYear(); year++) {
+    for (let month = 0; month < 12; month++) {
+      const currDate = new Date(year, month, stDate.getDate());
+      if (stDate <= currDate && currDate < endDate) {
+        dates.push(currDate);
+      }
+    }
+    years.push(year);
+  }
+  return { years, dates };
 }
 export const months = [
   { en: 'January', bn: 'জানুয়ারি' },

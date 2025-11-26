@@ -14,6 +14,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 @Component({
   selector: 'app-nav-bar',
   imports: [
@@ -34,18 +35,20 @@ export class NavBarComponent {
   user = inject(UserService).User;
   authService = inject(AuthService);
   router = inject(Router);
+  private readonly _localStorageService = inject(LocalStorageService);
   private readonly _translate = inject(TranslateService);
   dateNow = signal<Date>(new Date());
   isDark = signal(false);
   toggleSideNav = output<void>();
   isOpendedSideNav = input<boolean>(false);
+  private readonly _themeKey = 'theme';
   toggleLightDarkMode() {
     if (!document.body.classList.contains('dark')) {
       this.goToDarkMode();
-      localStorage.setItem('theme', 'dark');
+      this._localStorageService.set(this._themeKey, 'dark');
     } else {
       this.goToLightMode();
-      localStorage.setItem('theme', 'light');
+      this._localStorageService.set(this._themeKey, 'light');
     }
   }
 
