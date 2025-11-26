@@ -53,7 +53,7 @@ export class DigitsOnlyDirective {
     try {
       input.setSelectionRange(newCursorPoint, newCursorPoint);
     } catch (err) {}
-    input.dispatchEvent(new Event('event', { bubbles: true }));
+    input.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   @HostListener('input', ['$event'])
