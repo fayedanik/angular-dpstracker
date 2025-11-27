@@ -51,7 +51,7 @@
 </ng-template>
 
 <ng-template #addUser>
-  <div class="user-container bg-red p-4 flex flex-col h-full">
+  <div class="user-container bg-red p-4 flex flex-col h-calc[100%-40px]">
     <div class="flex flex-row justify-between gap-4 items-center mb-4">
       <span class="title-large">{{ "ADD_MEMBER" | translate }}</span>
       <button mat-icon-button (click)="drawer.close()">
@@ -91,7 +91,7 @@
     </div>
     }
 
-    <div class="w-full flex flex-row justify-between mt-8">
+    <div class="w-full flex flex-row justify-between my-4">
       <button matButton (click)="drawer.close()">
         {{ "CANCEL" | translate }}
       </button>
